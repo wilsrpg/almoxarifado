@@ -4,14 +4,33 @@
   <p>Data: {{$movimentacao->data}}</p>
   <p>Responsável: {{$movimentacao->responsavel}}</p>
   <p>Tipo: {{$movimentacao->tipo}}</p>
-  <p>Itens: {{$movimentacao->itens}}</p>
+  <p>Itens:</p>
+  @if (count($movimentacao->itens) > 0)
+    <ul>
+      @foreach ($movimentacao->itens as $item)
+        <li><?= $item?></li>
+      @endforeach
+    </ul>
+  @else
+    <p>Nenhum</p>{{--impossível--}}
+  @endif
   <p>Anotações: {{$movimentacao->anotacoes}}</p>
 @elseif (isset($movimentacoes) && count($movimentacoes) > 0)
   @foreach ($movimentacoes as $movimentacao)
     <p>Data: {{$movimentacao->data}}</p>
+    <p>Hora: {{$movimentacao->hora}}</p>
     <p>Responsável: {{$movimentacao->responsavel}}</p>
     <p>Tipo: {{$movimentacao->tipo}}</p>
-    <p>Itens: {{$movimentacao->itens}}</p>
+    <p>Itens:</p>
+    @if (count($movimentacao->itens) > 0)
+      <ul>
+        @foreach ($movimentacao->itens as $item)
+          <li><?= $item?></li>
+        @endforeach
+      </ul>
+    @else
+      <p>Nenhum</p>{{--impossível--}}
+    @endif
     <p>Anotações: {{$movimentacao->anotacoes}}</p>
     <br>
   @endforeach

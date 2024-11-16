@@ -20,8 +20,16 @@ class ItemController extends Controller
   }
 
   public function cadastrar_item() {
-    echo '<pre>';
-    print_r($_POST);
-    die();
+    //echo '<pre>';print_r($_POST);
+    //die();
+    $item = new Item;
+    $item->nome = $_POST['nome'];
+    $item->anotacoes = $_POST['anotacoes'];
+    $item->disponivel = isset($_POST['disponivel']) && $_POST['disponivel'] == 'on';
+    //echo '<pre>';print_r($item);
+    //die();
+    $res = $item->save();
+    //echo '<pre>';print_r($res);die();
+    return redirect('/')->with('cadastrou_item', $res);
   }
 }
