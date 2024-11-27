@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use App\Models\Categoria;
 
 class ItemController extends Controller
 {
@@ -16,7 +17,7 @@ class ItemController extends Controller
   }
 
   public function novo_item() {
-    return view('novo_item');
+    return view('novo_item', ['categorias' => Categoria::all()]);
   }
 
   public function cadastrar_item() {
@@ -25,6 +26,7 @@ class ItemController extends Controller
     $item = new Item;
     $item->nome = $_POST['nome'];
     $item->anotacoes = $_POST['anotacoes'];
+    $item->categoria = $_POST['categoria'] ?? '';
     $item->disponivel = isset($_POST['disponivel']) && $_POST['disponivel'] == 'on';
     //echo '<pre>';print_r($item);
     //die();

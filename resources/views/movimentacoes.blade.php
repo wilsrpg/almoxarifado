@@ -8,7 +8,7 @@
   @if (count($movimentacao->itens) > 0)
     <ul>
       @foreach ($movimentacao->itens as $item)
-        <li><?= $item?></li>
+        <li><?= $item->nome ?></li>
       @endforeach
     </ul>
   @else
@@ -16,6 +16,7 @@
   @endif
   <p>Anotações: {{$movimentacao->anotacoes}}</p>
 @elseif (isset($movimentacoes) && count($movimentacoes) > 0)
+  <p>{{count($movimentacoes) . (count($movimentacoes) > 1 ? ' movimentacões:' : ' movimentação:')}}</p>
   @foreach ($movimentacoes as $movimentacao)
     <p>Data: {{$movimentacao->data}}</p>
     <p>Hora: {{$movimentacao->hora}}</p>
@@ -25,7 +26,7 @@
     @if (count($movimentacao->itens) > 0)
       <ul>
         @foreach ($movimentacao->itens as $item)
-          <li><?= $item?></li>
+          <li><?= $item->nome ?></li>
         @endforeach
       </ul>
     @else

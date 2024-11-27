@@ -11,10 +11,17 @@ class MovimentacaoController extends Controller
 {
   public function index($id = '')
   {
-    if ($id == '')
-      return view('movimentacoes', ['movimentacoes' => Movimentacao::all()]);
-    else
-      return view('movimentacoes', ['movimentacao' => Movimentacao::where('data', $id)->first()]);
+    if ($id == '') {
+      $movimentacoes = Movimentacao::all();
+      foreach ($movimentacoes as $movimentacao) {
+        $movimentacao->itens = Item::whereIn('_id', $movimentacao->itens)->get();
+      }
+      return view('movimentacoes', ['movimentacoes' => $movimentacoes]);
+    } else {
+      $movimentacao = Movimentacao::where('id', $id)->first();
+      $movimentacao->itens = Item::whereIn('_id', $movimentacao->itens)->get();
+      return view('movimentacoes', ['movimentacao' => $movimentacao]);
+    }
   }
 
   public function novo_emprestimo() {
@@ -35,7 +42,7 @@ class MovimentacaoController extends Controller
     $movimentacao->data = $_POST['data'];
     $movimentacao->hora = $_POST['hora'];
     $movimentacao->responsavel = $_POST['responsavel'];
-    $movimentacao->tipo = 'emprestimo';
+    $movimentacao->tipo = 'Empréstimo';
     //$movimentacao->itens = [];
     //if (isset($_POST['itens'])) {
       $movimentacao->itens = $_POST['itens'];
@@ -70,7 +77,7 @@ class MovimentacaoController extends Controller
     $movimentacao->hora = $_POST['hora'];
     $movimentacao->responsavel = $_POST['responsavel'];
     $movimentacao->anotacoes = $_POST['anotacoes'];
-    $movimentacao->tipo = 'devolucao';
+    $movimentacao->tipo = 'Devolução';
     $movimentacao->itens = $_POST['itens'];
     $resUpdate = Item::whereIn('_id', $movimentacao->itens)->update(['disponivel' => true]);
     $res = $movimentacao->save();
