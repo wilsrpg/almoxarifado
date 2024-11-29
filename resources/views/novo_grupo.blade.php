@@ -9,7 +9,7 @@
     @if (count($itens))
       <select type="select" name="itens[]" multiple>
         @foreach ($itens as $item)
-          <option value="<?= $item['_id']?>"><?= $item['nome']?></option>
+          <option value="<?= $item['_id'] ?>"><?= $item['nome'] ?></option>
         @endforeach
       </select>
     @else
