@@ -38,3 +38,10 @@ Route::get('/novo_emprestimo', [MovimentacaoController::class, 'novo_emprestimo'
 Route::post('/registrar_emprestimo', [MovimentacaoController::class, 'registrar_emprestimo']);
 Route::get('/nova_devolucao', [MovimentacaoController::class, 'nova_devolucao']);
 Route::post('/registrar_devolucao', [MovimentacaoController::class, 'registrar_devolucao']);
+Route::get('/nova_transferencia', [MovimentacaoController::class, 'nova_transferencia']);
+Route::post('/registrar_transferencia', [MovimentacaoController::class, 'registrar_transferencia']);
+
+//Route::get('/novo_emprestimo', [MovimentacaoController::class, 'nova_movimentacao']);
+//Route::post('/registrar_emprestimo', [MovimentacaoController::class, 'registrar_movimentacao']);
+//Route::get('/nova_devolucao', [MovimentacaoController::class, 'nova_movimentacao']);
+//Route::post('/registrar_devolucao', [MovimentacaoController::class, 'registrar_movimentacao']);

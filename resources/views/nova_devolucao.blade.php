@@ -1,11 +1,10 @@
 <a href="/">Voltar</a>
-@if ($errors->any())
-{{print_r($errors->all(),true)}}
-@else
+
 <form action="registrar_devolucao" method="post">
-  <p>Data: <input type="date" name="data"></p>
-  <p>Hora: <input type="time" name="hora"></p>
-  <p>Responsável: <input type="text" name="responsavel"></p>
+  <p>Data: <input type="date" name="data" value="<?php echo date('Y-m-d'); ?>"></p>
+  <p>Hora: <input type="time" name="hora" value="<?php echo date('h:i'); ?>"></p>
+  <p>Responsável por receber: <input type="text" name="quem_recebeu"></p>
+  <p>Responsável por devolver: <input type="text" name="quem_devolveu"></p>
   {{--<p>Tipo:
     <select name="tipo">
       <option value="" default></option>
@@ -20,13 +19,28 @@
     @if (count($itens))
       <select type="select" name="itens[]" multiple required>
         @foreach ($itens as $item)
-          <option value="<?= $item['_id']?>" <?= $item['disponivel'] ? 'disabled' : '' ?>>
-            <?= $item['nome']?>
+          <option id="<?= $item['_id'] ?>" value="<?= $item['_id'] ?>" <?= $item['disponivel'] ? 'disabled' : '' ?>>
+            <?= $item['nome'] ?>
           </option>
         @endforeach
       </select>
     @else
       Não há itens cadastrados.
+    @endif
+    <span style="vertical-align: top;">Empréstimos: </span>
+    @if (count($emprestimos))
+      <select type="select" id="emprestimos" multiple onchange="atualizarItens(event)">
+        @foreach ($emprestimos as $emprestimo)
+          <option value="<?= $emprestimo['_id'] ?>">
+            <?= date_format(date_create($emprestimo['data']), 'd/m/Y') . ' ' . $emprestimo['hora'] ?>
+          </option>
+        @endforeach
+      </select>
+      @foreach ($emprestimos as $emprestimo)
+        <input type=hidden id="<?= $emprestimo['_id'] ?>" value="<?= implode(',', $emprestimo['itens']) ?>">
+      @endforeach
+    @else
+      Não há empréstimos cadastrados.
     @endif
   </p>
   <p>
@@ -36,4 +50,25 @@
   @csrf
   <input type="submit" value="Registrar">
 </form>
-@endif
+
+<script>
+  function atualizarItens(e) {
+    //console.log(e.target.children[0].selected);
+    let arr = []; //pra converter HTMLCollection em Array, pra usar forEach
+    for (let i = 0; i < e.target.children.length; i++) {
+      arr.push(e.target.children[i]);
+    }
+    //console.log(arr);
+    arr.forEach(op => {
+      if (document.getElementById(op.value).value) {
+        let ids_dos_itens = document.getElementById(op.value).value.split(',');
+        //console.log(ids_dos_itens);
+        if (ids_dos_itens.length)
+          ids_dos_itens.forEach(id => {
+            if (op.selected && !document.getElementById(id).disabled)
+              document.getElementById(id).selected = op.selected;
+          });
+      }
+    });
+  }
+</script>

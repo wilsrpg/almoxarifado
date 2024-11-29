@@ -12,6 +12,7 @@
     <p>Anotações: {{$item->anotacoes}}</p>
     <p>Categoria: {{$item->categoria}}</p>
     <p>Disponível: {{$item->disponivel ? 'Sim' : 'Não'}}</p>
+    <p>Onde está: {{$item->onde_esta}}</p>
     <br>
   @endforeach
 @else
