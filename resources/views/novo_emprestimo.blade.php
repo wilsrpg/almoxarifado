@@ -4,7 +4,7 @@
 @else
 <form action="registrar_emprestimo" method="post">
   <p>Data: <input type="date" name="data" value="<?php echo date('Y-m-d'); ?>"></p>
-  <p>Hora: <input type="time" name="hora" value="<?php echo date('h:i'); ?>"></p>
+  <p>Hora: <input type="time" name="hora" value="<?php echo date('H:i'); ?>"></p>
   <p>Responsável por entregar: <input type="text" name="quem_entregou"></p>
   <p>Responsável por levar: <input type="text" name="quem_levou"></p>
   {{--<p>Tipo:

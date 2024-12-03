@@ -2,7 +2,7 @@
 
 <form action="registrar_devolucao" method="post">
   <p>Data: <input type="date" name="data" value="<?php echo date('Y-m-d'); ?>"></p>
-  <p>Hora: <input type="time" name="hora" value="<?php echo date('h:i'); ?>"></p>
+  <p>Hora: <input type="time" name="hora" value="<?php echo date('H:i'); ?>"></p>
   <p>Responsável por receber: <input type="text" name="quem_recebeu"></p>
   <p>Responsável por devolver: <input type="text" name="quem_devolveu"></p>
   {{--<p>Tipo:
