@@ -7,7 +7,7 @@
   <p>
     <span style="vertical-align: top;">Itens: </span>
     @if (count($itens))
-      <select type="select" name="itens[]" multiple>
+      <select name="itens[]" multiple>
         @foreach ($itens as $item)
           <option value="<?= $item['_id'] ?>"><?= $item['nome'] ?></option>
         @endforeach

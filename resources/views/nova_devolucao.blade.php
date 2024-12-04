@@ -17,7 +17,7 @@
   <p>
     <span style="vertical-align: top;">Itens: </span>
     @if (count($itens))
-      <select type="select" name="itens[]" multiple required>
+      <select name="itens[]" multiple required>
         @foreach ($itens as $item)
           <option id="<?= $item['_id'] ?>" value="<?= $item['_id'] ?>" <?= $item['disponivel'] ? 'disabled' : '' ?>>
             <?= $item['nome'] ?>
@@ -29,7 +29,7 @@
     @endif
     <span style="vertical-align: top;">Empréstimos: </span>
     @if (count($emprestimos))
-      <select type="select" id="emprestimos" multiple onchange="atualizarItens(event)">
+      <select id="emprestimos" multiple onchange="atualizarItens(event)">
         @foreach ($emprestimos as $emprestimo)
           <option value="<?= $emprestimo['_id'] ?>">
             <?= date_format(date_create($emprestimo['data']), 'd/m/Y') . ' ' . $emprestimo['hora'] ?>

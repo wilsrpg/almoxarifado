@@ -7,7 +7,7 @@
   <p>
     <span style="vertical-align: top;">Categoria: </span>
     @if (count($categorias))
-      <select type="select" name="categoria">
+      <select name="categoria">
         <option value=""></option>
         @foreach ($categorias as $categoria)
           <option value="<?= $categoria->nome ?>"><?= $categoria->nome ?></option>

@@ -19,7 +19,7 @@
   <p>
     <span style="vertical-align: top;">Itens: </span>
     @if (count($itens))
-      <select type="select" name="itens[]" multiple required>
+      <select name="itens[]" multiple required>
         @foreach ($itens as $item)
           <option id="<?= $item['_id'] ?>" value="<?= $item['_id'] ?>" <?= $item['disponivel'] ? '' : 'disabled' ?>>
             <?= $item['nome'] ?>
@@ -31,7 +31,7 @@
     @endif
     <span style="vertical-align: top;">Grupos: </span>
     @if (count($grupos))
-      <select type="select" id="grupos" multiple onchange="atualizarItens(event)">
+      <select id="grupos" multiple onchange="atualizarItens(event)">
         @foreach ($grupos as $grupo)
           <option value="<?= $grupo['_id'] ?>">
             <?= $grupo['nome'] ?>
