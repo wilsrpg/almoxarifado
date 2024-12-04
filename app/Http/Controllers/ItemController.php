@@ -34,4 +34,17 @@ class ItemController extends Controller
     //echo '<pre>';print_r($res);die();
     return redirect('/')->with('cadastrou_item', $res);
   }
+
+  public function editar($nome) {
+    return view('editar_item', ['item' => Item::where('nome', $nome)->first(), 'categorias' => Categoria::all()]);
+  }
+
+  public function atualizar_item($nome) {
+    $item = Item::where('nome', $nome)->first();
+    $item->nome = $_POST['nome'];
+    $item->anotacoes = $_POST['anotacoes'];
+    $item->categoria = $_POST['categoria'] ?? '';
+    $res = $item->save();
+    return redirect('/')->with('atualizou_item', $res);
+  }
 }

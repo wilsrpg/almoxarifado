@@ -26,4 +26,16 @@ class CategoriaController extends Controller
     $res = $categoria->save();
     return redirect('/')->with('cadastrou_categoria', $res);
   }
+
+  public function editar($nome) {
+    return view('editar_categoria', ['categoria' => Categoria::where('nome', $nome)->first()]);
+  }
+
+  public function atualizar_categoria($nome) {
+    $categoria = Categoria::where('nome', $nome)->first();
+    $categoria->nome = $_POST['nome'];
+    $categoria->anotacoes = $_POST['anotacoes'];
+    $res = $categoria->save();
+    return redirect('/')->with('atualizou_categoria', $res);
+  }
 }

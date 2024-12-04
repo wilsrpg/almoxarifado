@@ -10,9 +10,16 @@
   <p>Devolução realizada com sucesso.</p>
 @elseif(session('registrou_transferencia'))
   <p>Transferência realizada com sucesso.</p>
+@elseif(session('atualizou_categoria'))
+  <p>Categoria atualizada com sucesso.</p>
+@elseif(session('atualizou_item'))
+  <p>Item atualizado com sucesso.</p>
+@elseif(session('atualizou_grupo'))
+  <p>Grupo de itens atualizado com sucesso.</p>
 @endif
 
 <p><a href="categorias">Ver categorias</a> - <a href="nova_categoria">Cadastrar categoria</a></p>
 <p><a href="itens">Ver itens</a> - <a href="novo_item">Cadastrar item</a></p>
 <p><a href="grupos">Ver grupos de itens</a> - <a href="novo_grupo">Cadastrar grupo de itens</a></p>
 <p><a href="movimentacoes">Ver movimentações</a> - <a href="novo_emprestimo">Realizar empréstimo</a> - <a href="nova_devolucao">Realizar devolução</a> - <a href="nova_transferencia">Realizar transferência</a></p>
+{{--<p><a href="movimentacoes">Ver movimentações</a> - <a href="nova_movimentacao">Realizar movimentação</a>--}}

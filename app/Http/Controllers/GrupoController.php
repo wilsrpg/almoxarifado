@@ -44,4 +44,26 @@ class GrupoController extends Controller
     $res = $grupo->save();
     return redirect('/')->with('cadastrou_grupo', $res);
   }
+
+  public function editar($nome) {
+    return view('editar_grupo', [
+      'grupo' => Grupo::where('nome', $nome)->first(),
+      'itens' => Item::aggregate()->project(_id: 1, nome: 1)->get()
+    ]);
+  }
+
+  public function atualizar_grupo($nome) {
+    $grupo = Grupo::where('nome', $nome)->first();
+    $grupo->nome = $_POST['nome'];
+    $grupo->anotacoes = $_POST['anotacoes'];
+    $itens = [];
+    if (isset($_POST['itens'])) {
+      $itens_db = Item::whereIn('_id', $_POST['itens'])->project(['_id' => 1])->get();
+      foreach ($itens_db as $item)
+        array_push($itens, $item->id);
+    }
+    $grupo->itens = $itens;
+    $res = $grupo->save();
+    return redirect('/')->with('atualizou_grupo', $res);
+  }
 }
