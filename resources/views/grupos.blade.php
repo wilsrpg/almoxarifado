@@ -4,33 +4,33 @@
   <p>Nome: {{$grupo->nome}}</p>
   {{--<p>Disponível: {{$grupo->disponivel ? 'Sim' : 'Não'}}</p>--}}
   <p>Itens:</p>
-  @if (count($grupo->itens) > 0)
-    <ul>
+  <ul>
+    @if (count($grupo->itens) > 0)
       @foreach ($grupo->itens as $item)
-        <li><?= $item->nome ?></li>
+        <li><a href="/itens/{{$item->nome}}">{{$item->nome}}</a></li>
       @endforeach
-    </ul>
-  @else
-    <p>Nenhum</p>
-  @endif
+    @else
+      <li>Nenhum</li>
+    @endif
+  </ul>
   <p>Anotações: <br><pre>{{$grupo->anotacoes}}</pre></p>
-  <a href="{{$grupo->nome}}/editar">Editar</a>
+  <a href="/grupos/{{$grupo->nome}}/editar">Editar</a>
 
 @elseif (isset($grupos) && count($grupos) > 0)
   <p>{{count($grupos) . (count($grupos) > 1 ? ' grupos:' : ' grupo:')}}</p>
   @foreach ($grupos as $grupo)
-    <p>Nome: <a href="grupos/{{$grupo->nome}}">{{$grupo->nome}}</a></p>
+    <p>Nome: <a href="/grupos/{{$grupo->nome}}">{{$grupo->nome}}</a></p>
     {{--<p>Disponível: {{$grupo->disponivel ? 'Sim' : 'Não'}}</p>--}}
     <p>Itens:</p>
-    @if (count($grupo->itens) > 0)
-      <ul>
+    <ul>
+      @if (count($grupo->itens) > 0)
         @foreach ($grupo->itens as $item)
-          <li><?= $item->nome ?></li>
+          <li><a href="/itens/{{$item->nome}}">{{$item->nome}}</a></li>
         @endforeach
-      </ul>
-    @else
-      <p>Nenhum</p>
-    @endif
+      @else
+        <li>Nenhum</li>
+      @endif
+    </ul>
     <p>Anotações: {{$grupo->anotacoes}}</p>
     <br>
   @endforeach
