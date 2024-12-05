@@ -1,6 +1,6 @@
 <a href="/">Ir para página inicial</a>
 
-<form action="cadastrar_grupo" method="post">
+<form action="/grupos/criar" method="post">
   <p>Nome do grupo: <input type="text" name="nome" required></p>
   <span style="vertical-align: top;">Anotações: </span>
   <textarea name="anotacoes"></textarea>
@@ -9,7 +9,7 @@
     @if (count($itens))
       <select name="itens[]" multiple>
         @foreach ($itens as $item)
-          <option value="<?= $item['_id'] ?>"><?= $item['nome'] ?></option>
+          <option value="{{$item['_id']}}">{{$item['nome']}}</option>
         @endforeach
       </select>
     @else

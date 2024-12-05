@@ -1,6 +1,6 @@
 <a href="/">Ir para página inicial</a>
 
-<form action="atualizar_categoria" method="post">
+<form action="/categoria/{{$categoria->id}}/atualizar" method="post">
   <p>Nome da categoria: <input type="text" name="nome" value="{{$categoria->nome}}" required></p>
   <p>
     <span style="vertical-align: top;">Anotações: </span>

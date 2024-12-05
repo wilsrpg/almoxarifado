@@ -1,6 +1,6 @@
 <a href="/">Ir para página inicial</a>
 
-<form action="atualizar_grupo" method="post">
+<form action="/grupo/{{$grupo->id}}/atualizar" method="post">
   <p>Nome do grupo: <input type="text" name="nome" value="{{$grupo->nome}}" required></p>
   <p>
     <span style="vertical-align: top;">Anotações: </span>

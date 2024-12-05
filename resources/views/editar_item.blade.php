@@ -1,6 +1,6 @@
 <a href="/">Ir para página inicial</a>
 
-<form action="atualizar_item" method="post">
+<form action="/item/{{$item->id}}/atualizar" method="post">
   <p>Nome: <input type="text" name="nome" value="{{$item->nome}}" required></p>
   <span style="vertical-align: top;">Anotações: </span>
   <textarea name="anotacoes">{{$item->anotacoes}}</textarea>
@@ -10,8 +10,8 @@
       <select name="categoria">
         <option value=""></option>
         @foreach ($categorias as $categoria)
-          <option value="<?= $categoria->nome ?>" {{$categoria->nome == $item->categoria ? 'selected' : ''}}>
-            <?= $categoria->nome ?>
+          <option value="{{$categoria->id}}" {{$categoria->id == $item->categoria['id'] ? 'selected' : ''}}>
+            {{$categoria->nome}}
           </option>
         @endforeach
       </select>

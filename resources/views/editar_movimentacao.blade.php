@@ -2,7 +2,8 @@
 @if ($errors->any())
 {{print_r($errors->all(),true)}}
 @else
-<form action="atualizar_movimentacao" method="post">
+<form action="/movimentacao/{{$movimentacao->id}}/atualizar" method="post">
+  <p>ID: {{$movimentacao->id}}</p>
   <p>Data: <input type="date" name="data" value="{{$movimentacao->data}}"></p>
   <p>Hora: <input type="time" name="hora" value="{{$movimentacao->hora}}"></p>
   <p>Responsável por entregar: <input type="text" name="quem_entregou" value="{{$movimentacao->quem_entregou}}"></p>
@@ -51,7 +52,7 @@
     @if (count($grupos))
       <select id="grupos" multiple onchange="atualizarItens(event)">
         @foreach ($grupos as $grupo)
-          <option value="{{$grupo['_id']}}">
+          <option value="{{$grupo['id']}}">
             {{$grupo['nome']}}
           </option>
         @endforeach

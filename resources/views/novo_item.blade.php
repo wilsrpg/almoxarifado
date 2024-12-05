@@ -1,6 +1,6 @@
 <a href="/">Ir para página inicial</a>
 
-<form action="cadastrar_item" method="post">
+<form action="/itens/criar" method="post">
   <p>Nome: <input type="text" name="nome" required></p>
   <span style="vertical-align: top;">Anotações: </span>
   <textarea name="anotacoes"></textarea>
@@ -10,7 +10,7 @@
       <select name="categoria">
         <option value=""></option>
         @foreach ($categorias as $categoria)
-          <option value="<?= $categoria->nome ?>"><?= $categoria->nome ?></option>
+          <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
         @endforeach
       </select>
     @else

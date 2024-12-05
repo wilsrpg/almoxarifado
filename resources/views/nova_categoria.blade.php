@@ -1,6 +1,6 @@
 <a href="/">Ir para página inicial</a>
 
-<form action="cadastrar_categoria" method="post">
+<form action="/categorias/criar" method="post">
   <p>Nome da categoria: <input type="text" name="nome" required></p>
   <p>
     <span style="vertical-align: top;">Anotações: </span>

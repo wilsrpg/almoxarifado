@@ -8,26 +8,24 @@ use App\Models\Item;
 
 class GrupoController extends Controller
 {
-  public function index($nome = '')
-  {
-    if ($nome == '') {
-      $grupos = Grupo::all();
-      foreach ($grupos as $grupo) {
-        $grupo->itens = Item::whereIn('_id', $grupo->itens)->get();
-      }
-      return view('grupos', ['grupos' => $grupos]);
-    } else {
-      $grupo = Grupo::where('nome', $nome)->first();
+  public function index() {
+    $grupos = Grupo::all();
+    foreach ($grupos as $grupo)
       $grupo->itens = Item::whereIn('_id', $grupo->itens)->get();
-      return view('grupos', ['grupo' => $grupo]);
-    }
+    return view('grupos', ['grupos' => $grupos]);
   }
 
-  public function novo_grupo() {
+  public function ver($id) {
+    $grupo = Grupo::where('id', $id)->first();
+    $grupo->itens = Item::whereIn('_id', $grupo->itens)->get();
+    return view('grupos', ['grupo' => $grupo]);
+  }
+
+  public function pagina_de_criacao() {
     return view('novo_grupo', ['itens' => Item::aggregate()->project(_id: 1, nome: 1)->get()]);
   }
 
-  public function cadastrar_grupo() {
+  public function criar() {
     $grupo = new Grupo;
     $grupo->nome = $_POST['nome'];
     $grupo->anotacoes = $_POST['anotacoes'];
@@ -42,18 +40,19 @@ class GrupoController extends Controller
     //print_r($grupo->itens);
     //die();
     $res = $grupo->save();
-    return redirect('/')->with('cadastrou_grupo', $res);
+    //return redirect('/')->with('cadastrou_grupo', $res);
+    return redirect('/')->with('mensagem', 'Grupo cadastrado com sucesso.');
   }
 
-  public function editar($nome) {
+  public function pagina_de_edicao($id) {
     return view('editar_grupo', [
-      'grupo' => Grupo::where('nome', $nome)->first(),
+      'grupo' => Grupo::where('id', $id)->first(),
       'itens' => Item::aggregate()->project(_id: 1, nome: 1)->get()
     ]);
   }
 
-  public function atualizar_grupo($nome) {
-    $grupo = Grupo::where('nome', $nome)->first();
+  public function atualizar($id) {
+    $grupo = Grupo::where('id', $id)->first();
     $grupo->nome = $_POST['nome'];
     $grupo->anotacoes = $_POST['anotacoes'];
     $itens = [];
@@ -64,6 +63,7 @@ class GrupoController extends Controller
     }
     $grupo->itens = $itens;
     $res = $grupo->save();
-    return redirect('/')->with('atualizou_grupo', $res);
+    //return redirect('/')->with('atualizou_grupo', $res);
+    return redirect('/')->with('mensagem', 'Grupo atualizado com sucesso.');
   }
 }

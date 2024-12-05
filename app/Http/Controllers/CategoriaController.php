@@ -7,35 +7,37 @@ use App\Models\Categoria;
 
 class CategoriaController extends Controller
 {
-  public function index($nome = '')
-  {
-    if ($nome == '')
+  public function index() {
       return view('categorias', ['categorias' => Categoria::all()]);
-    else
-      return view('categorias', ['categoria' => Categoria::where('nome', $nome)->first()]);
   }
 
-  public function nova_categoria() {
+  public function ver($id) {
+    return view('categorias', ['categoria' => Categoria::where('id', $id)->first()]);
+  }
+
+  public function pagina_de_criacao() {
     return view('nova_categoria');
   }
 
-  public function cadastrar_categoria() {
+  public function criar() {
     $categoria = new Categoria;
     $categoria->nome = $_POST['nome'];
     $categoria->anotacoes = $_POST['anotacoes'];
     $res = $categoria->save();
-    return redirect('/')->with('cadastrou_categoria', $res);
+    //return redirect('/')->with('cadastrou_categoria', $res);
+    return redirect('/')->with('mensagem', 'Categoria cadastrada com sucesso.');
   }
 
-  public function editar($nome) {
-    return view('editar_categoria', ['categoria' => Categoria::where('nome', $nome)->first()]);
+  public function pagina_de_edicao($id) {
+    return view('editar_categoria', ['categoria' => Categoria::where('id', $id)->first()]);
   }
 
-  public function atualizar_categoria($nome) {
-    $categoria = Categoria::where('nome', $nome)->first();
+  public function atualizar($id) {
+    $categoria = Categoria::where('id', $id)->first();
     $categoria->nome = $_POST['nome'];
     $categoria->anotacoes = $_POST['anotacoes'];
     $res = $categoria->save();
-    return redirect('/')->with('atualizou_categoria', $res);
+    //return redirect('/')->with('atualizou_categoria', $res);
+    return redirect('/')->with('mensagem', 'Categoria atualizada com sucesso.');
   }
 }
