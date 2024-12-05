@@ -44,14 +44,13 @@ Route::get('/grupos/{nome}/editar', [GrupoController::class, 'editar']);
 Route::post('/grupos/{nome}/atualizar_grupo', [GrupoController::class, 'atualizar_grupo']);
 
 Route::get('/movimentacoes/{id?}', [MovimentacaoController::class, 'index']);
-Route::get('/novo_emprestimo', [MovimentacaoController::class, 'novo_emprestimo']);
-Route::post('/registrar_emprestimo', [MovimentacaoController::class, 'registrar_emprestimo']);
-Route::get('/nova_devolucao', [MovimentacaoController::class, 'nova_devolucao']);
-Route::post('/registrar_devolucao', [MovimentacaoController::class, 'registrar_devolucao']);
-Route::get('/nova_transferencia', [MovimentacaoController::class, 'nova_transferencia']);
-Route::post('/registrar_transferencia', [MovimentacaoController::class, 'registrar_transferencia']);
-
-//Route::get('/nova_movimentacao', [MovimentacaoController::class, 'nova_movimentacao']);
-//Route::post('/registrar_movimentacao', [MovimentacaoController::class, 'registrar_movimentacao']);
+//Route::get('/novo_emprestimo', [MovimentacaoController::class, 'novo_emprestimo']);
+//Route::post('/registrar_emprestimo', [MovimentacaoController::class, 'registrar_emprestimo']);
+//Route::get('/nova_devolucao', [MovimentacaoController::class, 'nova_devolucao']);
+//Route::post('/registrar_devolucao', [MovimentacaoController::class, 'registrar_devolucao']);
+//Route::get('/nova_transferencia', [MovimentacaoController::class, 'nova_transferencia']);
+//Route::post('/registrar_transferencia', [MovimentacaoController::class, 'registrar_transferencia']);
+Route::get('/nova_movimentacao', [MovimentacaoController::class, 'nova_movimentacao']);
+Route::post('/registrar_movimentacao', [MovimentacaoController::class, 'registrar_movimentacao']);
 //Route::get('/movimentacoes/{id}/editar', [MovimentacaoController::class, 'editar']);
 //Route::post('/movimentacoes/{id}/atualizar_movimentacao', [MovimentacaoController::class, 'atualizar_movimentacao']);
