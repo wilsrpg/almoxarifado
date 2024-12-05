@@ -52,5 +52,5 @@ Route::get('/movimentacoes/{id?}', [MovimentacaoController::class, 'index']);
 //Route::post('/registrar_transferencia', [MovimentacaoController::class, 'registrar_transferencia']);
 Route::get('/nova_movimentacao', [MovimentacaoController::class, 'nova_movimentacao']);
 Route::post('/registrar_movimentacao', [MovimentacaoController::class, 'registrar_movimentacao']);
-//Route::get('/movimentacoes/{id}/editar', [MovimentacaoController::class, 'editar']);
-//Route::post('/movimentacoes/{id}/atualizar_movimentacao', [MovimentacaoController::class, 'atualizar_movimentacao']);
+Route::get('/movimentacoes/{id}/editar', [MovimentacaoController::class, 'editar']);
+Route::post('/movimentacoes/{id}/atualizar_movimentacao', [MovimentacaoController::class, 'atualizar_movimentacao']);

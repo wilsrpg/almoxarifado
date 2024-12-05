@@ -16,12 +16,12 @@
   <p>Item atualizado com sucesso.</p>
 @elseif(session('atualizou_grupo'))
   <p>Grupo de itens atualizado com sucesso.</p>
-{{--@elseif(session('atualizou_emprestimo'))
+@elseif(session('atualizou_emprestimo'))
   <p>Empréstimo atualizado com sucesso.</p>
 @elseif(session('atualizou_devolucao'))
   <p>Devolução atualizada com sucesso.</p>
 @elseif(session('atualizou_transferencia'))
-  <p>Transferência atualizada com sucesso.</p>--}}
+  <p>Transferência atualizada com sucesso.</p>
 @endif
 
 <p><a href="/categorias">Ver categorias</a> - <a href="/nova_categoria">Cadastrar categoria</a></p>
