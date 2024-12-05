@@ -8,15 +8,15 @@ use App\Models\Categoria;
 class CategoriaController extends Controller
 {
   public function index() {
-      return view('categorias', ['categorias' => Categoria::all()]);
+      return view('categorias.categorias', ['categorias' => Categoria::all()]);
   }
 
   public function ver($id) {
-    return view('categorias', ['categoria' => Categoria::where('id', $id)->first()]);
+    return view('categorias.categorias', ['categoria' => Categoria::where('id', $id)->first()]);
   }
 
   public function pagina_de_criacao() {
-    return view('nova_categoria');
+    return view('categorias.nova_categoria');
   }
 
   public function criar() {
@@ -29,7 +29,7 @@ class CategoriaController extends Controller
   }
 
   public function pagina_de_edicao($id) {
-    return view('editar_categoria', ['categoria' => Categoria::where('id', $id)->first()]);
+    return view('categorias.editar_categoria', ['categoria' => Categoria::where('id', $id)->first()]);
   }
 
   public function atualizar($id) {

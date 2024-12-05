@@ -12,17 +12,17 @@ class GrupoController extends Controller
     $grupos = Grupo::all();
     foreach ($grupos as $grupo)
       $grupo->itens = Item::whereIn('_id', $grupo->itens)->get();
-    return view('grupos', ['grupos' => $grupos]);
+    return view('grupos.grupos', ['grupos' => $grupos]);
   }
 
   public function ver($id) {
     $grupo = Grupo::where('id', $id)->first();
     $grupo->itens = Item::whereIn('_id', $grupo->itens)->get();
-    return view('grupos', ['grupo' => $grupo]);
+    return view('grupos.grupos', ['grupo' => $grupo]);
   }
 
   public function pagina_de_criacao() {
-    return view('novo_grupo', ['itens' => Item::aggregate()->project(_id: 1, nome: 1)->get()]);
+    return view('grupos.novo_grupo', ['itens' => Item::aggregate()->project(_id: 1, nome: 1)->get()]);
   }
 
   public function criar() {
@@ -45,7 +45,7 @@ class GrupoController extends Controller
   }
 
   public function pagina_de_edicao($id) {
-    return view('editar_grupo', [
+    return view('grupos.editar_grupo', [
       'grupo' => Grupo::where('id', $id)->first(),
       'itens' => Item::aggregate()->project(_id: 1, nome: 1)->get()
     ]);

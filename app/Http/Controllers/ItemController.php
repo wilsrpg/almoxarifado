@@ -37,7 +37,7 @@ class ItemController extends Controller
     //die();
     //$item->update(['categoria', array_search($item->categoria, $categorias)]);
     //Item::whereNull('historico_de_movimentacoes')->update(['historico_de_movimentacoes' => []]);
-    return view('itens', ['itens' => Item::all()]);
+    return view('itens.itens', ['itens' => Item::all()]);
   }
 
   public function ver($id) {
@@ -50,11 +50,11 @@ class ItemController extends Controller
     //print_r($item->grupos);
     //die();
     //$item->categoria = Categoria::where('id', $id)->first();
-    return view('itens', ['item' => Item::where('id', $id)->first()]);
+    return view('itens.itens', ['item' => Item::where('id', $id)->first()]);
   }
 
   public function pagina_de_criacao() {
-    return view('novo_item', ['categorias' => Categoria::all()]);
+    return view('itens.novo_item', ['categorias' => Categoria::all()]);
   }
 
   public function criar() {
@@ -78,7 +78,7 @@ class ItemController extends Controller
   }
 
   public function pagina_de_edicao($id) {
-    return view('editar_item', ['item' => Item::where('id', $id)->first(), 'categorias' => Categoria::all()]);
+    return view('itens.editar_item', ['item' => Item::where('id', $id)->first(), 'categorias' => Categoria::all()]);
   }
 
   public function atualizar($id) {

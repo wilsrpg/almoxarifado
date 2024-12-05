@@ -17,17 +17,17 @@ class MovimentacaoController extends Controller
     $movimentacoes = Movimentacao::all();
     foreach ($movimentacoes as $movimentacao)
       $movimentacao->itens = Item::whereIn('_id', $movimentacao->itens)->get();
-    return view('movimentacoes', ['movimentacoes' => $movimentacoes]);
+    return view('movimentacoes.movimentacoes', ['movimentacoes' => $movimentacoes]);
   }
 
   public function ver($id) {
     $movimentacao = Movimentacao::where('id', $id)->first();
     $movimentacao->itens = Item::whereIn('_id', $movimentacao->itens)->get();
-    return view('movimentacoes', ['movimentacao' => $movimentacao]);
+    return view('movimentacoes.movimentacoes', ['movimentacao' => $movimentacao]);
   }
   
   public function pagina_de_criacao() {
-    return view('nova_movimentacao', [
+    return view('movimentacoes.nova_movimentacao', [
       //'itens' => Item::all(),
       'itens' => Item::aggregate()->project(_id: 1, nome: 1, disponivel: 1)->get(),
       //'grupos' => Grupo::aggregate()->project(_id: 1, nome: 1, itens: 1)->get(),
@@ -60,7 +60,7 @@ class MovimentacaoController extends Controller
   }
 
   public function pagina_de_edicao($id) {
-    return view('editar_movimentacao', [
+    return view('movimentacoes.editar_movimentacao', [
       'movimentacao' => Movimentacao::where('id', $id)->first(),
       //'itens' => Item::all(),
       'itens' => Item::aggregate()->project(_id: 1, nome: 1, disponivel: 1)->get(),
