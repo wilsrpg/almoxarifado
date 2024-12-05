@@ -19,11 +19,8 @@ use App\Http\Controllers\CategoriaController;
 |
 */
 
-Route::get('/', function () {
-    return view('pagina_inicial');
-});
+Route::get('/', function () {return view('pagina_inicial');});
 //Route::get('/pag', Pag::class);
-//Route::get('/postagens/{titulo?}', [PostagemController::class, 'index']);
 
 Route::get('/categorias', [CategoriaController::class, 'index']);
 Route::get('/categorias/nova', [CategoriaController::class, 'pagina_de_criacao']);
