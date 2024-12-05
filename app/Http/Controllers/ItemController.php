@@ -10,6 +10,7 @@ class ItemController extends Controller
 {
   public function index($nome = '')
   {
+    //Item::whereNull('historico_de_movimentacoes')->update(['historico_de_movimentacoes' => []]);
     if ($nome == '')
       return view('itens', ['itens' => Item::all()]);
     else
@@ -28,6 +29,7 @@ class ItemController extends Controller
     $item->anotacoes = $_POST['anotacoes'];
     $item->categoria = $_POST['categoria'] ?? '';
     $item->disponivel = isset($_POST['disponivel']) && $_POST['disponivel'] == 'on';
+    $item->historico_de_movimentacoes = [];
     //echo '<pre>';print_r($item);
     //die();
     $res = $item->save();

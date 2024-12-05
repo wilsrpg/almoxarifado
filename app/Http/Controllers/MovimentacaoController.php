@@ -145,10 +145,10 @@ class MovimentacaoController extends Controller
       'onde_esta' => $movimentacao->tipo == 'Devolução' ? 'Comunidade' : $movimentacao->quem_recebeu
     ]);
     $res = $movimentacao->save();
-    //if ($res) {
-    //  $itensMovUpdate = Item::whereIn('_id', $movimentacao->itens)
-    //    ->push('historico_de_movimentacoes', $movimentacao->id);
-    //}
+    if ($res) {
+      $itensMovUpdate = Item::whereIn('_id', $movimentacao->itens)
+        ->push('historico_de_movimentacoes', $movimentacao->id);
+    }
     if ($movimentacao->tipo == 'Empréstimo')
       return redirect('/')->with('registrou_emprestimo', $res);
     elseif ($movimentacao->tipo == 'Devolução')
