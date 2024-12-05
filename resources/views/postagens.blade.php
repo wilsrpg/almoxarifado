@@ -1,4 +1,4 @@
-<a href="/">Voltar</a>
+<a href="/">Ir para página inicial</a>
 
 @if (isset($postagem))
   <p>Título: {{$postagem->titulo_do_blog}}</p>

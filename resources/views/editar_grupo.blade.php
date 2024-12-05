@@ -1,4 +1,4 @@
-<a href="/">Voltar</a>
+<a href="/">Ir para página inicial</a>
 
 <form action="atualizar_grupo" method="post">
   <p>Nome do grupo: <input type="text" name="nome" value="{{$grupo->nome}}" required></p>

@@ -1,4 +1,4 @@
-<a href="/">Voltar</a>
+<a href="/">Ir para página inicial</a>
 
 @if (isset($grupo))
   <p>Nome: {{$grupo->nome}}</p>

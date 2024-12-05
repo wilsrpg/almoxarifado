@@ -1,4 +1,4 @@
-<a href="/">Voltar</a>
+<a href="/">Ir para página inicial</a>
 
 <form action="registrar_transferencia" method="post">
   <p>Data: <input type="date" name="data" value="<?php echo date('Y-m-d'); ?>"></p>

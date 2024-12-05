@@ -1,4 +1,4 @@
-<a href="/">Voltar</a>
+<a href="/">Ir para página inicial</a>
 
 <form action="cadastrar_item" method="post">
   <p>Nome: <input type="text" name="nome" required></p>

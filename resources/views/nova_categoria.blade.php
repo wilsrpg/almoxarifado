@@ -1,4 +1,4 @@
-<a href="/">Voltar</a>
+<a href="/">Ir para página inicial</a>
 
 <form action="cadastrar_categoria" method="post">
   <p>Nome da categoria: <input type="text" name="nome" required></p>

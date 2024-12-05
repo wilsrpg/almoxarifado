@@ -1,4 +1,4 @@
-<a href="/">Voltar</a>
+<a href="/">Ir para página inicial</a>
 @if ($errors->any())
 {{print_r($errors->all(),true)}}
 @else
