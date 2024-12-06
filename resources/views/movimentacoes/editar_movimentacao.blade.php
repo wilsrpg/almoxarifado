@@ -6,8 +6,8 @@
   <p>ID: {{$movimentacao->id}}</p>
   <p>Data: <input type="date" name="data" value="{{$movimentacao->data}}"></p>
   <p>Hora: <input type="time" name="hora" value="{{$movimentacao->hora}}"></p>
-  <p>Responsável por entregar: <input type="text" name="quem_entregou" value="{{$movimentacao->quem_entregou}}"></p>
-  <p>Responsável por receber: <input type="text" name="quem_recebeu" value="{{$movimentacao->quem_recebeu}}"></p>
+  <p>Responsável por entregar: <input name="quem_entregou" value="{{$movimentacao->quem_entregou}}"></p>
+  <p>Responsável por receber: <input name="quem_recebeu" value="{{$movimentacao->quem_recebeu}}"></p>
   <p>Tipo:
     <select name="tipo" onchange="mudarTipo(event)" required>
       <option value="Empréstimo" {{$movimentacao->tipo == 'Empréstimo' ? 'selected' : ''}}>Empréstimo</option>

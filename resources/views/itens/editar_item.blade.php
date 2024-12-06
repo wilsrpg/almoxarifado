@@ -1,7 +1,7 @@
 <a href="/">Ir para página inicial</a>
 
 <form action="/item/{{$item->id}}/atualizar" method="post">
-  <p>Nome: <input type="text" name="nome" value="{{$item->nome}}" required></p>
+  <p>Nome: <input name="nome" value="{{$item->nome}}" required></p>
   <span style="vertical-align: top;">Anotações: </span>
   <textarea name="anotacoes">{{$item->anotacoes}}</textarea>
   <p>

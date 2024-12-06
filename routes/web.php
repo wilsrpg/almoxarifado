@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Livewire\Pag;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\MovimentacaoController;
-use App\Http\Controllers\CategoriaController;
+
+//use App\Http\Livewire\Pag;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,14 +21,6 @@ use App\Http\Controllers\CategoriaController;
 */
 
 Route::get('/', function () {return view('pagina_inicial');});
-//Route::get('/pag', Pag::class);
-
-Route::get('/categorias', [CategoriaController::class, 'index']);
-Route::get('/categorias/nova', [CategoriaController::class, 'pagina_de_criacao']);
-Route::post('/categorias/criar', [CategoriaController::class, 'criar']);
-Route::get('/categoria/{id}', [CategoriaController::class, 'ver']);
-Route::get('/categoria/{id}/editar', [CategoriaController::class, 'pagina_de_edicao']);
-Route::post('/categoria/{id}/atualizar', [CategoriaController::class, 'atualizar']);
 
 Route::get('/itens', [ItemController::class, 'index']);
 Route::get('/itens/novo', [ItemController::class, 'pagina_de_criacao']);
@@ -35,6 +28,13 @@ Route::post('/itens/criar', [ItemController::class, 'criar']);
 Route::get('/item/{id}', [ItemController::class, 'ver']);
 Route::get('/item/{id}/editar', [ItemController::class, 'pagina_de_edicao']);
 Route::post('/item/{id}/atualizar', [ItemController::class, 'atualizar']);
+
+Route::get('/categorias', [CategoriaController::class, 'index']);
+Route::get('/categorias/nova', [CategoriaController::class, 'pagina_de_criacao']);
+Route::post('/categorias/criar', [CategoriaController::class, 'criar']);
+Route::get('/categoria/{id}', [CategoriaController::class, 'ver']);
+Route::get('/categoria/{id}/editar', [CategoriaController::class, 'pagina_de_edicao']);
+Route::post('/categoria/{id}/atualizar', [CategoriaController::class, 'atualizar']);
 
 Route::get('/grupos', [GrupoController::class, 'index']);
 Route::get('/grupos/novo', [GrupoController::class, 'pagina_de_criacao']);
@@ -49,3 +49,5 @@ Route::post('/movimentacoes/criar', [MovimentacaoController::class, 'criar']);
 Route::get('/movimentacao/{id}', [MovimentacaoController::class, 'ver']);
 Route::get('/movimentacao/{id}/editar', [MovimentacaoController::class, 'pagina_de_edicao']);
 Route::post('/movimentacao/{id}/atualizar', [MovimentacaoController::class, 'atualizar']);
+
+//Route::get('/pag', Pag::class);

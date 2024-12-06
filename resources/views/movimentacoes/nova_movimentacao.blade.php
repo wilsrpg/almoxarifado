@@ -5,8 +5,8 @@
 <form action="/movimentacoes/criar" method="post">
   <p>Data: <input type="date" name="data" value="<?php echo date('Y-m-d'); ?>"></p>
   <p>Hora: <input type="time" name="hora" value="<?php echo date('H:i'); ?>"></p>
-  <p>Responsável por entregar: <input type="text" name="quem_entregou"></p>
-  <p>Responsável por receber: <input type="text" name="quem_recebeu"></p>
+  <p>Responsável por entregar: <input name="quem_entregou"></p>
+  <p>Responsável por receber: <input name="quem_recebeu"></p>
   <p>Tipo:
     <select name="tipo" onchange="mudarTipo(event)" required>
       <option default></option>
@@ -20,8 +20,8 @@
     @if (count($itens))
       <select id="itens" name="itens[]" multiple required disabled>
         @foreach ($itens as $item)
-          <option id="<?= $item['_id'] ?>" value="<?= $item['_id'] ?>" class="<?= $item['disponivel'] ? 'disp' : 'ndisp' ?>">
-            <?= $item['nome'] ?>
+          <option id="{{$item['_id']}}" value="{{$item['_id']}}" class="{{$item['disponivel'] ? 'disp' : 'ndisp'}}">
+            {{$item['nome']}}
           </option>
         @endforeach
       </select>
@@ -32,13 +32,13 @@
     @if (count($grupos))
       <select id="grupos" multiple onchange="atualizarItens(event)" disabled>
         @foreach ($grupos as $grupo)
-          <option value="<?= $grupo['_id'] ?>">
-            <?= $grupo['nome'] ?>
+          <option value="{{$grupo['_id']}}">
+            {{$grupo['nome']}}
           </option>
         @endforeach
       </select>
       @foreach ($grupos as $grupo)
-        <input type=hidden id="<?= $grupo['_id'] ?>" value="<?= implode(',', $grupo['itens']) ?>">
+        <input type=hidden id="{{$grupo['_id']}}" value="{{implode(',', $grupo['itens'])}}">
       @endforeach
     @else
       Não há grupos cadastrados.
@@ -47,13 +47,13 @@
     @if (count($movimentacoes))
       <select id="movimentacoes" multiple onchange="atualizarItens(event)" disabled>
         @foreach ($movimentacoes as $movimentacao)
-          <option value="<?= $movimentacao['_id'] ?>">
-            <?= date_format(date_create($movimentacao['data']), 'd/m/Y') . ' ' . $movimentacao['hora'] ?>
+          <option value="{{$movimentacao['_id']}}">
+            {{date_format(date_create($movimentacao['data']), 'd/m/Y') . ' ' . $movimentacao['hora']}}
           </option>
         @endforeach
       </select>
       @foreach ($movimentacoes as $movimentacao)
-        <input type=hidden id="<?= $movimentacao['_id'] ?>" value="<?= implode(',', $movimentacao['itens']) ?>">
+        <input type=hidden id="{{$movimentacao['_id']}}" value="{{implode(',', $movimentacao['itens'])}}">
       @endforeach
     @else
       Não há movimentações registradas.

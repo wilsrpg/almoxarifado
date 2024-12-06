@@ -1,7 +1,7 @@
 <a href="/">Ir para página inicial</a>
 
 <form action="/grupos/criar" method="post">
-  <p>Nome do grupo: <input type="text" name="nome" required></p>
+  <p>Nome do grupo: <input name="nome" required></p>
   <span style="vertical-align: top;">Anotações: </span>
   <textarea name="anotacoes"></textarea>
   <p>

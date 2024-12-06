@@ -1,7 +1,7 @@
 <a href="/">Ir para página inicial</a>
 
 <form action="/itens/criar" method="post">
-  <p>Nome: <input type="text" name="nome" required></p>
+  <p>Nome: <input name="nome" required></p>
   <span style="vertical-align: top;">Anotações: </span>
   <textarea name="anotacoes"></textarea>
   <p>
