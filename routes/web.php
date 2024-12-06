@@ -7,7 +7,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\MovimentacaoController;
 
-//use App\Http\Livewire\Pag;
+use App\Http\Livewire\Pag;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,4 +50,4 @@ Route::get('/movimentacao/{id}', [MovimentacaoController::class, 'ver']);
 Route::get('/movimentacao/{id}/editar', [MovimentacaoController::class, 'pagina_de_edicao']);
 Route::post('/movimentacao/{id}/atualizar', [MovimentacaoController::class, 'atualizar']);
 
-//Route::get('/pag', Pag::class);
+Route::get('/pag', Pag::class);
