@@ -1,7 +1,7 @@
-<a href="/">Ir para página inicial</a>
-@if ($errors->any())
-{{print_r($errors->all(),true)}}
-@else
+@extends('layouts.layout')
+@section('titulo', 'Editando movimentação: '.$movimentacao->nome.' - Almoxarifado')
+@section('conteudo')
+
 <form action="/movimentacao/{{$movimentacao->id}}/atualizar" method="post">
   <p>ID: {{$movimentacao->id}}</p>
   <p>Data: <input type="date" name="data" value="{{$movimentacao->data}}"></p>
@@ -86,7 +86,6 @@
   @csrf
   <input type="submit" value="Salvar">
 </form>
-@endif
 
 <script>
   function mudarTipo(e) {
@@ -124,3 +123,5 @@
     });
   }
 </script>
+
+@endsection

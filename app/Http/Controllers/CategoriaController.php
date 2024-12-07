@@ -12,7 +12,7 @@ class CategoriaController extends Controller
   }
 
   public function ver($id) {
-    return view('categorias.categorias', ['categoria' => Categoria::where('id', $id)->first()]);
+    return view('categorias.categoria', ['categoria' => Categoria::where('id', $id)->first()]);
   }
 
   public function pagina_de_criacao() {

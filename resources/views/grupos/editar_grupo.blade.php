@@ -1,4 +1,6 @@
-<a href="/">Ir para página inicial</a>
+@extends('layouts.layout')
+@section('titulo', 'Editando grupo: '.$grupo->nome.' - Almoxarifado')
+@section('conteudo')
 
 <form action="/grupo/{{$grupo->id}}/atualizar" method="post">
   <p>Nome do grupo: <input name="nome" value="{{$grupo->nome}}" required></p>
@@ -23,3 +25,5 @@
   @csrf
   <input type="submit" value="Salvar">
 </form>
+
+@endsection

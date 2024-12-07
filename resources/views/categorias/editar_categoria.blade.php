@@ -1,4 +1,6 @@
-<a href="/">Ir para página inicial</a>
+@extends('layouts.layout')
+@section('titulo', 'Editando categoria: '.$categoria->nome.' - Almoxarifado')
+@section('conteudo')
 
 <form action="/categoria/{{$categoria->id}}/atualizar" method="post">
   <p>Nome da categoria: <input name="nome" value="{{$categoria->nome}}" required></p>
@@ -9,3 +11,5 @@
   @csrf
   <input type="submit" value="Salvar">
 </form>
+
+@endsection

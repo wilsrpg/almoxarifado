@@ -18,7 +18,7 @@ class GrupoController extends Controller
   public function ver($id) {
     $grupo = Grupo::where('id', $id)->first();
     $grupo->itens = Item::whereIn('_id', $grupo->itens)->get();
-    return view('grupos.grupos', ['grupo' => $grupo]);
+    return view('grupos.grupo', ['grupo' => $grupo]);
   }
 
   public function pagina_de_criacao() {

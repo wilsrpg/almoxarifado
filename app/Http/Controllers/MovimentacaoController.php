@@ -23,7 +23,7 @@ class MovimentacaoController extends Controller
   public function ver($id) {
     $movimentacao = Movimentacao::where('id', $id)->first();
     $movimentacao->itens = Item::whereIn('_id', $movimentacao->itens)->get();
-    return view('movimentacoes.movimentacoes', ['movimentacao' => $movimentacao]);
+    return view('movimentacoes.movimentacao', ['movimentacao' => $movimentacao]);
   }
   
   public function pagina_de_criacao() {

@@ -1,4 +1,6 @@
-<a href="/">Ir para página inicial</a>
+@extends('layouts.layout')
+@section('titulo', 'Editando item: '.$item->nome.' - Almoxarifado')
+@section('conteudo')
 
 <form action="/item/{{$item->id}}/atualizar" method="post">
   <p>Nome: <input name="nome" value="{{$item->nome}}" required></p>
@@ -24,3 +26,5 @@
   @csrf
   <input type="submit" value="Salvar">
 </form>
+
+@endsection

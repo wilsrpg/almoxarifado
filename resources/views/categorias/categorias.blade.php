@@ -1,18 +1,15 @@
-<a href="/">Ir para página inicial</a>
+@extends('layouts.layout')
+@section('titulo', 'Categorias - Almoxarifado')
+@section('conteudo')
 
-@if (isset($categoria))
-  <p>Nome: {{$categoria->nome}}</p>
-  <p>Anotações: <br><pre>{{$categoria->anotacoes}}</pre></p>
-  <a href="/categoria/{{$categoria->id}}/editar">Editar</a>
-
-@elseif (isset($categorias) && count($categorias) > 0)
-{{--@elseif (!empty($categorias))--}}
-  <p>{{count($categorias) . (count($categorias) > 1 ? ' categorias:' : ' categoria:')}}</p>
+@if (count($categorias) > 0)
+  <p>{{count($categorias) . ' categoria' . (count($categorias) > 1 ? 's' : '')}}</p>
   @foreach ($categorias as $categoria)
-    <p>Nome: <a href="/categoria/{{$categoria->id}}">{{$categoria->nome}}</a></p>
-    <p>Anotações: {{$categoria->anotacoes}}</p>
+    <livewire:ver-categoria :categoria="$categoria" :link="true" />
     <br>
   @endforeach
 @else
   <p>Nenhuma categoria.</p>
 @endif
+
+@endsection

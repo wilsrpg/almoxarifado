@@ -1,4 +1,6 @@
-<a href="/">Ir para página inicial</a>
+@extends('layouts.layout')
+@section('titulo', 'Novo grupo - Almoxarifado')
+@section('conteudo')
 
 <form action="/grupos/criar" method="post">
   <p>Nome do grupo: <input name="nome" required></p>
@@ -20,3 +22,5 @@
   @csrf
   <input type="submit" value="Cadastrar">
 </form>
+
+@endsection

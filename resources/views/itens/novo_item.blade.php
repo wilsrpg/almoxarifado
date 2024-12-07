@@ -1,4 +1,6 @@
-<a href="/">Ir para página inicial</a>
+@extends('layouts.layout')
+@section('titulo', 'Novo item - Almoxarifado')
+@section('conteudo')
 
 <form action="/itens/criar" method="post">
   <p>Nome: <input name="nome" required></p>
@@ -21,3 +23,5 @@
   @csrf
   <input type="submit" value="Cadastrar">
 </form>
+
+@endsection

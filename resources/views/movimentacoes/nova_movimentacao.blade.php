@@ -1,7 +1,7 @@
-<a href="/">Ir para página inicial</a>
-@if ($errors->any())
-{{print_r($errors->all(),true)}}
-@else
+@extends('layouts.layout')
+@section('titulo', 'Nova movimentação - Almoxarifado')
+@section('conteudo')
+
 <form action="/movimentacoes/criar" method="post">
   <p>Data: <input type="date" name="data" value="<?php echo date('Y-m-d'); ?>"></p>
   <p>Hora: <input type="time" name="hora" value="<?php echo date('H:i'); ?>"></p>
@@ -66,7 +66,6 @@
   @csrf
   <input type="submit" value="Registrar">
 </form>
-@endif
 
 <script>
   function mudarTipo(e) {
@@ -126,3 +125,5 @@
     });
   }
 </script>
+
+@endsection

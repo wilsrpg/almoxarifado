@@ -50,7 +50,7 @@ class ItemController extends Controller
     //print_r($item->grupos);
     //die();
     //$item->categoria = Categoria::where('id', $id)->first();
-    return view('itens.itens', ['item' => Item::where('id', $id)->first()]);
+    return view('itens.item', ['item' => Item::where('id', $id)->first()]);
   }
 
   public function pagina_de_criacao() {
