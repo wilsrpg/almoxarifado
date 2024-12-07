@@ -6,7 +6,7 @@
   <p>Nome do grupo: <input name="nome" required></p>
   <span style="vertical-align: top;">Anotações: </span>
   <textarea name="anotacoes"></textarea>
-  <p>
+  {{--<p>
     <span style="vertical-align: top;">Itens: </span>
     @if (count($itens))
       <select name="itens[]" multiple>
@@ -17,8 +17,11 @@
     @else
       Não há itens cadastrados.
     @endif
-  </p>
-  {{--<p>Disponível: <input type="checkbox" name="disponivel" checked></p>--}}
+  </p>--}}
+  <p>Itens adicionados:</p>
+  <livewire:conjunto-de-itens />
+  <p>Todos os itens:</p>
+  <livewire:conjunto-de-itens :itens="$itens" />
   @csrf
   <input type="submit" value="Cadastrar">
 </form>

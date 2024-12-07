@@ -22,7 +22,7 @@ class GrupoController extends Controller
   }
 
   public function pagina_de_criacao() {
-    return view('grupos.novo_grupo', ['itens' => Item::aggregate()->project(_id: 1, nome: 1)->get()]);
+    return view('grupos.novo_grupo', ['itens' => Item::all()]);
   }
 
   public function criar() {
@@ -47,7 +47,7 @@ class GrupoController extends Controller
   public function pagina_de_edicao($id) {
     return view('grupos.editar_grupo', [
       'grupo' => Grupo::where('id', $id)->first(),
-      'itens' => Item::aggregate()->project(_id: 1, nome: 1)->get()
+      'itens' => Item::all()
     ]);
   }
 
