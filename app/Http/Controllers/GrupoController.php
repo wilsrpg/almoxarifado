@@ -30,13 +30,16 @@ class GrupoController extends Controller
     $grupo->nome = $_POST['nome'];
     $grupo->anotacoes = $_POST['anotacoes'];
     //$grupo->categoria = $_POST['categoria'];
-    $itens = [];
-    if (isset($_POST['itens'])) {
-      $itens_db = Item::whereIn('_id', $_POST['itens'])->project(['_id' => 1])->get();
-      foreach ($itens_db as $item)
-        array_push($itens, $item->id);
-    }
-    $grupo->itens = $itens;
+    $grupo->itens = explode(',', $_POST['itens']);
+    //var_dump($grupo->itens);
+    //die();
+    //$itens = [];
+    //if (isset($_POST['itens'])) {
+    //  $itens_db = Item::whereIn('_id', $_POST['itens'])->project(['_id' => 1])->get();
+    //  foreach ($itens_db as $item)
+    //    array_push($itens, $item->id);
+    //}
+    //$grupo->itens = $itens;
     //print_r($grupo->itens);
     //die();
     $res = $grupo->save();

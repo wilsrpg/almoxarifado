@@ -18,10 +18,16 @@
       Não há itens cadastrados.
     @endif
   </p>--}}
-  <p>Itens adicionados:</p>
-  <livewire:conjunto-de-itens />
-  <p>Todos os itens:</p>
-  <livewire:conjunto-de-itens :itens="$itens" />
+  <div style="display: flex">
+    <div>
+      <p>Itens adicionados:</p>
+      <livewire:conjunto-de-itens :nome="'itens-do-grupo'" name="itens" />
+    </div>
+    <div>
+      <p>Todos os itens:</p>
+      <livewire:conjunto-de-itens :itens="$itens" :tipo="'envio'" :destino="'itens-do-grupo'" :texto_botao="'<'" />
+    </div>
+  </div>
   @csrf
   <input type="submit" value="Cadastrar">
 </form>
