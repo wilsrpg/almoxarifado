@@ -58,7 +58,7 @@
         @endforeach
       </select>
       @foreach ($grupos as $grupo)
-        <input type=hidden id="{{$grupo['_id']}}" value="{{implode(',', $grupo['itens'])}}">
+        <input type="hidden" id="{{$grupo['_id']}}" value="{{implode(',', $grupo['itens'])}}">
       @endforeach
     @else
       Não há grupos cadastrados.
@@ -73,7 +73,7 @@
         @endforeach
       </select>
       @foreach ($movimentacoes as $mov)
-        <input type=hidden id="{{$mov['_id']}}" value="{{implode(',', $mov['itens'])}}">
+        <input type="hidden" id="{{$mov['_id']}}" value="{{implode(',', $mov['itens'])}}">
       @endforeach
     @else
       Não há movimentações registradas.
