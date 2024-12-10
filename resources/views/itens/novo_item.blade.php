@@ -19,7 +19,7 @@
       Não há categorias cadastradas.
     @endif
   </p>
-  <p>Disponível: <input type="checkbox" name="disponivel" checked></p>
+  {{--<p>Disponível: <input type="checkbox" name="disponivel" checked></p>--}}
   @csrf
   <input type="submit" value="Cadastrar">
 </form>

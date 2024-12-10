@@ -62,12 +62,15 @@ class ItemController extends Controller
     //die();
     $item = new Item;
     $item->nome = $_POST['nome'];
+    //$item->anotacoes = str_replace(chr(13), '', $_POST['anotacoes']);
     $item->anotacoes = $_POST['anotacoes'];
     $categoria = (object)['id' => '', 'nome' => ''];
     if ($_POST['categoria'])
       $categoria = Categoria::where('id', $_POST['categoria'])->first();
     $item->categoria = ['id' => $categoria->id, 'nome' => $categoria->nome];
-    $item->disponivel = isset($_POST['disponivel']) && $_POST['disponivel'] == 'on';
+    //$item->disponivel = isset($_POST['disponivel']) && $_POST['disponivel'] == 'on';
+    $item->disponivel = true;
+    $item->onde_esta = 'Comunidade';
     $item->historico_de_movimentacoes = [];
     //echo '<pre>';print_r($item);
     //die();
@@ -84,6 +87,12 @@ class ItemController extends Controller
   public function atualizar($id) {
     $item = Item::where('id', $id)->first();
     $item->nome = $_POST['nome'];
+    //$item->anotacoes = $_POST['anotacoes'];
+    //echo ord(str_split($_POST['anotacoes'])[2]);
+    //echo chr(98);
+    //die();
+    //$item->anotacoes = str_replace(chr(13).chr(10), '', $_POST['anotacoes']); //chr(10) = caractere '\n', q eh adicionado com novas linhas na tag <textarea>
+    //$item->anotacoes = str_replace(chr(13), '', $item->anotacoes); //chr(13) = caractere '\r', q eh adicionado com novas linhas na tag <textarea>
     $item->anotacoes = $_POST['anotacoes'];
     $categoria = (object)['id' => '', 'nome' => ''];
     if ($_POST['categoria'])
