@@ -1,4 +1,4 @@
-<ul>
+<ul class="lista-de-itens">
   {{--<input type="hidden" name="{{$name}}" value="{{$itens_do_grupo->implode('id',',')}}">--}}
   <input type="hidden" name="{{$name}}"
     value="{{implode(',', array_map(function($i){ return $i['id']; }, $itens_do_grupo))}}"

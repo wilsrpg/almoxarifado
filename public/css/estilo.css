@@ -1,0 +1,7 @@
+.lista-de-itens {
+  overflow: auto;
+  height: 50vh;
+}
+.lista-de-itens li {
+  list-style-type: none;
+}
