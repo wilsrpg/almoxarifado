@@ -5,8 +5,8 @@
   >
   @foreach ($itens_do_grupo as $item)
     <li>
-      <button type="button" onclick="this.disabled = true" wire:click="remover('{{$item['id']}}')"
-      >x</button> {{$item['nome']}}
+      <button type="button" onclick="this.disabled = true" wire:click="remover('{{$item['id']}}')">x</button>
+      {{$item['nome']}}
     </li>
   @endforeach
 </ul>

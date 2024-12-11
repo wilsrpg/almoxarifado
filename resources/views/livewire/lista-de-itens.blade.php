@@ -1,9 +1,10 @@
 <ul>
   @foreach ($lista_de_itens as $key => $item)
     <li>
-      <button type="button" onclick="this.disabled = true" wire:click="enviar('{{$item['id']}}')"
-        {{$enviados[$key] ? 'disabled' : ''}}
-      ><</button> {{$item['nome']}}
+      <button type="button" onclick="this.disabled = true" {{$enviados[$key] ? 'disabled' : ''}}
+        wire:click="enviar('{{$item['id']}}')"
+      ><</button>
+      {{$item['nome']}}
     </li>
   @endforeach
 </ul>
