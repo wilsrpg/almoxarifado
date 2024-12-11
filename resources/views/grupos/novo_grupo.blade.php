@@ -25,7 +25,7 @@
     </div>
     <div>
       <p>Todos os itens:</p>
-      <livewire:conjunto-de-itens :itens="$itens" :tipo="'envio'" :destino="'itens-do-grupo'" :texto_botao="'<'" />
+      <livewire:lista-de-itens :lista_de_itens="$itens" :destino="'itens-do-grupo'" />
     </div>
   </div>
   @csrf

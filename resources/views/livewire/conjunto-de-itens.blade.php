@@ -1,18 +1,12 @@
 <ul>
-  {{--<input type="hidden" name="{{$name}}" value="{{$itens->implode('id',',')}}">--}}
+  {{--<input type="hidden" name="{{$name}}" value="{{$itens_do_grupo->implode('id',',')}}">--}}
   <input type="hidden" name="{{$name}}"
-    value="{{implode(',', array_map(function($i){ return $i['id']; }, $itens))}}"
+    value="{{implode(',', array_map(function($i){ return $i['id']; }, $itens_do_grupo))}}"
   >
-  @foreach ($itens as $indice => $item)
+  @foreach ($itens_do_grupo as $item)
     <li>
-      <button type="button" onclick="this.disabled = true" title="{{print_r($item['anotacoes'],true)}}"
-        {{isset($item['enviado']) ? 'disabled' : ''}}
-        @if ($tipo == 'envio')
-          wire:click="enviar('{{json_encode($item)}}', '{{$destino}}', {{$indice}})"
-        @else
-          wire:click="remover('{{$item['id']}}')"
-        @endif
-      >{{$texto_botao}}</button> {{print_r(str_replace(chr(13), '\\u000d', str_replace(chr(10), '\\u000a', json_encode($item['anotacoes']))),true)}}
+      <button type="button" onclick="this.disabled = true" wire:click="remover('{{$item['id']}}')"
+      >x</button> {{$item['nome']}}
     </li>
   @endforeach
 </ul>
