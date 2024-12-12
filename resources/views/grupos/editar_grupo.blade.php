@@ -8,20 +8,21 @@
     <span style="vertical-align: top;">Anotações: </span>
     <textarea name="anotacoes">{{$grupo->anotacoes}}</textarea>
   </p>
-  <p>
-    <span style="vertical-align: top;">Itens: </span>
-    @if (count($itens))
-      <select name="itens[]" multiple>
-        @foreach ($itens as $item)
-          <option value="{{$item['_id']}}" {{array_search($item['_id'], $grupo['itens']) !== false ? 'selected' : ''}}>
-            {{$item['nome']}}
-          </option>
-        @endforeach
-      </select>
-    @else
-      Não há itens cadastrados.
-    @endif
-  </p>
+  <div style="display: flex">
+    <div>
+      <p>Itens adicionados:</p>
+      <?php
+        $itens_do_grupo = [];
+        foreach ($grupo->itens as $it)
+          $itens_do_grupo[] = $itens->find($it);
+      ?>
+      <livewire:conjunto-de-itens :itens_do_grupo="$itens_do_grupo" :nome="'itens-do-grupo'" name="itens" />
+    </div>
+    <div>
+      <p>Todos os itens:</p>
+      <livewire:lista-de-itens :lista_de_itens="$itens" :destino="'itens-do-grupo'" />
+    </div>
+  </div>
   @csrf
   <input type="submit" value="Salvar">
 </form>
