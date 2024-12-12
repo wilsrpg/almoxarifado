@@ -3,6 +3,8 @@
 @section('conteudo')
 
 <form action="/item/{{$item->id}}/atualizar" method="post">
+  @csrf
+  @method('PUT')
   <p>Nome: <input name="nome" value="{{$item->nome}}" required></p>
   <span style="vertical-align: top;">Anotações: </span>
   <textarea name="anotacoes">{{$item->anotacoes}}</textarea>
@@ -23,7 +25,6 @@
   </p>
   <p>Disponível: <input type="checkbox" name="disponivel" {{$item->disponivel ? 'checked' : ''}} disabled></p>
   <p>Onde está: <input value="{{$item->onde_esta}}" disabled></p>
-  @csrf
   <input type="submit" value="Salvar">
 </form>
 

@@ -3,6 +3,8 @@
 @section('conteudo')
 
 <form action="/grupo/{{$grupo->id}}/atualizar" method="post">
+  @csrf
+  @method('PUT')
   <p>Nome do grupo: <input name="nome" value="{{$grupo->nome}}" required></p>
   <p>
     <span style="vertical-align: top;">Anotações: </span>
@@ -23,7 +25,6 @@
       <livewire:lista-de-itens :lista_de_itens="$itens" :destino="'itens-do-grupo'" />
     </div>
   </div>
-  @csrf
   <input type="submit" value="Salvar">
 </form>
 

@@ -3,6 +3,8 @@
 @section('conteudo')
 
 <form action="/movimentacao/{{$movimentacao->id}}/atualizar" method="post">
+  @csrf
+  @method('PUT')
   <p>ID: {{$movimentacao->id}}</p>
   <p>Data: <input type="date" name="data" value="{{$movimentacao->data}}"></p>
   <p>Hora: <input type="time" name="hora" value="{{$movimentacao->hora}}"></p>
@@ -83,7 +85,6 @@
     <span style="vertical-align: top;">Anotações: </span>
     <textarea name="anotacoes">{{$movimentacao->anotacoes}}</textarea>
   </p>
-  @csrf
   <input type="submit" value="Salvar">
 </form>
 
