@@ -10,14 +10,23 @@ class GrupoController extends Controller
 {
   public function index() {
     $grupos = Grupo::all();
-    foreach ($grupos as $grupo)
-      $grupo->itens = Item::whereIn('_id', $grupo->itens)->get();
+    foreach ($grupos as $grupo) {
+      $itens_db = Item::whereIn('_id', $grupo->itens)->get();
+      $itens_em_ordem = [];
+      foreach ($grupo->itens as $it)
+        $itens_em_ordem[] = $itens_db->find($it);
+      $grupo->itens = $itens_em_ordem;
+    }
     return view('grupos.grupos', ['grupos' => $grupos]);
   }
 
   public function ver($id) {
     $grupo = Grupo::where('id', $id)->first();
-    $grupo->itens = Item::whereIn('_id', $grupo->itens)->get();
+    $itens_db = Item::whereIn('_id', $grupo->itens)->get();
+    $itens_em_ordem = [];
+    foreach ($grupo->itens as $it)
+      $itens_em_ordem[] = $itens_db->find($it);
+    $grupo->itens = $itens_em_ordem;
     return view('grupos.grupo', ['grupo' => $grupo]);
   }
 
@@ -31,17 +40,6 @@ class GrupoController extends Controller
     $grupo->anotacoes = $_POST['anotacoes'];
     //$grupo->categoria = $_POST['categoria'];
     $grupo->itens = explode(',', $_POST['itens']);
-    //var_dump($grupo->itens);
-    //die();
-    //$itens = [];
-    //if (isset($_POST['itens'])) {
-    //  $itens_db = Item::whereIn('_id', $_POST['itens'])->project(['_id' => 1])->get();
-    //  foreach ($itens_db as $item)
-    //    array_push($itens, $item->id);
-    //}
-    //$grupo->itens = $itens;
-    //print_r($grupo->itens);
-    //die();
     $res = $grupo->save();
     //return redirect('/')->with('cadastrou_grupo', $res);
     return redirect('/')->with('mensagem', 'Grupo cadastrado com sucesso.');
@@ -58,13 +56,7 @@ class GrupoController extends Controller
     $grupo = Grupo::where('id', $id)->first();
     $grupo->nome = $_POST['nome'];
     $grupo->anotacoes = $_POST['anotacoes'];
-    $itens = [];
-    if (isset($_POST['itens'])) {
-      $itens_db = Item::whereIn('_id', $_POST['itens'])->project(['_id' => 1])->get();
-      foreach ($itens_db as $item)
-        array_push($itens, $item->id);
-    }
-    $grupo->itens = $itens;
+    $grupo->itens = explode(',', $_POST['itens']);
     $res = $grupo->save();
     //return redirect('/')->with('atualizou_grupo', $res);
     return redirect('/')->with('mensagem', 'Grupo atualizado com sucesso.');
