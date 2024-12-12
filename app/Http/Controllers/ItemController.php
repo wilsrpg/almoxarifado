@@ -104,7 +104,7 @@ class ItemController extends Controller
   }
 
   public function excluir($id) {
-    $res = Item::where('id', $id)->first()->delete();
+    $res = Item::where('id', $id)->update(['deletado' => true]);
     return redirect('/')->with('mensagem', 'Item excluído com sucesso.');
   }
 }

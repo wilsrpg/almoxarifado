@@ -63,7 +63,7 @@ class GrupoController extends Controller
   }
 
   public function excluir($id) {
-    $res = Grupo::where('id', $id)->first()->delete();
+    $res = Grupo::where('id', $id)->update(['deletado' => true]);
     return redirect('/')->with('mensagem', 'Grupo excluído com sucesso.');
   }
 }

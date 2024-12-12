@@ -42,7 +42,8 @@ class CategoriaController extends Controller
   }
 
   public function excluir($id) {
-    $res = Categoria::where('id', $id)->first()->delete();
+    //$res = Categoria::where('id', $id)->first()->delete();
+    $res = Categoria::where('id', $id)->update(['deletado' => true]);
     return redirect('/')->with('mensagem', 'Categoria excluída com sucesso.');
   }
 }

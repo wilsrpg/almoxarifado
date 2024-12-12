@@ -160,7 +160,7 @@ class MovimentacaoController extends Controller
     }
 
     $genero = $movimentacao->tipo == 'Empréstimo' ? 'o' : 'a';
-    $res = $movimentacao->delete();
+    $res = $movimentacao->update(['deletado' => true]);
     return redirect('/')->with('mensagem', $movimentacao->tipo.' excluíd'.$genero.' com sucesso.');
   }
 }
