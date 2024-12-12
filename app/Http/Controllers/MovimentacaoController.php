@@ -13,7 +13,14 @@ class MovimentacaoController extends Controller
     //Movimentacao::where('id', '6751ef9d515ffcbb02070017')->push('itens', '6751e467515ffcbb02070013');
     //Movimentacao::where('tipo', 'devolucao')->update(['tipo' => 'Devolução']);
     //Movimentacao::where('responsavel', 'eu')->where('tipo', 'Devolução')->update(['quem_recebeu' => 'eu']);
+    //Movimentacao::whereNull('quem_recebeu')->update(['quem_recebeu' => '']);
+    //Movimentacao::whereNull('quem_entregou')->update(['quem_entregou' => '']);
+    //$respons = Movimentacao::where('responsavel', 'like', '%')->get();
+    //$respons = Movimentacao::whereNot('responsavel', 'like', 'eu')->get();
+    //$respons = Movimentacao::where('responsavel', 'like', '%')->update(['$unset' => ['responsavel' => 1]]);
     //Movimentacao::where('responsavel', 'eu')->where('tipo', 'Empréstimo')->update(['quem_entregou' => 'eu']);
+    //echo '<pre>';
+    //print_r($respons);die();
     $movimentacoes = Movimentacao::all();
     foreach ($movimentacoes as $movimentacao)
       $movimentacao->itens = Item::whereIn('_id', $movimentacao->itens)->get();
@@ -80,8 +87,6 @@ class MovimentacaoController extends Controller
     $movimentacao->quem_recebeu = $req->quem_recebeu;
     $movimentacao->anotacoes = $req->anotacoes;
     $movimentacao->tipo = $req->tipo;
-    //implementar histórico de item e, caso haja alteração de item na movimentação,
-    //retornar campos 'disponivel' e 'onde_esta' pros valores anteriores
     $ids_dos_itens_removidos = array_intersect($movimentacao->itens, array_diff($movimentacao->itens, $req->itens));
     $itens_removidos = Item::whereIn('id', $ids_dos_itens_removidos)->get();
     if (count($itens_removidos)) {
@@ -92,8 +97,7 @@ class MovimentacaoController extends Controller
         //print_r($item->historico_de_movimentacoes);
         //die();
         if (count($histmovitem)) {
-          $movimentacao_anterior = Movimentacao::where('id', end($histmovitem))
-            ->project(quem_recebeu: 1, tipo: 1)->first();
+          $movimentacao_anterior = Movimentacao::where('id', end($histmovitem))->first();
           $item->disponivel = $movimentacao_anterior->tipo == 'Devolução';
           $item->onde_esta = $movimentacao_anterior->tipo == 'Devolução' ? 'Comunidade'
             : $movimentacao_anterior->quem_recebeu;
@@ -126,5 +130,37 @@ class MovimentacaoController extends Controller
     $res = $movimentacao->save();
     $genero = $movimentacao->tipo == 'Empréstimo' ? 'o' : 'a';
     return redirect('/')->with('mensagem', $movimentacao->tipo.' atualizad'.$genero.' com sucesso.');
+  }
+
+  public function excluir($id) {
+    $movimentacao = Movimentacao::where('id', $id)->first();
+    
+    $itens_removidos = Item::whereIn('id', $movimentacao->itens)->get();
+    //echo '<pre>';
+    //print_r(count($itens_removidos));
+    //die();
+    if (count($itens_removidos)) {
+      foreach ($itens_removidos as $item) {
+        $histmovitem = $item->historico_de_movimentacoes;
+        array_pop($histmovitem);
+        $item->historico_de_movimentacoes = $histmovitem;
+        //print_r($item->historico_de_movimentacoes);
+        //die();
+        if (count($histmovitem)) {
+          $movimentacao_anterior = Movimentacao::where('id', end($histmovitem))->first();
+          $item->disponivel = $movimentacao_anterior->tipo == 'Devolução';
+          $item->onde_esta = $movimentacao_anterior->tipo == 'Devolução' ? 'Comunidade'
+            : $movimentacao_anterior->quem_recebeu;
+        } else {
+          $item->disponivel = true;
+          $item->onde_esta = 'Comunidade';
+        }
+        $item->save();
+      }
+    }
+
+    $genero = $movimentacao->tipo == 'Empréstimo' ? 'o' : 'a';
+    $res = $movimentacao->delete();
+    return redirect('/')->with('mensagem', $movimentacao->tipo.' excluíd'.$genero.' com sucesso.');
   }
 }
