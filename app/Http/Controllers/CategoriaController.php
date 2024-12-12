@@ -40,4 +40,9 @@ class CategoriaController extends Controller
     //return redirect('/')->with('atualizou_categoria', $res);
     return redirect('/')->with('mensagem', 'Categoria atualizada com sucesso.');
   }
+
+  public function excluir($id) {
+    $res = Categoria::where('id', $id)->first()->delete();
+    return redirect('/')->with('mensagem', 'Categoria excluída com sucesso.');
+  }
 }

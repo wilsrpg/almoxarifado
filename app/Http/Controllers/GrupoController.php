@@ -61,4 +61,9 @@ class GrupoController extends Controller
     //return redirect('/')->with('atualizou_grupo', $res);
     return redirect('/')->with('mensagem', 'Grupo atualizado com sucesso.');
   }
+
+  public function excluir($id) {
+    $res = Grupo::where('id', $id)->first()->delete();
+    return redirect('/')->with('mensagem', 'Grupo excluído com sucesso.');
+  }
 }

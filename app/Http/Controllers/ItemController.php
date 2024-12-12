@@ -102,4 +102,9 @@ class ItemController extends Controller
     //return redirect('/')->with('atualizou_item', $res);
     return redirect('/')->with('mensagem', 'Item atualizado com sucesso.');
   }
+
+  public function excluir($id) {
+    $res = Item::where('id', $id)->first()->delete();
+    return redirect('/')->with('mensagem', 'Item excluído com sucesso.');
+  }
 }
