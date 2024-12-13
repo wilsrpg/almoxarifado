@@ -33,9 +33,9 @@ class ListaDeItens extends Component
   //}
 
   #[On('atualizar-itens-enviados')]
-  public function atualizar($ids_dos_itens_do_grupo) {
+  public function atualizar($ids_dos_itens_do_conjunto) {
     for ($i=0; $i < count($this->lista_de_itens); $i++) {
-      $this->enviados[$i] = array_search($this->lista_de_itens[$i]['id'], $ids_dos_itens_do_grupo) !== false;
+      $this->enviados[$i] = array_search($this->lista_de_itens[$i]['id'], $ids_dos_itens_do_conjunto) !== false;
     }
   }
 }

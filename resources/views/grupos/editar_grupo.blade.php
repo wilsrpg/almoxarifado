@@ -14,11 +14,11 @@
     <div>
       <p>Itens adicionados:</p>
       <?php
-        $itens_do_grupo = [];
+        $itens_do_conjunto = [];
         foreach ($grupo->itens as $it)
-          $itens_do_grupo[] = $itens->find($it);
+          $itens_do_conjunto[] = $itens->find($it);
       ?>
-      <livewire:conjunto-de-itens :itens_do_grupo="$itens_do_grupo" :nome="'itens-do-grupo'" name="itens" />
+      <livewire:conjunto-de-itens :itens_do_conjunto="$itens_do_conjunto" :nome="'itens-do-grupo'" name="itens" />
     </div>
     <div>
       <p>Todos os itens:</p>
