@@ -39,7 +39,8 @@ class GrupoController extends Controller
     $grupo->nome = $_POST['nome'];
     $grupo->anotacoes = $_POST['anotacoes'];
     //$grupo->categoria = $_POST['categoria'];
-    $grupo->itens = explode(',', $_POST['itens']);
+    //$grupo->itens = explode(',', $_POST['itens']);
+    $grupo->itens = $_POST['itens'];
     $res = $grupo->save();
     //return redirect('/')->with('cadastrou_grupo', $res);
     return redirect('/')->with('mensagem', 'Grupo cadastrado com sucesso.');
@@ -56,7 +57,8 @@ class GrupoController extends Controller
     $grupo = Grupo::where('id', $id)->first();
     $grupo->nome = $_POST['nome'];
     $grupo->anotacoes = $_POST['anotacoes'];
-    $grupo->itens = explode(',', $_POST['itens']);
+    //$grupo->itens = explode(',', $_POST['itens']);
+    $grupo->itens = $_POST['itens'];
     $res = $grupo->save();
     //return redirect('/')->with('atualizou_grupo', $res);
     return redirect('/')->with('mensagem', 'Grupo atualizado com sucesso.');
