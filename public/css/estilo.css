@@ -1,7 +1,15 @@
 .lista-de-itens {
+  padding: 0;
   overflow: auto;
   height: 50vh;
 }
 .lista-de-itens li {
   list-style-type: none;
+}
+
+.cinza {
+  color: gray;
+}
+.vermelho {
+  color: red;
 }
