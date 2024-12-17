@@ -45,7 +45,10 @@ class MovimentacaoController extends Controller
     return view('movimentacoes.movimentacao', ['movimentacao' => $movimentacao]);
   }
 
-  public function pagina_de_criacao() {
+  public function pagina_de_criacao($id = null) {
+    $movimentacao = [];
+    if ($id)
+      $movimentacao = Movimentacao::where('id', $id)->first();
     return view('movimentacoes.nova_movimentacao', [
       //'itens' => Item::all(),
       'itens' => Item::all(),
@@ -53,6 +56,7 @@ class MovimentacaoController extends Controller
       'grupos' => Grupo::all(),
       //'movimentacoes' => Movimentacao::all()
       'movimentacoes' => Movimentacao::aggregate()->project(_id: 1, data: 1, hora: 1, itens: 1)->get(),
+      'movimentacao' => $movimentacao
     ]);
   }
 

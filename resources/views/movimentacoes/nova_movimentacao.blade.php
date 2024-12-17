@@ -10,7 +10,15 @@
   <p>Responsável por receber: <input name="quem_recebeu"></p>
   <livewire:tipo-da-movimentacao />
   <div style="display: flex">
+    <?php
+      $itens_do_conjunto = [];
+      if ($movimentacao)
+        foreach ($movimentacao->itens as $it)
+          $itens_do_conjunto[] = $itens->find($it);
+      //echo '<pre>';print_r($movimentacao->itens);die();
+    ?>
     <livewire:conjunto-de-itens
+      :itens_do_conjunto="$itens_do_conjunto"
       :nome="'itens-da-movimentacao'"
       :name="'itens[]'"
     />
