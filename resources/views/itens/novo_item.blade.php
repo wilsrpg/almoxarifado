@@ -3,9 +3,8 @@
 @section('conteudo')
 
 <form action="/itens/criar" method="post">
+  @csrf
   <p>Nome: <input name="nome" required></p>
-  <span style="vertical-align: top;">Anotações: </span>
-  <textarea name="anotacoes"></textarea>
   <p>
     <span style="vertical-align: top;">Categoria: </span>
     @if (count($categorias))
@@ -20,7 +19,10 @@
     @endif
   </p>
   {{--<p>Disponível: <input type="checkbox" name="disponivel" checked></p>--}}
-  @csrf
+  <p>
+    <span style="vertical-align: top;">Anotações: </span>
+    <textarea name="anotacoes"></textarea>
+  </p>
   <input type="submit" value="Cadastrar">
 </form>
 

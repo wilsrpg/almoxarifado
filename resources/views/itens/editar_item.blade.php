@@ -6,8 +6,6 @@
   @csrf
   @method('PUT')
   <p>Nome: <input name="nome" value="{{$item->nome}}" required></p>
-  <span style="vertical-align: top;">Anotações: </span>
-  <textarea name="anotacoes">{{$item->anotacoes}}</textarea>
   <p>
     <span style="vertical-align: top;">Categoria: </span>
     @if (count($categorias))
@@ -25,6 +23,10 @@
   </p>
   <p>Disponível: <input type="checkbox" name="disponivel" {{$item->disponivel ? 'checked' : ''}} disabled></p>
   <p>Onde está: <input value="{{$item->onde_esta}}" disabled></p>
+  <p>
+    <span style="vertical-align: top;">Anotações: </span>
+    <textarea name="anotacoes">{{$item->anotacoes}}</textarea>
+  </p>
   <input type="submit" value="Salvar">
 </form>
 
