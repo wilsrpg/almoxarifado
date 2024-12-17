@@ -57,6 +57,11 @@ class ConjuntoDeItens extends Component
     );
   }
 
+  public function remover_tudo() {
+    $this->itens_do_conjunto = [];
+    $this->dispatch('atualizar-itens-enviados', []);
+  }
+
   //public function hydrate() {
   //  $this->dispatch('atualizar-itens-enviados',
   //    array_map(function($i){ return $i['id']; }, $this->itens_do_conjunto)
