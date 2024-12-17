@@ -2,30 +2,35 @@
 @section('titulo', 'Editando grupo: '.$grupo->nome.' - Almoxarifado')
 @section('conteudo')
 
-<form action="/grupo/{{$grupo->id}}/atualizar" method="post">
+<form action="/grupo/{{$grupo->id}}/atualizar" method="post" onsubmit="checar_itens(event)">
   @csrf
   @method('PUT')
   <p>Nome do grupo: <input name="nome" value="{{$grupo->nome}}" required></p>
+  <div style="display: flex">
+    <?php
+      $itens_do_conjunto = [];
+      foreach ($grupo->itens as $it)
+        $itens_do_conjunto[] = $itens->find($it);
+    ?>
+    <livewire:conjunto-de-itens :itens_do_conjunto="$itens_do_conjunto" :nome="'itens-do-grupo'" :name="'itens[]'" />
+    <livewire:lista-de-itens :lista_de_itens="$itens" :destino="'itens-do-grupo'" />
+  </div>
   <p>
     <span style="vertical-align: top;">Anotações: </span>
     <textarea name="anotacoes">{{$grupo->anotacoes}}</textarea>
   </p>
-  <div style="display: flex">
-    <div>
-      <p>Itens adicionados:</p>
-      <?php
-        $itens_do_conjunto = [];
-        foreach ($grupo->itens as $it)
-          $itens_do_conjunto[] = $itens->find($it);
-      ?>
-      <livewire:conjunto-de-itens :itens_do_conjunto="$itens_do_conjunto" :nome="'itens-do-grupo'" name="itens" />
-    </div>
-    <div>
-      <p>Todos os itens:</p>
-      <livewire:lista-de-itens :lista_de_itens="$itens" :destino="'itens-do-grupo'" />
-    </div>
-  </div>
   <input type="submit" value="Salvar">
+  <span id="erro" class="vermelho"></span>
 </form>
+
+<script>
+  function checar_itens(e) {
+    e.preventDefault();
+    if (document.getElementsByName('itens[]').length == 0)
+      document.getElementById('erro').textContent = 'Inclua pelo menos um item.';
+    else
+      e.target.submit();
+  }
+</script>
 
 @endsection
