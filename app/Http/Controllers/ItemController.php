@@ -8,7 +8,7 @@ use App\Models\Categoria;
 
 class ItemController extends Controller
 {
-  public function index() {
+  public function index(Request $req) {
     //$itens = Item::all();
     //Item::all()->unset('0');
     //$categorias = Categoria::all();
@@ -37,11 +37,40 @@ class ItemController extends Controller
     //die();
     //$item->update(['categoria', array_search($item->categoria, $categorias)]);
     //Item::whereNull('historico_de_movimentacoes')->update(['historico_de_movimentacoes' => []]);
-    return view('itens.itens', ['itens' => Item::all()]);
+    //echo '<pre>';
+    //print_r($req->toArray());die();
+    //$a = ['$regex' => '/.*/ms'];
+    //var_dump($a);die();
+    $filtro = (object)[];
+    $filtro->nome = $req->nome ?? '';
+    $filtro->categoria = $req->categoria ?? '';
+    $filtro->disponivel = $req->disponivel == 'sim' ? true : ($req->disponivel == 'nao' ? false : '');
+    $filtro->onde_esta = $req->onde_esta ?? '';
+    $filtro->anotacoes = $req->anotacoes ?? '';
+    //$itens = Item::all();
+    $itens = Item::where('nome', 'like', '%'.$filtro->nome.'%')
+      ->where('onde_esta', 'like', '%'.$filtro->onde_esta.'%')
+      //->where('anotacoes', 'REGEX', new Regex('.*'.$filtro->anotacoes.'.*', 'ms'))
+      ->where('anotacoes', 'regexp', '/.*'.$filtro->anotacoes.'.*/ms')
+      //->where('anotacoes', ['$regex' => '/.*/ms'])
+      ->get();
+    if ($filtro->categoria != ''){
+      if ($filtro->categoria == 'sem_categoria')
+        $id_da_categoria = '';
+      else
+        $id_da_categoria = Categoria::where('nome', $filtro->categoria)->first()->id;
+      $itens = $itens->where('categoria.id', $id_da_categoria);
+    }
+    if ($filtro->disponivel !== '')
+      $itens = $itens->where('disponivel', $filtro->disponivel);
+    foreach ($itens as $item)
+      if ($item->categoria['id'])
+        $item->categoria = Categoria::where('id', $item->categoria['id'])->first();
+    return view('itens.itens', ['itens' => $itens, 'filtro' => $filtro, 'categorias' => Categoria::all()]);
   }
 
   public function ver($id) {
-    //$item = Item::where('id', $id)->first();
+    $item = Item::where('id', $id)->first();
         //$cat = Categoria::where('nome', $item->categoria)->first();
         //$cat->itens()->save($item);
     //    $grupo = Grupo::where('nome', 'grupo1')->first();
@@ -49,8 +78,9 @@ class ItemController extends Controller
     //echo '<pre>';
     //print_r($item->grupos);
     //die();
-    //$item->categoria = Categoria::where('id', $id)->first();
-    return view('itens.item', ['item' => Item::where('id', $id)->first()]);
+    if ($item->categoria['id'])
+      $item->categoria = Categoria::where('id', $item->categoria['id'])->first();
+    return view('itens.item', ['item' => $item]);
   }
 
   public function pagina_de_criacao() {
