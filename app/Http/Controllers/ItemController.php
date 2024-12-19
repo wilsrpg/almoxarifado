@@ -93,7 +93,7 @@ class ItemController extends Controller
     $item = new Item;
     $item->nome = $_POST['nome'];
     //$item->anotacoes = str_replace(chr(13), '', $_POST['anotacoes']);
-    $item->anotacoes = $_POST['anotacoes'];
+    $item->anotacoes = $_POST['anotacoes'] ?? '';
     $categoria = (object)['id' => '', 'nome' => ''];
     if ($_POST['categoria'])
       $categoria = Categoria::where('id', $_POST['categoria'])->first();
@@ -123,7 +123,7 @@ class ItemController extends Controller
     //die();
     //$item->anotacoes = str_replace(chr(13).chr(10), '', $_POST['anotacoes']); //chr(10) = caractere '\n', q eh adicionado com novas linhas na tag <textarea>
     //$item->anotacoes = str_replace(chr(13), '', $item->anotacoes); //chr(13) = caractere '\r', q eh adicionado com novas linhas na tag <textarea>
-    $item->anotacoes = $_POST['anotacoes'];
+    $item->anotacoes = $_POST['anotacoes'] ?? '';
     $categoria = (object)['id' => '', 'nome' => ''];
     if ($_POST['categoria'])
       $categoria = Categoria::where('id', $_POST['categoria'])->first();

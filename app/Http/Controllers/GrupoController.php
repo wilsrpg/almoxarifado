@@ -52,7 +52,7 @@ class GrupoController extends Controller
   public function criar() {
     $grupo = new Grupo;
     $grupo->nome = $_POST['nome'];
-    $grupo->anotacoes = $_POST['anotacoes'];
+    $grupo->anotacoes = $_POST['anotacoes'] ?? '';
     //$grupo->categoria = $_POST['categoria'];
     //$grupo->itens = explode(',', $_POST['itens']);
     $grupo->itens = $_POST['itens'];
@@ -71,7 +71,7 @@ class GrupoController extends Controller
   public function atualizar($id) {
     $grupo = Grupo::where('id', $id)->first();
     $grupo->nome = $_POST['nome'];
-    $grupo->anotacoes = $_POST['anotacoes'];
+    $grupo->anotacoes = $_POST['anotacoes'] ?? '';
     //$grupo->itens = explode(',', $_POST['itens']);
     $grupo->itens = $_POST['itens'];
     $res = $grupo->save();

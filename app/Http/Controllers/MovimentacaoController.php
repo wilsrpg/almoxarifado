@@ -78,11 +78,11 @@ class MovimentacaoController extends Controller
     //echo '<pre>';
     //print_r($req->toArray());die();
     $movimentacao = new Movimentacao;
-    $movimentacao->data = $req->data;
-    $movimentacao->hora = $req->hora;
-    $movimentacao->quem_entregou = $req->quem_entregou;
-    $movimentacao->quem_recebeu = $req->quem_recebeu;
-    $movimentacao->anotacoes = $req->anotacoes;
+    $movimentacao->data = $req->data ?? '';
+    $movimentacao->hora = $req->hora ?? '';
+    $movimentacao->quem_entregou = $req->quem_entregou ?? '';
+    $movimentacao->quem_recebeu = $req->quem_recebeu ?? '';
+    $movimentacao->anotacoes = $req->anotacoes ?? '';
     $movimentacao->tipo = $req->tipo;
     $movimentacao->itens = $req->itens;
     $itensUpdate = Item::whereIn('_id', $movimentacao->itens)->update([
@@ -123,11 +123,11 @@ class MovimentacaoController extends Controller
           );
       }
     }
-    $movimentacao->data = $req->data;
-    $movimentacao->hora = $req->hora;
-    $movimentacao->quem_entregou = $req->quem_entregou;
-    $movimentacao->quem_recebeu = $req->quem_recebeu;
-    $movimentacao->anotacoes = $req->anotacoes;
+    $movimentacao->data = $req->data ?? '';
+    $movimentacao->hora = $req->hora ?? '';
+    $movimentacao->quem_entregou = $req->quem_entregou ?? '';
+    $movimentacao->quem_recebeu = $req->quem_recebeu ?? '';
+    $movimentacao->anotacoes = $req->anotacoes ?? '';
     $movimentacao->tipo = $req->tipo;
     if (count($ids_dos_itens_removidos) > 0) {
       $itens_removidos = Item::whereIn('id', $ids_dos_itens_removidos)->get();

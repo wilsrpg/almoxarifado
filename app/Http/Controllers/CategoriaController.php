@@ -42,7 +42,7 @@ class CategoriaController extends Controller
   public function atualizar($id) {
     $categoria = Categoria::where('id', $id)->first();
     $categoria->nome = $_POST['nome'];
-    $categoria->anotacoes = $_POST['anotacoes'];
+    $categoria->anotacoes = $_POST['anotacoes'] ?? '';
     $res = $categoria->save();
     //return redirect('/')->with('atualizou_categoria', $res);
     return redirect('/')->with('mensagem', 'Categoria atualizada com sucesso.');
