@@ -9,7 +9,22 @@ use App\Models\Item;
 class GrupoController extends Controller
 {
   public function index() {
-    $grupos = Grupo::all();
+    //echo '<pre>';
+    //print_r($_GET);die();
+    $filtro = (object)[];
+    $filtro->nome = $_GET['nome'] ?? '';
+    $filtro->itens = $_GET['itens'] ?? [];
+    $filtro->anotacoes = $_GET['anotacoes'] ?? '';
+    $grupos = Grupo::where('nome', 'like', '%'.$filtro->nome.'%')
+      ->where('anotacoes', 'regexp', '/.*'.$filtro->anotacoes.'.*/ms')
+      ->get();
+    //$grupos = Grupo::all();
+    $grupos->filter(function ($grupo) use ($filtro) {return count(array_diff($filtro->itens, $grupo->itens))==0;});
+    echo '<pre>';
+    print_r(count($grupos));die();
+    foreach ($grupos as $grupo) {
+
+    }
     foreach ($grupos as $grupo) {
       $itens_db = Item::whereIn('_id', $grupo->itens)->get();
       $itens_em_ordem = [];
@@ -17,7 +32,7 @@ class GrupoController extends Controller
         $itens_em_ordem[] = $itens_db->find($it);
       $grupo->itens = $itens_em_ordem;
     }
-    return view('grupos.grupos', ['grupos' => $grupos]);
+    return view('grupos.grupos', ['grupos' => $grupos, 'itens' => Item::all(), 'filtro' => $filtro]);
   }
 
   public function ver($id) {

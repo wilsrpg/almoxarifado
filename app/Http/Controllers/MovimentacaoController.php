@@ -21,7 +21,21 @@ class MovimentacaoController extends Controller
     //Movimentacao::where('responsavel', 'eu')->where('tipo', 'Empréstimo')->update(['quem_entregou' => 'eu']);
     //echo '<pre>';
     //print_r($respons);die();
-    $movimentacoes = Movimentacao::all();
+    $filtro = (object)[];
+    $filtro->data = $_GET['data'] ?? '';
+    $filtro->hora = $_GET['hora'] ?? '';
+    $filtro->tipo = $_GET['tipo'] ?? '';
+    $filtro->quem_entregou = $_GET['quem_entregou'] ?? '';
+    $filtro->quem_recebeu = $_GET['quem_recebeu'] ?? '';
+    $filtro->anotacoes = $_GET['anotacoes'] ?? '';
+    $movimentacoes = Movimentacao::where('data', 'like', '%'.$filtro->data.'%')
+      ->where('hora', 'like', '%'.$filtro->hora.'%')
+      ->where('tipo', 'like', '%'.$filtro->tipo.'%')
+      ->where('quem_entregou', 'like', '%'.$filtro->quem_entregou.'%')
+      ->where('quem_recebeu', 'like', '%'.$filtro->quem_recebeu.'%')
+      ->where('anotacoes', 'regexp', '/.*'.$filtro->anotacoes.'.*/ms')
+      ->get();
+    //$movimentacoes = Movimentacao::all();
     //foreach ($movimentacoes as $movimentacao)
     //  $movimentacao->itens = Item::whereIn('_id', $movimentacao->itens)->get();
     foreach ($movimentacoes as $movimentacao) {
@@ -31,7 +45,7 @@ class MovimentacaoController extends Controller
         $itens_em_ordem[] = $itens_db->find($it);
       $movimentacao->itens = $itens_em_ordem;
     }
-    return view('movimentacoes.movimentacoes', ['movimentacoes' => $movimentacoes]);
+    return view('movimentacoes.movimentacoes', ['movimentacoes' => $movimentacoes, 'filtro' => $filtro]);
   }
 
   public function ver($id) {

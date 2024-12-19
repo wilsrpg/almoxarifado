@@ -7,8 +7,15 @@ use App\Models\Categoria;
 
 class CategoriaController extends Controller
 {
-  public function index() {
-      return view('categorias.categorias', ['categorias' => Categoria::all()]);
+  public function index(Request $req) {
+    //echo '<pre>';
+    //print_r($req->toArray());die();
+    $filtro = (object)[];
+    $filtro->nome = $req->nome ?? '';
+    $filtro->anotacoes = $req->anotacoes ?? '';
+    $categorias = Categoria::where('nome', 'like', '%'.$filtro->nome.'%')
+      ->where('anotacoes', 'regexp', '/.*'.$filtro->anotacoes.'.*/ms')->get();
+    return view('categorias.categorias', ['categorias' => $categorias, 'filtro' => $filtro]);
   }
 
   public function ver($id) {
