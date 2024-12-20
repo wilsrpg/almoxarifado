@@ -23,8 +23,11 @@ class MovimentacaoController extends Controller
     //print_r($respons);die();
     $filtro = (object)[];
     $filtro->data = $_GET['data'] ?? '';
+    $filtro->dataAte = $_GET['dataAte'] ?? '';
     $filtro->hora = $_GET['hora'] ?? '';
+    $filtro->horaAte = $_GET['horaAte'] ?? '';
     $filtro->tipo = $_GET['tipo'] ?? '';
+    $filtro->itens = $_GET['itens'] ?? [];
     $filtro->quem_entregou = $_GET['quem_entregou'] ?? '';
     $filtro->quem_recebeu = $_GET['quem_recebeu'] ?? '';
     $filtro->anotacoes = $_GET['anotacoes'] ?? '';
@@ -38,6 +41,9 @@ class MovimentacaoController extends Controller
     //$movimentacoes = Movimentacao::all();
     //foreach ($movimentacoes as $movimentacao)
     //  $movimentacao->itens = Item::whereIn('_id', $movimentacao->itens)->get();
+    $movimentacoes = $movimentacoes->filter(function ($movimentacao) use ($filtro) {
+      return count(array_diff($filtro->itens, $movimentacao->itens))==0;
+    });
     foreach ($movimentacoes as $movimentacao) {
       $itens_db = Item::whereIn('_id', $movimentacao->itens)->get();
       $itens_em_ordem = [];
@@ -45,7 +51,7 @@ class MovimentacaoController extends Controller
         $itens_em_ordem[] = $itens_db->find($it);
       $movimentacao->itens = $itens_em_ordem;
     }
-    return view('movimentacoes.movimentacoes', ['movimentacoes' => $movimentacoes, 'filtro' => $filtro]);
+    return view('movimentacoes.movimentacoes', ['movimentacoes' => $movimentacoes, 'itens' => Item::all(), 'grupos' => Grupo::all(), 'filtro' => $filtro]);
   }
 
   public function ver($id) {
