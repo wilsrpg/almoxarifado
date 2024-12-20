@@ -19,9 +19,9 @@ class GrupoController extends Controller
       ->where('anotacoes', 'regexp', '/.*'.$filtro->anotacoes.'.*/ms')
       ->get();
     //$grupos = Grupo::all();
-    $grupos->filter(function ($grupo) use ($filtro) {return count(array_diff($filtro->itens, $grupo->itens))==0;});
-    echo '<pre>';
-    print_r(count($grupos));die();
+    $grupos = $grupos->filter(function ($grupo) use ($filtro) {
+      return count(array_diff($filtro->itens, $grupo->itens))==0;
+    });
     foreach ($grupos as $grupo) {
 
     }
