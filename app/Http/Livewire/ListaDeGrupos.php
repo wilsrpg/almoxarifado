@@ -12,11 +12,14 @@ class ListaDeGrupos extends Component
   public $destino;
   public $enviados = [];
   public $enviados_parcialmente = [];
+  public $em_movimentacao;
   public $tipo_da_movimentacao;
   public $tudo_disponivel = [];
   public $tudo_indisponivel = [];
 
-  public function mount() {
+  public function mount($tipo_da_movimentacao = null, $em_movimentacao = false) {
+    if (!$em_movimentacao)
+      $this->em_movimentacao = !empty($tipo_da_movimentacao);
     $this->enviados = array_pad($this->enviados, count($this->lista_de_itens), false);
     $this->enviados_parcialmente = $this->enviados;
     $this->dispatch('obter-itens-enviados');

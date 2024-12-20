@@ -4,13 +4,13 @@
     @foreach ($lista_de_grupos as $key => $grupo)
       <li>
         <button type="button" onclick="this.disabled = true"
-          {{$tipo_da_movimentacao == '' || !$enviados_parcialmente[$key] ? 'disabled' : ''}}
+          {{$em_movimentacao && $tipo_da_movimentacao == '' || !$enviados_parcialmente[$key] ? 'disabled' : ''}}
           wire:click="remover('{{$grupo['id']}}')"
         >
           >
         </button>
         <button type="button" onclick="this.disabled = true"
-          {{$tipo_da_movimentacao == '' || $enviados[$key] ? 'disabled' : ''}}
+          {{$em_movimentacao && $tipo_da_movimentacao == '' || $enviados[$key] ? 'disabled' : ''}}
           wire:click="enviar('{{$grupo['id']}}')"
         >
           <
