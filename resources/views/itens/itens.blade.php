@@ -2,7 +2,7 @@
 @section('titulo', 'Itens - Almoxarifado')
 @section('conteudo')
 
-<form action="/itens">
+<form action="/itens" onformdata="remover_campos_em_branco(event)">
   <p>Nome: <input name="nome" value="{{$filtro->nome}}"></p>
   <p>
     <span style="vertical-align: top;">Categoria: </span>
@@ -45,6 +45,14 @@
 @endif
 
 <script>
+  function remover_campos_em_branco(e) {
+    if (document.getElementsByName('nome')[0].value == '') e.formData.delete('nome');
+    if (document.getElementsByName('categoria')[0].value == '') e.formData.delete('categoria');
+    if (document.getElementsByName('disponivel')[0].value == '') e.formData.delete('disponivel');
+    if (document.getElementsByName('onde_esta')[0].value == '') e.formData.delete('onde_esta');
+    if (document.getElementsByName('anotacoes')[0].value == '') e.formData.delete('anotacoes');
+  }
+
   function limpar_campos() {
     document.getElementsByName('nome')[0].value = '';
     document.getElementsByName('categoria')[0].value = '';

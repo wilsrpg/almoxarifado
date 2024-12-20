@@ -2,7 +2,7 @@
 @section('titulo', 'Grupos - Almoxarifado')
 @section('conteudo')
 
-<form action="/grupos">
+<form action="/grupos" onformdata="remover_campos_em_branco(event)">
   <p>Nome do grupo: <input name="nome" value="{{$filtro->nome}}"></p>
   <div style="display: flex">
     <?php
@@ -32,6 +32,11 @@
 @endif
 
 <script>
+  function remover_campos_em_branco(e) {
+    if (document.getElementsByName('nome')[0].value == '') e.formData.delete('nome');
+    if (document.getElementsByName('anotacoes')[0].value == '') e.formData.delete('anotacoes');
+  }
+
   function limpar_campos() {
     document.getElementsByName('nome')[0].value = '';
     document.getElementsByName('anotacoes')[0].value = '';
