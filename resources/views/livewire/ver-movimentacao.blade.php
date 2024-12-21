@@ -7,7 +7,7 @@
     @endif
     <?= isset($movimentacao->deletado) ? '<i>(deletado)</i>;' : '' ?>
   </p>
-  <p>Data: {{date_format(date_create($movimentacao->data), 'd/m/Y')}}</p>
+  <p>Data: {{$movimentacao->data ? date_format(date_create($movimentacao->data), 'd/m/Y') : ''}}</p>
   <p>Hora: {{$movimentacao->hora}}</p>
   <p>Tipo: {{$movimentacao->tipo}}</p>
   <p>Responsável por entregar: {{$movimentacao->quem_entregou}}</p>
