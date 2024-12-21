@@ -2,7 +2,7 @@
 @section('titulo', 'Movimentações - Almoxarifado')
 @section('conteudo')
 
-<form action="/movimentacoes" {{--onsubmit="teste(event)"--}} onformdata="remover_campos_em_branco(event)">
+<form action="/movimentacoes" onsubmit="enviar(event)" onformdata="remover_campos_em_branco(event)">
   <div style="margin: 16px 0">Data: <input type="date" name="data" value="{{$filtro->data}}">
     <livewire:data-ate :dataAte="$filtro->dataAte ?? ''" />
   </div>
@@ -65,22 +65,16 @@
     if (document.getElementsByName('quem_recebeu')[0].value == '') e.formData.delete('quem_recebeu');
     if (document.getElementsByName('tipo')[0].value == '') e.formData.delete('tipo');
     if (document.getElementsByName('anotacoes')[0].value == '') e.formData.delete('anotacoes');
-    //let i = '';
-    //for (const value of e.formData.keys()) {
-    //  i+=value+',';
-    //}
-    //if (!i)
-    //e.formData.set('anotacoes', e.target.action);
-    //console.log(e.formData);
-    //console.log(Array.from(e.formData.entries()));
   }
-  function teste(e) {
+
+  function enviar(e) {
     e.preventDefault();
-    if (Array.from(e.formData.entries()).length > 0) {
+    const form = new FormData(document.getElementsByTagName('form')[0]);
+    //console.log(Array.from(form.entries()).length);
+    if (Array.from(form.entries()).length > 0)
       e.target.submit();
-    } else {
+    else
       window.location = e.target.action;
-    }
   }
 
   function limpar_campos() {

@@ -2,7 +2,7 @@
 @section('titulo', 'Categorias - Almoxarifado')
 @section('conteudo')
 
-<form action="/categorias" onformdata="remover_campos_em_branco(event)">
+<form action="/categorias" onsubmit="enviar(event)" onformdata="remover_campos_em_branco(event)">
   <p>Nome da categoria: <input name="nome" value="{{$filtro->nome}}"></p>
   <p>
     <span style="vertical-align: top;">Anotações: </span>
@@ -26,6 +26,15 @@
   function remover_campos_em_branco(e) {
     if (document.getElementsByName('nome')[0].value == '') e.formData.delete('nome');
     if (document.getElementsByName('anotacoes')[0].value == '') e.formData.delete('anotacoes');
+  }
+
+  function enviar(e) {
+    e.preventDefault();
+    const form = new FormData(document.getElementsByTagName('form')[0]);
+    if (Array.from(form.entries()).length > 0)
+      e.target.submit();
+    else
+      window.location = e.target.action;
   }
 
   function limpar_campos() {
