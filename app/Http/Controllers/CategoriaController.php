@@ -7,14 +7,15 @@ use App\Models\Categoria;
 
 class CategoriaController extends Controller
 {
-  public function index(Request $req) {
+  public function index() {
     //echo '<pre>';
     //print_r($req->toArray());die();
     $filtro = (object)[];
-    $filtro->nome = $req->nome ?? '';
-    $filtro->anotacoes = $req->anotacoes ?? '';
+    $filtro->nome = $_GET['nome'] ?? '';
+    $filtro->anotacoes = $_GET['anotacoes'] ?? '';
     $categorias = Categoria::where('nome', 'like', '%'.$filtro->nome.'%')
-      ->where('anotacoes', 'regexp', '/.*'.$filtro->anotacoes.'.*/ms')->get();
+      ->where('anotacoes', 'regexp', '/.*'.$filtro->anotacoes.'.*/ms')
+      ->get();
     return view('categorias.categorias', ['categorias' => $categorias, 'filtro' => $filtro]);
   }
 

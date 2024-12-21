@@ -42,11 +42,17 @@ class ItemController extends Controller
     //$a = ['$regex' => '/.*/ms'];
     //var_dump($a);die();
     $filtro = (object)[];
-    $filtro->nome = $req->nome ?? '';
-    $filtro->categoria = $req->categoria ?? '';
-    $filtro->disponivel = $req->disponivel == 'sim' ? true : ($req->disponivel == 'nao' ? false : '');
-    $filtro->onde_esta = $req->onde_esta ?? '';
-    $filtro->anotacoes = $req->anotacoes ?? '';
+    //$filtro->nome = $req->nome ?? '';
+    $filtro->nome = $_GET['nome'] ?? '';
+    //$filtro->categoria = $req->categoria ?? '';
+    $filtro->categoria = $_GET['categoria'] ?? '';
+    //$filtro->disponivel = $req->disponivel == 'sim' ? true : ($req->disponivel == 'nao' ? false : '');
+    $disp = $_GET['disponivel'] ?? '';
+    $filtro->disponivel = $disp == 'sim' ? true : ($disp == 'nao' ? false : '');
+    //$filtro->onde_esta = $req->onde_esta ?? '';
+    $filtro->onde_esta = $_GET['onde_esta'] ?? '';
+    //$filtro->anotacoes = $req->anotacoes ?? '';
+    $filtro->anotacoes = $_GET['anotacoes'] ?? '';
     //$itens = Item::all();
     $itens = Item::where('nome', 'like', '%'.$filtro->nome.'%')
       ->where('onde_esta', 'like', '%'.$filtro->onde_esta.'%')
