@@ -22,5 +22,5 @@
       <li>Nenhum</li>{{--impossível--}}
     @endif
   </ul>
-  <p>Anotações: {{$movimentacao->anotacoes}}</p>
+  <p>Anotações: <br><pre>{{$movimentacao->anotacoes}}</pre></p>
 </div>
