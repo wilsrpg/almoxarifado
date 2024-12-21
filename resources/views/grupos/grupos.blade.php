@@ -49,6 +49,8 @@
   function limpar_campos() {
     document.getElementsByName('nome')[0].value = '';
     document.getElementsByName('anotacoes')[0].value = '';
+    if (document.getElementById('remover-itens'))
+      document.getElementById('remover-itens').click();
   }
 </script>
 

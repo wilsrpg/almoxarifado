@@ -87,6 +87,8 @@
     document.getElementsByName('quem_recebeu')[0].value = '';
     document.getElementsByName('tipo')[0].value = '';
     document.getElementsByName('anotacoes')[0].value = '';
+    if (document.getElementById('remover-itens'))
+      document.getElementById('remover-itens').click();
   }
 </script>
 
