@@ -6,8 +6,9 @@
   <div style="margin: 16px 0">Data: <input type="date" name="data" value="{{$filtro->data}}">
     <livewire:data-ate :dataAte="$filtro->dataAte ?? ''" />
   </div>
-  <p>Hora: <input type="time" name="hora" value="{{$filtro->hora}}">
-  ~ <input type="time" name="horaAte" value="{{$filtro->horaAte ?? ''}}"></p>
+  <div style="margin: 16px 0">Hora: <input type="time" name="hora" value="{{$filtro->hora}}">
+    <livewire:hora-ate :horaAte="$filtro->horaAte ?? ''" />
+  </div>
   <p>Responsável por entregar: <input name="quem_entregou" value="{{$filtro->quem_entregou}}"></p>
   <p>Responsável por receber: <input name="quem_recebeu" value="{{$filtro->quem_recebeu}}"></p>
   <livewire:tipo-da-movimentacao :tipo_da_movimentacao="$filtro->tipo" :opcional="true"/>
@@ -60,7 +61,8 @@
     if (document.getElementsByName('dataAte').length)
       if (document.getElementsByName('dataAte')[0].value == '') e.formData.delete('dataAte');
     if (document.getElementsByName('hora')[0].value == '') e.formData.delete('hora');
-    if (document.getElementsByName('horaAte')[0].value == '') e.formData.delete('horaAte');
+    if (document.getElementsByName('horaAte').length)
+      if (document.getElementsByName('horaAte')[0].value == '') e.formData.delete('horaAte');
     if (document.getElementsByName('quem_entregou')[0].value == '') e.formData.delete('quem_entregou');
     if (document.getElementsByName('quem_recebeu')[0].value == '') e.formData.delete('quem_recebeu');
     if (document.getElementsByName('tipo')[0].value == '') e.formData.delete('tipo');
@@ -82,7 +84,8 @@
     if (document.getElementsByName('dataAte').length)
       document.getElementsByName('dataAte')[0].value = '';
     document.getElementsByName('hora')[0].value = '';
-    document.getElementsByName('horaAte')[0].value = '';
+    if (document.getElementsByName('horaAte').length)
+      document.getElementsByName('horaAte')[0].value = '';
     document.getElementsByName('quem_entregou')[0].value = '';
     document.getElementsByName('quem_recebeu')[0].value = '';
     document.getElementsByName('tipo')[0].value = '';

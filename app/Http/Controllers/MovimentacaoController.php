@@ -31,19 +31,39 @@ class MovimentacaoController extends Controller
     $filtro->quem_entregou = $_GET['quem_entregou'] ?? '';
     $filtro->quem_recebeu = $_GET['quem_recebeu'] ?? '';
     $filtro->anotacoes = $_GET['anotacoes'] ?? '';
-    $movimentacoes = Movimentacao::where('data', 'like', '%'.$filtro->data.'%')
-      ->where('hora', 'like', '%'.$filtro->hora.'%')
-      ->where('tipo', 'like', '%'.$filtro->tipo.'%')
+
+    $movimentacoes = Movimentacao::where('tipo', 'like', '%'.$filtro->tipo.'%')
       ->where('quem_entregou', 'like', '%'.$filtro->quem_entregou.'%')
       ->where('quem_recebeu', 'like', '%'.$filtro->quem_recebeu.'%')
       ->where('anotacoes', 'regexp', '/.*'.$filtro->anotacoes.'.*/ms')
       ->get();
+    //print_r($movimentacoes);die();
+
+    if ($filtro->dataAte)
+      $movimentacoes = $movimentacoes->where('data', '>=', $filtro->data)
+        ->where('data', '<=', $filtro->dataAte);
+    else if ($filtro->data)
+      $movimentacoes = $movimentacoes->where('data', $filtro->data);
+
+    if ($filtro->horaAte && $filtro->hora && $filtro->hora > $filtro->horaAte) {
+      $horaDe = date_format(date_create($filtro->hora)->sub(new \DateInterval("PT1M")), 'H:i');
+      $horaAte = date_format(date_create($filtro->horaAte)->add(new \DateInterval("PT1M")), 'H:i');
+      //print_r($horaAte);die();
+      $movimentacoes = $movimentacoes->whereNotBetween('hora', [$horaAte, $horaDe]);
+    } else if ($filtro->horaAte)
+      $movimentacoes = $movimentacoes->where('hora', '>=', $filtro->hora)
+        ->where('hora', '<=', $filtro->horaAte);
+    else if ($filtro->hora)
+      $movimentacoes = $movimentacoes->where('hora', $filtro->hora);
+
+    //print_r($movimentacoes);die();
     //$movimentacoes = Movimentacao::all();
     //foreach ($movimentacoes as $movimentacao)
     //  $movimentacao->itens = Item::whereIn('_id', $movimentacao->itens)->get();
     $movimentacoes = $movimentacoes->filter(function ($movimentacao) use ($filtro) {
       return count(array_diff($filtro->itens, $movimentacao->itens))==0;
     });
+
     foreach ($movimentacoes as $movimentacao) {
       $itens_db = Item::whereIn('_id', $movimentacao->itens)->get();
       $itens_em_ordem = [];
@@ -51,6 +71,7 @@ class MovimentacaoController extends Controller
         $itens_em_ordem[] = $itens_db->find($it);
       $movimentacao->itens = $itens_em_ordem;
     }
+
     return view('movimentacoes.movimentacoes', ['movimentacoes' => $movimentacoes, 'itens' => Item::all(), 'grupos' => Grupo::all(), 'filtro' => $filtro]);
   }
 
