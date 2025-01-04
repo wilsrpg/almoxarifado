@@ -10,7 +10,7 @@
       foreach ($filtro->itens as $it)
         $itens_do_conjunto[] = $itens->find($it);
     ?>
-    <livewire:conjunto-de-itens :itens_do_conjunto="$itens_do_conjunto" :nome="'itens-do-grupo'" :name="'itens[]'" />
+    <livewire:conjunto-de-itens :itens_do_conjunto="$itens_do_conjunto" :qtdes="$filtro->qtdes" :nome="'itens-do-grupo'" :name="'itens[]'" />
     <livewire:lista-de-itens :lista_de_itens="$itens" :destino="'itens-do-grupo'" />
   </div>
   <p>

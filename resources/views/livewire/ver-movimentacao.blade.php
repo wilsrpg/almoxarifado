@@ -15,8 +15,13 @@
   <p>Itens:</p>
   <ul>
     @if (count($movimentacao->itens) > 0)
-      @foreach ($movimentacao->itens as $item)
-        <li><a href="/item/{{$item->id}}">{{$item->nome}}</a></li>
+      @foreach ($movimentacao->itens as $key => $item)
+        <li>
+          <a href="/item/{{$item->id}}">{{$item->nome}}</a>
+          @if (isset($movimentacao->qtdes[$key]))
+            <i>({{$movimentacao->qtdes[$key]}})</i>
+          @endif
+        </li>
       @endforeach
     @else
       <li>Nenhum</li>{{--impossível--}}

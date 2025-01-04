@@ -8,14 +8,17 @@
   <p>ID: {{$movimentacao->id}}</p>
   <p>Data: <input type="date" name="data" value="{{$movimentacao->data}}"></p>
   <p>Hora: <input type="time" name="hora" value="{{$movimentacao->hora}}"></p>
-  <p>Responsável por entregar: <input name="quem_entregou" value="{{$movimentacao->quem_entregou}}"></p>
-  <p>Responsável por receber: <input name="quem_recebeu" value="{{$movimentacao->quem_recebeu}}"></p>
+  <p>Responsável por entregar: <input name="quem_entregou" value="{{$movimentacao->quem_entregou}}" required></p>
+  <p>Responsável por receber: <input name="quem_recebeu" value="{{$movimentacao->quem_recebeu}}" required></p>
   <livewire:tipo-da-movimentacao :tipo_da_movimentacao="$movimentacao->tipo"/>
   <div style="display: flex">
     <?php
       $itens_do_conjunto = [];
-      foreach ($movimentacao->itens as $it)
-        $itens_do_conjunto[] = $itens->find($it);
+      foreach ($movimentacao->itens as $key => $item) {
+        $itens_do_conjunto[] = $itens->find($item);
+        if ($movimentacao->qtdes[$key])
+          end($itens_do_conjunto)->quantidade = $movimentacao->qtdes[$key];
+      }
       //echo '<pre>';print_r($movimentacao->itens);die();
     ?>
     <livewire:conjunto-de-itens

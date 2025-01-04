@@ -25,12 +25,24 @@ class ListaDeGrupos extends Component
     $this->dispatch('obter-itens-enviados');
     for ($i=0; $i < count($this->lista_de_grupos); $i++) {
       $todos_disp = true;
-      for ($j=0; $j < count($this->lista_de_grupos[$i]->itens) && $todos_disp; $j++) {
-        $todos_disp = $this->lista_de_itens->find($this->lista_de_grupos[$i]->itens[$j])->disponivel;
-      }
       $todos_indisp = true;
-      for ($j=0; $j < count($this->lista_de_grupos[$i]->itens) && $todos_indisp; $j++) {
-        $todos_indisp = !$this->lista_de_itens->find($this->lista_de_grupos[$i]->itens[$j])->disponivel;
+      for ($j=0; $j < count($this->lista_de_grupos[$i]->itens); $j++) {
+        $item = $this->lista_de_itens->find($this->lista_de_grupos[$i]->itens[$j]);
+        if($todos_disp)
+          if(isset($item->quantidade)) 
+            $todos_disp = $item->onde_esta[0]['qtde'] >= $this->lista_de_grupos[$i]->qtdes[$j];
+          else
+            $todos_disp = $item->disponivel;
+        if($todos_indisp)
+          if(isset($item->quantidade)) {
+            $tem_essa_qtde_emprestada = false;
+            for ($k=1; $k < count($item->onde_esta) && !$tem_essa_qtde_emprestada; $k++)
+              $tem_essa_qtde_emprestada = $item->onde_esta[$k]['qtde'] >= $this->lista_de_grupos[$i]->qtdes[$j];
+            $todos_indisp = $tem_essa_qtde_emprestada;
+          } else
+            $todos_indisp = !$item->disponivel;
+        if(!$todos_disp && !$todos_indisp)
+          break;
       }
       $this->tudo_disponivel[$i] = $todos_disp;
       $this->tudo_indisponivel[$i] = $todos_indisp;
@@ -56,19 +68,27 @@ class ListaDeGrupos extends Component
     $indice = $this->indice($id_do_grupo);
     $this->enviados[$indice] = true;
     $conteudo = [];
-    foreach ($this->lista_de_grupos[$indice]->itens as $it) {
+    $qtdes = [];
+    foreach ($this->lista_de_grupos[$indice]->itens as $key => $it) {
       //$conteudo[] = $this->lista_de_itens[$this->indice($it, $this->lista_de_itens->toArray())];
       $conteudo[] = $this->lista_de_itens->find($it);
+      $qtdes[] = $this->lista_de_grupos[$indice]->qtdes[$key] ?? null;
     }
-    $this->dispatch('adicionar-itens', $conteudo, $this->destino);
+    //$this->lista_de_grupos[$indice]->nome = implode(',', $qtdes);
+    //for ($i=0; $i < count($this->lista_de_grupos[$indice]->itens); $i++) { 
+    //  $conteudo[] = $this->lista_de_itens->find($this->lista_de_grupos[$indice]->itens[$i]);
+    //  $qtdes[] = $this->lista_de_grupos[$indice]->qtdes[$i] ?? null;
+    //}
+    $this->dispatch('adicionar-itens', $conteudo, $this->destino, $qtdes);
   }
 
   public function remover($id_do_grupo) {
-    $this->dispatch('remover-itens', $this->lista_de_grupos->find($id_do_grupo)->itens, $this->destino);
+    //$this->lista_de_grupos[0]->nome = implode(',', $this->lista_de_grupos->find($id_do_grupo)->qtdes ?? null);
+    $this->dispatch('remover-itens', $this->lista_de_grupos->find($id_do_grupo)->itens, $this->destino, $this->lista_de_grupos->find($id_do_grupo)->qtdes ?? null);
   }
 
   #[On('atualizar-itens-enviados')]
-  public function atualizar($ids_dos_itens_do_conjunto) {
+  public function atualizar($ids_dos_itens_do_conjunto, $qtdes_do_conjunto = null) {
     for ($i=0; $i < count($this->lista_de_grupos); $i++) {
       $falta_algum = false;
       for ($j=0; $j < count($this->lista_de_grupos[$i]->itens) && !$falta_algum; $j++) {

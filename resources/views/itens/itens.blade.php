@@ -24,8 +24,17 @@
       <option value="sim" {{$filtro->disponivel === true ? 'selected' : ''}}>Sim</option>
       <option value="nao" {{$filtro->disponivel === false ? 'selected' : ''}}>Não</option>
     </select>
-    </p>
+  </p>
   <p>Onde está: <input name="onde_esta" value="{{$filtro->onde_esta}}"></p>
+  <p>
+    Em quantidade:
+    <select name="emQuantidade" onchange="alternarQuantidade(event)">
+      <option value="">Qualquer</option>
+      <option value="sim" {{$filtro->emQuantidade == 'sim' ? 'selected' : ''}}>Sim</option>
+      <option value="nao" {{$filtro->emQuantidade == 'nao' ? 'selected' : ''}}>Não</option>
+    </select>
+    <input type="number" name="quantidade" min="0" size="5" value="{{$filtro->quantidade != '' ? $filtro->quantidade : ''}}">
+  </p>
   <p>
     <span style="vertical-align: top;">Anotações: </span>
     <textarea name="anotacoes">{{$filtro->anotacoes}}</textarea>
@@ -50,6 +59,8 @@
     if (document.getElementsByName('categoria')[0].value == '') e.formData.delete('categoria');
     if (document.getElementsByName('disponivel')[0].value == '') e.formData.delete('disponivel');
     if (document.getElementsByName('onde_esta')[0].value == '') e.formData.delete('onde_esta');
+    if (document.getElementsByName('emQuantidade')[0].value == '') e.formData.delete('emQuantidade');
+    if (document.getElementsByName('quantidade')[0].value == '') e.formData.delete('quantidade');
     if (document.getElementsByName('anotacoes')[0].value == '') e.formData.delete('anotacoes');
   }
 
@@ -62,11 +73,17 @@
       window.location = e.target.action;
   }
 
+  function alternarQuantidade(e) {
+    document.getElementsByName("quantidade")[0].disabled = e.target.value == 'nao';
+  }
+
   function limpar_campos() {
     document.getElementsByName('nome')[0].value = '';
     document.getElementsByName('categoria')[0].value = '';
     document.getElementsByName('disponivel')[0].value = '';
     document.getElementsByName('onde_esta')[0].value = '';
+    document.getElementsByName('emQuantidade')[0].value = '';
+    document.getElementsByName('quantidade')[0].value = '';
     document.getElementsByName('anotacoes')[0].value = '';
   }
 </script>

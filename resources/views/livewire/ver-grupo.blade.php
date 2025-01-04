@@ -10,8 +10,13 @@
   <p>Itens:</p>
   <ul>
     @if (count($grupo->itens) > 0)
-      @foreach ($grupo->itens as $item)
-        <li><a href="/item/{{$item->id}}">{{$item->nome}}</a></li>
+      @foreach ($grupo->itens as $key => $item)
+        <li>
+          <a href="/item/{{$item->id}}">{{$item->nome}}</a>
+          @if (isset($grupo->qtdes[$key]))
+            <i>({{$grupo->qtdes[$key]}})</i>
+          @endif
+        </li>
       @endforeach
     @else
       <li>Nenhum</li>

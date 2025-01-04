@@ -9,8 +9,16 @@
   <div style="display: flex">
     <?php
       $itens_do_conjunto = [];
-      foreach ($grupo->itens as $it)
-        $itens_do_conjunto[] = $itens->find($it);
+      //for ($i=0; $i < count($grupo->itens); $i++) { 
+      //  $itens_do_conjunto[] = $itens->find($grupo->itens[$i]);
+      //  if ($grupo->qtdes[$i])
+      //    end($itens_do_conjunto)->quantidade = $grupo->qtdes[$i];
+      //}
+      foreach ($grupo->itens as $key => $item) {
+        $itens_do_conjunto[] = $itens->find($item);
+        if ($grupo->qtdes[$key])
+          end($itens_do_conjunto)->quantidade = $grupo->qtdes[$key];
+      }
     ?>
     <livewire:conjunto-de-itens :itens_do_conjunto="$itens_do_conjunto" :nome="'itens-do-grupo'" :name="'itens[]'" />
     <livewire:lista-de-itens :lista_de_itens="$itens" :destino="'itens-do-grupo'" />

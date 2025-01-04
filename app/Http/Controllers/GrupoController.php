@@ -14,6 +14,7 @@ class GrupoController extends Controller
     $filtro = (object)[];
     $filtro->nome = $_GET['nome'] ?? '';
     $filtro->itens = $_GET['itens'] ?? [];
+    $filtro->qtdes = $_GET['qtdes'] ?? [];
     $filtro->anotacoes = $_GET['anotacoes'] ?? '';
     $grupos = Grupo::where('nome', 'like', '%'.$filtro->nome.'%')
       ->where('anotacoes', 'regexp', '/.*'.$filtro->anotacoes.'.*/ms')
@@ -22,9 +23,6 @@ class GrupoController extends Controller
     $grupos = $grupos->filter(function ($grupo) use ($filtro) {
       return count(array_diff($filtro->itens, $grupo->itens))==0;
     });
-    foreach ($grupos as $grupo) {
-
-    }
     foreach ($grupos as $grupo) {
       $itens_db = Item::whereIn('_id', $grupo->itens)->get();
       $itens_em_ordem = [];
@@ -56,6 +54,7 @@ class GrupoController extends Controller
     //$grupo->categoria = $_POST['categoria'];
     //$grupo->itens = explode(',', $_POST['itens']);
     $grupo->itens = $_POST['itens'];
+    $grupo->qtdes = $_POST['qtdes'];
     $res = $grupo->save();
     //return redirect('/')->with('cadastrou_grupo', $res);
     return redirect('/')->with('mensagem', 'Grupo cadastrado com sucesso.');
@@ -74,6 +73,7 @@ class GrupoController extends Controller
     $grupo->anotacoes = $_POST['anotacoes'] ?? '';
     //$grupo->itens = explode(',', $_POST['itens']);
     $grupo->itens = $_POST['itens'];
+    $grupo->qtdes = $_POST['qtdes'];
     $res = $grupo->save();
     //return redirect('/')->with('atualizou_grupo', $res);
     return redirect('/')->with('mensagem', 'Grupo atualizado com sucesso.');

@@ -6,15 +6,18 @@
   @csrf
   <p>Data: <input type="date" name="data" value="<?php echo date('Y-m-d'); ?>"></p>
   <p>Hora: <input type="time" name="hora" value="<?php echo date('H:i'); ?>"></p>
-  <p>Responsável por entregar: <input name="quem_entregou"></p>
-  <p>Responsável por receber: <input name="quem_recebeu"></p>
+  <p>Responsável por entregar: <input name="quem_entregou" required></p>
+  <p>Responsável por receber: <input name="quem_recebeu" required></p>
   <livewire:tipo-da-movimentacao />
   <div style="display: flex">
     <?php
       $itens_do_conjunto = [];
       if ($movimentacao)
-        foreach ($movimentacao->itens as $it)
-          $itens_do_conjunto[] = $itens->find($it);
+        foreach ($movimentacao->itens as $key => $item) {
+          $itens_do_conjunto[] = $itens->find($item);
+          if ($movimentacao->qtdes[$key])
+            end($itens_do_conjunto)->quantidade = $movimentacao->qtdes[$key];
+        }
       //echo '<pre>';print_r($movimentacao->itens);die();
     ?>
     <livewire:conjunto-de-itens
@@ -31,6 +34,7 @@
       :lista_de_grupos="$grupos"
       :lista_de_itens="$itens"
       :destino="'itens-da-movimentacao'"
+      :em_movimentacao="true"
     />
   </div>
   <p>

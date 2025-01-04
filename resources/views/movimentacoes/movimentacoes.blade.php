@@ -21,6 +21,7 @@
     ?>
     <livewire:conjunto-de-itens
       :itens_do_conjunto="$itens_do_conjunto"
+      :qtdes="$filtro->qtdes"
       :nome="'itens-da-movimentacao'"
       :name="'itens[]'"
       :tipo_da_movimentacao="$filtro->tipo ?? null"

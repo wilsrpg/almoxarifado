@@ -51,15 +51,27 @@ class ItemController extends Controller
     $filtro->disponivel = $disp == 'sim' ? true : ($disp == 'nao' ? false : '');
     //$filtro->onde_esta = $req->onde_esta ?? '';
     $filtro->onde_esta = $_GET['onde_esta'] ?? '';
+    $filtro->emQuantidade = $_GET['emQuantidade'] ?? '';
+    $filtro->quantidade = $_GET['quantidade'] ?? '';
+    if ($filtro->quantidade != '')
+      $filtro->quantidade = (int) $filtro->quantidade;
     //$filtro->anotacoes = $req->anotacoes ?? '';
     $filtro->anotacoes = $_GET['anotacoes'] ?? '';
     //$itens = Item::all();
     $itens = Item::where('nome', 'like', '%'.$filtro->nome.'%')
-      ->where('onde_esta', 'like', '%'.$filtro->onde_esta.'%')
+      //->where('onde_esta', 'like', '%'.$filtro->onde_esta.'%')
       //->where('anotacoes', 'REGEX', new Regex('.*'.$filtro->anotacoes.'.*', 'ms'))
       ->where('anotacoes', 'regexp', '/.*'.$filtro->anotacoes.'.*/ms')
       //->where('anotacoes', ['$regex' => '/.*/ms'])
       ->get();
+    if ($filtro->onde_esta != ''){
+      $itens = $itens->filter(function($item) use($filtro){
+        if (gettype($item->onde_esta) == 'string')
+          return stripos($item->onde_esta, $filtro->onde_esta) !== false;
+        else
+          return array_search($filtro->onde_esta, array_map(function($v){return $v['onde'];}, $item->onde_esta)) !== false;
+      });
+    }
     if ($filtro->categoria != ''){
       if ($filtro->categoria == 'sem_categoria')
         $id_da_categoria = '';
@@ -69,6 +81,10 @@ class ItemController extends Controller
     }
     if ($filtro->disponivel !== '')
       $itens = $itens->where('disponivel', $filtro->disponivel);
+    if ($filtro->emQuantidade == 'nao')
+      $itens = $itens->where('quantidade', null);
+    else if ($filtro->emQuantidade == 'sim' || $filtro->quantidade > 0)
+      $itens = $itens->where('quantidade', '!=', null)->where('quantidade', '>=', $filtro->quantidade);
     foreach ($itens as $item)
       if ($item->categoria['id'])
         $item->categoria = Categoria::where('id', $item->categoria['id'])->first();
@@ -77,13 +93,6 @@ class ItemController extends Controller
 
   public function ver($id) {
     $item = Item::where('id', $id)->first();
-        //$cat = Categoria::where('nome', $item->categoria)->first();
-        //$cat->itens()->save($item);
-    //    $grupo = Grupo::where('nome', 'grupo1')->first();
-    //    $grupo->itens()->save($item);
-    //echo '<pre>';
-    //print_r($item->grupos);
-    //die();
     if ($item->categoria['id'])
       $item->categoria = Categoria::where('id', $item->categoria['id'])->first();
     return view('itens.item', ['item' => $item]);
@@ -106,13 +115,16 @@ class ItemController extends Controller
     $item->categoria = ['id' => $categoria->id, 'nome' => $categoria->nome];
     //$item->disponivel = isset($_POST['disponivel']) && $_POST['disponivel'] == 'on';
     $item->disponivel = true;
-    $item->onde_esta = 'Comunidade';
+    if (isset($_POST['emQuantidade'])) {
+      $item->quantidade = (int) $_POST['quantidade'];
+      $item->onde_esta = [['onde' => 'Comunidade', 'qtde' => $item->quantidade]];
+    } else
+      $item->onde_esta = 'Comunidade';
     $item->historico_de_movimentacoes = [];
     //echo '<pre>';print_r($item);
     //die();
     $res = $item->save();
     //echo '<pre>';print_r($res);die();
-    //return redirect('/')->with('cadastrou_item', $res);
     return redirect('/')->with('mensagem', 'Item cadastrado com sucesso.');
   }
 
@@ -123,6 +135,24 @@ class ItemController extends Controller
   public function atualizar($id) {
     $item = Item::where('id', $id)->first();
     $item->nome = $_POST['nome'];
+    if (isset($item->quantidade) && !isset($_POST['emQuantidade'])) {
+        if (gettype($item->onde_esta) == 'array')
+          $item->onde_esta = $item->onde_esta[array_key_last($item->onde_esta)]['onde'];
+        unset($item->quantidade);
+    } else if (!isset($item->quantidade) && isset($_POST['emQuantidade'])) {
+      $item->quantidade = (int) $_POST['quantidade'];
+      $arr = [['onde' => 'Comunidade', 'qtde' => 0]];
+      if ($item->onde_esta == 'Comunidade')
+        $arr[0]['qtde'] = $item->quantidade;
+      else
+        $arr[] = ['onde' => $item->onde_esta, 'qtde' => $item->quantidade];
+      $item->onde_esta = $arr;
+    } else if (isset($item->quantidade) && isset($_POST['emQuantidade']) && $item->quantidade != (int) $_POST['quantidade']) {
+      $arr = $item->onde_esta;
+      $arr[0]['qtde'] += (int) $_POST['quantidade'] - $item->quantidade;
+      $item->onde_esta = $arr;
+      $item->quantidade = (int) $_POST['quantidade'];
+    }
     //$item->anotacoes = $_POST['anotacoes'];
     //echo ord(str_split($_POST['anotacoes'])[2]);
     //echo chr(98);
@@ -135,7 +165,6 @@ class ItemController extends Controller
       $categoria = Categoria::where('id', $_POST['categoria'])->first();
     $item->categoria = ['id' => $categoria->id, 'nome' => $categoria->nome];
     $res = $item->save();
-    //return redirect('/')->with('atualizou_item', $res);
     return redirect('/')->with('mensagem', 'Item atualizado com sucesso.');
   }
 
