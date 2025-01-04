@@ -5,7 +5,7 @@
     @else
       {{$grupo->nome}}
     @endif
-    <?= isset($grupo->deletado) ? '<i>(deletado)</i>;' : '' ?>
+    <?= isset($grupo->deletado) ? '<i class=vermelho>(deletado)</i>' : '' ?>
   </p>
   <p>Itens:</p>
   <ul>

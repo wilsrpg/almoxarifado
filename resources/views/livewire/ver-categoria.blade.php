@@ -5,7 +5,7 @@
     @else
       {{$categoria->nome}}
     @endif
-    <?= isset($categoria->deletado) ? '<i>(deletado)</i>;' : '' ?>
+    <?= isset($categoria->deletado) ? '<i class=vermelho>(deletado)</i>' : '' ?>
   </p>
   <p>Anotações: <br><pre>{{$categoria->anotacoes}}</pre></p>
 </div>

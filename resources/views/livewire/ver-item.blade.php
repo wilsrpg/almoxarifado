@@ -5,7 +5,7 @@
     @else
       {{$item->nome}}
     @endif
-    <?= isset($item->deletado) ? '<i>(deletado)</i>;' : '' ?>
+    <?= isset($item->deletado) ? '<i class=vermelho>(deletado)</i>' : '' ?>
   </p>
   <p>Categoria: <a href="/categoria/{{$item->categoria['id']}}">{{$item->categoria['nome']}}</a></p>
   <p>Disponível: {{$item->disponivel ? 'Sim' : 'Não'}}</p>

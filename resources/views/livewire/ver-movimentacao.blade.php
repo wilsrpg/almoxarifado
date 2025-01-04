@@ -5,7 +5,7 @@
     @else
       {{$movimentacao->id}}
     @endif
-    <?= isset($movimentacao->deletado) ? '<i>(deletado)</i>;' : '' ?>
+    <?= isset($movimentacao->deletado) ? '<i class=vermelho>(deletado)</i>' : '' ?>
   </p>
   <p>Data: {{$movimentacao->data ? date_format(date_create($movimentacao->data), 'd/m/Y') : ''}}</p>
   <p>Hora: {{$movimentacao->hora}}</p>
