@@ -2,6 +2,8 @@
 @section('titulo', 'Itens - Almoxarifado')
 @section('conteudo')
 
+<a href="/itens/novo">Novo item</a>
+<p>Filtros</p>
 <form action="/itens" onsubmit="enviar(event)" onformdata="remover_campos_em_branco(event)">
   <p>Nome: <input name="nome" value="{{$filtro->nome}}"></p>
   <p>

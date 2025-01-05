@@ -15,7 +15,11 @@
 
   <body>
     <header>
-      <a href="/">Ir para página inicial</a>
+      <a href="/">Página inicial</a>
+      <a href="/itens">Itens</a>
+      <a href="/grupos">Grupos de itens</a>
+      <a href="/categorias">Categorias</a>
+      <a href="/movimentacoes">Movimentações</a>
     </header>
 
     <div>

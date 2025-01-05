@@ -2,6 +2,8 @@
 @section('titulo', 'Grupos - Almoxarifado')
 @section('conteudo')
 
+<a href="/grupos/novo">Novo grupo de itens</a>
+<p>Filtros</p>
 <form action="/grupos" onsubmit="enviar(event)" onformdata="remover_campos_em_branco(event)">
   <p>Nome do grupo: <input name="nome" value="{{$filtro->nome}}"></p>
   <div style="display: flex">

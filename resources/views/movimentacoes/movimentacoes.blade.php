@@ -2,6 +2,8 @@
 @section('titulo', 'Movimentações - Almoxarifado')
 @section('conteudo')
 
+<a href="/movimentacoes/nova">Nova movimentação</a>
+<p>Filtros</p>
 <form action="/movimentacoes" onsubmit="enviar(event)" onformdata="remover_campos_em_branco(event)">
   <div style="margin: 16px 0">Data: <input type="date" name="data" value="{{$filtro->data}}">
     <livewire:data-ate :dataAte="$filtro->dataAte ?? ''" />
