@@ -22,7 +22,7 @@
       <a href="/movimentacoes">Movimentações</a>
     </header>
 
-    <div>
+    <div class="conteudo">
       @if(session('mensagem'))
         <p>{{session('mensagem')}}</p>
       @endif
