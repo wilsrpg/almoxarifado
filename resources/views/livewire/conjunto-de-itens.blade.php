@@ -32,7 +32,7 @@
             : ''
           }}
         >
-          {{$item['nome']}}
+          <a href="/item/{{$item['id']}}">{{$item['nome']}}</a>
           @if ($qtdes[$key])
             <i>({{$qtdes[$key]}})</i>
           @endif

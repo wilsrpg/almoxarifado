@@ -33,7 +33,7 @@
             : ''
           }}
         >
-          {{$item['nome']}}
+          <a href="/item/{{$item['id']}}">{{$item['nome']}}</a>
         </span>
         @if (isset($qtdes[$key]))
           ({{$qtde_input[$key]}}/{{$item['quantidade']}}){{$qtdes[$key]}}

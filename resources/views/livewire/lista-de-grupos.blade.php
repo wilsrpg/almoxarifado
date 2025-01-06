@@ -21,7 +21,7 @@
               || $tipo_da_movimentacao != 'Empréstimo' && !$tudo_indisponivel[$key] ? 'class=cinza' : ''}}
           @endif
         >
-          {{$grupo['nome']}}
+          <a href="/grupo/{{$grupo['id']}}">{{$grupo['nome']}}</a>
         </span>
       </li>
     @endforeach
