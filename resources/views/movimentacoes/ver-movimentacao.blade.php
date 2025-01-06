@@ -1,6 +1,6 @@
 <div>
   <p>ID:
-    @if ($link)
+    @if (!empty($link))
       <a href="/movimentacao/{{$movimentacao->id}}">{{$movimentacao->id}}</a>
     @else
       {{$movimentacao->id}}

@@ -2,7 +2,8 @@
 @section('titulo', $movimentacao->tipo.': '.$movimentacao->id.' - Almoxarifado')
 @section('conteudo')
 
-<livewire:ver-movimentacao :movimentacao="$movimentacao" />
+{{--<livewire:ver-movimentacao :movimentacao="$movimentacao" />--}}
+@include('movimentacoes.ver-movimentacao')
 <a href="/movimentacao/{{$movimentacao->id}}/editar">Editar</a><br>
 
 <form action="/movimentacoes/nova" method="POST">

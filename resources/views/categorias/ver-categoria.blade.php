@@ -1,6 +1,6 @@
 <div>
   <p>Nome:
-    @if ($link)
+    @if (!empty($link))
       <a href="/categoria/{{$categoria->id}}">{{$categoria->nome}}</a>
     @else
       {{$categoria->nome}}

@@ -50,8 +50,10 @@
 
 @if (count($movimentacoes) > 0)
   <p>{{count($movimentacoes) . ' movimentaç' . (count($movimentacoes) > 1 ? 'ões' : 'ão')}}</p>
+  <?php $link=true; ?>
   @foreach ($movimentacoes as $movimentacao)
-    <livewire:ver-movimentacao :movimentacao="$movimentacao" :link="true" />
+    {{--<livewire:ver-movimentacao :movimentacao="$movimentacao" :link="true" />--}}
+    @include('movimentacoes.ver-movimentacao')
     <br>
   @endforeach
 @else

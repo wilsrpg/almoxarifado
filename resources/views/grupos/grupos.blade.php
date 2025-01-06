@@ -25,8 +25,10 @@
 
 @if (count($grupos) > 0)
   <p>{{count($grupos) . ' grupo' . (count($grupos) > 1 ? 's' : '')}}</p>
+  <?php $link=true; ?>
   @foreach ($grupos as $grupo)
-    <livewire:ver-grupo :grupo="$grupo" :link="true" />
+    {{--<livewire:ver-grupo :grupo="$grupo" :link="true" />--}}
+    @include('grupos.ver-grupo')
     <br>
   @endforeach
 @else

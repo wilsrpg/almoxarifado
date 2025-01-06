@@ -2,7 +2,8 @@
 @section('titulo', 'Item: '.$item->nome.' - Almoxarifado')
 @section('conteudo')
 
-<livewire:ver-item :item="$item" />
+{{--<livewire:ver-item :item="$item" />--}}
+@include('itens.ver-item')
 <a href="/item/{{$item->id}}/editar">Editar</a>
 @if (empty($item->deletado))
 <form action="/item/{{$item->id}}/excluir" method="POST">

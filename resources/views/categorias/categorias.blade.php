@@ -16,8 +16,10 @@
 
 @if (count($categorias) > 0)
   <p>{{count($categorias) . ' categoria' . (count($categorias) > 1 ? 's' : '')}}</p>
+  <?php $link=true; ?>
   @foreach ($categorias as $categoria)
-    <livewire:ver-categoria :categoria="$categoria" :link="true" />
+    {{--<livewire:ver-categoria :categoria="$categoria" :link="true" />--}}
+    @include('categorias.ver-categoria')
     <br>
   @endforeach
 @else

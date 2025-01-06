@@ -47,8 +47,10 @@
 
 @if (count($itens) > 0)
   <p>{{count($itens) . ' ite' . (count($itens) > 1 ? 'ns' : 'm')}}</p>
+  <?php $link=true; ?>
   @foreach ($itens as $item)
-    <livewire:ver-item :item="$item" :link="true" />
+    {{--<livewire:ver-item :item="$item" :link="true" />--}}
+    @include('itens.ver-item')
     <br>
   @endforeach
 @else

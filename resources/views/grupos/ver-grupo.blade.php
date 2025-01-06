@@ -1,6 +1,6 @@
 <div>
   <p>Nome:
-    @if ($link)
+    @if (!empty($link))
       <a href="/grupo/{{$grupo->id}}">{{$grupo->nome}}</a>
     @else
       {{$grupo->nome}}
