@@ -36,7 +36,7 @@ class ItemController extends Controller
     //}
     //die();
     //$item->update(['categoria', array_search($item->categoria, $categorias)]);
-    //Item::whereNull('historico_de_movimentacoes')->update(['historico_de_movimentacoes' => []]);
+    //Item::whereNull('movimentacoes')->update(['movimentacoes' => []]);
     //echo '<pre>';
     //print_r($req->toArray());die();
     //$a = ['$regex' => '/.*/ms'];
@@ -120,7 +120,7 @@ class ItemController extends Controller
       $item->onde_esta = [['onde' => 'Comunidade', 'qtde' => $item->quantidade]];
     } else
       $item->onde_esta = 'Comunidade';
-    $item->historico_de_movimentacoes = [];
+    $item->movimentacoes = [];
     //echo '<pre>';print_r($item);
     //die();
     $res = $item->save();

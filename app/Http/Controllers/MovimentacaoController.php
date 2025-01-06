@@ -10,6 +10,20 @@ use App\Models\Grupo;
 class MovimentacaoController extends Controller
 {
   public function index() {
+    //$movs = Movimentacao::where('deletado', null)->get();
+    //$its = Item::all();
+    //echo '<pre>';
+    //foreach ($its as $it) {
+    //  $it->movimentacoes = $movs->filter(function ($mov) use ($it) {
+    //    return array_search($it->id, $mov->itens) !== false && !isset($mov->deletado);
+    //  })->map(function ($mov){return $mov->id;})->values()->toArray();
+    //  echo $it->nome.': antes='.count($it->movimentacoes).', depois='.count($it->movimentacoes).'<br>';
+    //  $it->save();
+    //}
+    //die();
+    //$res = Item::where('nome', 'like', '%')->update(['$unset' => ['historico_de_movimentacoes' => 1]]);
+    //echo 'qtde d itens alterados: '.$res;
+    //die();
     //Movimentacao::where('id', '6751ef9d515ffcbb02070017')->push('itens', '6751e467515ffcbb02070013');
     //Movimentacao::where('tipo', 'devolucao')->update(['tipo' => 'Devolução']);
     //Movimentacao::where('responsavel', 'eu')->where('tipo', 'Devolução')->update(['quem_recebeu' => 'eu']);
@@ -156,7 +170,7 @@ class MovimentacaoController extends Controller
       'onde_esta' => $movimentacao->tipo == 'Devolução' ? 'Comunidade' : $movimentacao->quem_recebeu
     ]);
     Item::whereIn('_id', $movimentacao->itens)->where('quantidade', null)
-      ->push('historico_de_movimentacoes', $movimentacao->id);
+      ->push('movimentacoes', $movimentacao->id);
     //atualização dos itens com quantidade
     //$ids_dos_itens_com_qtde = [];
     //foreach ($movimentacao->itens as $key => $id_do_item)
@@ -167,13 +181,13 @@ class MovimentacaoController extends Controller
     foreach ($movimentacao->itens as $key => $id_do_item)
       if ($movimentacao->qtdes[$key]) {
         $item = $itens_com_qtde->find($id_do_item);
-        $ultimo_indice = array_key_last($item->historico_de_movimentacoes);
-        if ($item->historico_de_movimentacoes[$ultimo_indice] == $movimentacao->id)
+        $ultimo_indice = array_key_last($item->movimentacoes);
+        if ($item->movimentacoes[$ultimo_indice] == $movimentacao->id)
           continue;
         else {
-          $histmovitem = $item->historico_de_movimentacoes;
+          $histmovitem = $item->movimentacoes;
           $histmovitem[] = $movimentacao->id;
-          $item->historico_de_movimentacoes = $histmovitem;
+          $item->movimentacoes = $histmovitem;
         }
         $paradeiros = array_map(function($v){return $v['onde'];}, $item->onde_esta);
         $onde_estava = array_search($movimentacao->quem_entregou, $paradeiros);
@@ -212,18 +226,18 @@ class MovimentacaoController extends Controller
 
   function checar_ultima_movimentacao_de_itens_da_movimentacao($itens, $id_da_movimentacao) {
     $itens_da_movimentacao = Item::whereIn('id', $itens)->get();
-    //$ultimo_indice = array_key_last($itens_da_movimentacao[0]->historico_de_movimentacoes);
-    //$id_da_movimentacao = $itens_da_movimentacao[0]->historico_de_movimentacoes[$ultimo_indice];
+    //$ultimo_indice = array_key_last($itens_da_movimentacao[0]->movimentacoes);
+    //$id_da_movimentacao = $itens_da_movimentacao[0]->movimentacoes[$ultimo_indice];
     foreach ($itens_da_movimentacao as $item)
-      if ($item->historico_de_movimentacoes[array_key_last($item->historico_de_movimentacoes)] != $id_da_movimentacao)
+      if ($item->movimentacoes[array_key_last($item->movimentacoes)] != $id_da_movimentacao)
         return false;
     return true;
   }
 
   public function desfazer_ultima_movimentacao_de_itens_da_movimentacao($itens, $id_da_movimentacao) {
     $itens_da_movimentacao = Item::whereIn('id', $itens)->get();
-    //$ultimo_indice = array_key_last($itens_da_movimentacao[0]->historico_de_movimentacoes);
-    //$id_da_movimentacao = $itens_da_movimentacao[0]->historico_de_movimentacoes[$ultimo_indice];
+    //$ultimo_indice = array_key_last($itens_da_movimentacao[0]->movimentacoes);
+    //$id_da_movimentacao = $itens_da_movimentacao[0]->movimentacoes[$ultimo_indice];
     //if (!$this->checar_ultima_movimentacao_de_itens_da_movimentacao($itens, $id_da_movimentacao))
       //return false;
     $movimentacao = Movimentacao::where('id', $id_da_movimentacao)->first();
@@ -231,10 +245,10 @@ class MovimentacaoController extends Controller
     //die();
     foreach ($movimentacao->itens as $key => $id_do_item) {
       $item = $itens_da_movimentacao->find($id_do_item);
-      $histmovitem = $item->historico_de_movimentacoes;
+      $histmovitem = $item->movimentacoes;
       array_pop($histmovitem);
-      $item->historico_de_movimentacoes = $histmovitem;
-      //print_r($item->historico_de_movimentacoes);
+      $item->movimentacoes = $histmovitem;
+      //print_r($item->movimentacoes);
       //die();
       if (count($histmovitem) == 0) {
         $item->disponivel = true;
@@ -305,7 +319,7 @@ class MovimentacaoController extends Controller
     $res = $movimentacao->save();
     if ($res) {
     //  $itensMovUpdate = Item::whereIn('_id', $movimentacao->itens)
-    //    ->push('historico_de_movimentacoes', $movimentacao->id);
+    //    ->push('movimentacoes', $movimentacao->id);
       $this->aplicar_movimentacao_nos_itens($movimentacao);
     }
     $genero = $movimentacao->tipo == 'Empréstimo' ? 'o' : 'a';
@@ -480,10 +494,10 @@ class MovimentacaoController extends Controller
     //  $itens_removidos = Item::whereIn('id', $ids_dos_itens_removidos)->get();
     //  if (count($itens_removidos)) {
     //    foreach ($itens_removidos as $item) {
-    //      $histmovitem = $item->historico_de_movimentacoes;
+    //      $histmovitem = $item->movimentacoes;
     //      array_pop($histmovitem);
-    //      $item->historico_de_movimentacoes = $histmovitem;
-    //      //print_r($item->historico_de_movimentacoes);
+    //      $item->movimentacoes = $histmovitem;
+    //      //print_r($item->movimentacoes);
     //      //die();
     //      if (count($histmovitem) == 0) {
     //        $item->disponivel = true;
@@ -547,10 +561,10 @@ class MovimentacaoController extends Controller
     //$ids_dos_itens_adicionados = array_diff($req->itens, $movimentacao->itens);
     //if (count($ids_dos_itens_adicionados)) {
     //  foreach ($ids_dos_itens_adicionados as $item) {
-    //    $itemAdicUpdate = Item::where('id', $item)->push('historico_de_movimentacoes', $id);
+    //    $itemAdicUpdate = Item::where('id', $item)->push('movimentacoes', $id);
         //$itemUpdate = Item::where('id', $item)->update([
-        //  'disponivel' => end($item->historico_de_movimentacoes)->disponivel ?? true,
-        //  'onde_esta' => end($item->historico_de_movimentacoes)->onde_esta ?? 'Comunidade'
+        //  'disponivel' => end($item->movimentacoes)->disponivel ?? true,
+        //  'onde_esta' => end($item->movimentacoes)->onde_esta ?? 'Comunidade'
         //]);
     //  }
     //}

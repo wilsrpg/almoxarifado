@@ -23,6 +23,6 @@
   </ul>
   @endif
   <p>Anotações: <br><pre>{{$item->anotacoes}}</pre></p>
-  <p>Total de movimentações: {{count($item->historico_de_movimentacoes)}}<br>
+  <p>Total de movimentações: {{count($item->movimentacoes)}}<br>
   <a href="/movimentacoes?itens[]={{$item->id}}">Ver tudo</a></p>
 </div>
