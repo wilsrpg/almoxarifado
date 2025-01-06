@@ -14,7 +14,7 @@
         <button type="button" onclick="this.disabled = true" wire:click="remover('{{$item['id']}}', '{{$nome}}')">
           x
         </button>
-        <span
+        <a href="/item/{{$item['id']}}"
           {{
             $tipo_da_movimentacao != '' && (
               $tipo_da_movimentacao == 'Empréstimo' && (
@@ -31,9 +31,7 @@
             ? 'class=cinza'
             : ''
           }}
-        >
-          <a href="/item/{{$item['id']}}">{{$item['nome']}}</a>
-        </span>
+        >{{$item['nome']}}</a>
         @if ($qtdes[$key])
           <i>({{$qtdes[$key]}})</i>
           <label style="cursor: help;"

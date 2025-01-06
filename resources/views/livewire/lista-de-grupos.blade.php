@@ -15,14 +15,12 @@
         >
           <
         </button>
-        <span
+        <a href="/grupo/{{$grupo['id']}}"
           @if ($tipo_da_movimentacao != '')
             {{$tipo_da_movimentacao == 'Empréstimo' && !$tudo_disponivel[$key] 
               || $tipo_da_movimentacao != 'Empréstimo' && !$tudo_indisponivel[$key] ? 'class=cinza' : ''}}
           @endif
-        >
-          <a href="/grupo/{{$grupo['id']}}">{{$grupo['nome']}}</a>
-        </span>
+        >{{$grupo['nome']}}</a>
         <label style="cursor: help;"
           title="<?php
             $texto = 'Itens:';

@@ -15,7 +15,7 @@
         >
           <
         </button>
-        <span
+        <a href="/item/{{$item['id']}}"
           {{
             $tipo_da_movimentacao != '' && (
               $tipo_da_movimentacao == 'Empréstimo' && (
@@ -32,9 +32,7 @@
             ? 'class=cinza'
             : ''
           }}
-        >
-          <a href="/item/{{$item['id']}}">{{$item['nome']}}</a>
-        </span>
+        >{{$item['nome']}}</a>
         @if (isset($qtdes[$key]))
           ({{$qtde_input[$key]}}/{{$item['quantidade']}}){{$qtdes[$key]}}
           <input type="number" min="1" max="{{$qtdes[$key]}}" size="5" wire:model.live="qtde_input.{{$key}}"
