@@ -42,8 +42,18 @@
           >
           <label style="cursor: help;"
             title="<?php
+              $texto = 'Onde está:';
               foreach ($item->onde_esta as $loc)
-                echo $loc['onde'].': '.$loc['qtde'].chr(10);
+                $texto .= chr(10).$loc['onde'].': '.$loc['qtde'];
+              $texto .= chr(10).chr(10).'Anotações:'.chr(10).$item->anotacoes;
+              echo str_replace('"', '&quot;', $texto);
+            ?>"
+          >ⓘ</label>
+        @else
+          <label style="cursor: help;"
+            title="<?php
+              $texto = 'Onde está:'.chr(10).$item->onde_esta.chr(10).chr(10).'Anotações:'.chr(10).$item->anotacoes;
+              echo str_replace('"', '&quot;', $texto);
             ?>"
           >ⓘ</label>
         @endif

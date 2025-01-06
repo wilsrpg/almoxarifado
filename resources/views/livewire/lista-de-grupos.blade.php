@@ -23,6 +23,19 @@
         >
           <a href="/grupo/{{$grupo['id']}}">{{$grupo['nome']}}</a>
         </span>
+        <label style="cursor: help;"
+          title="<?php
+            $texto = 'Itens:';
+            foreach ($grupo['itens'] as $key => $id_do_item) {
+              $item = $lista_de_itens->find($id_do_item);
+              $texto .= chr(10).$item->nome;
+              if (isset($item->quantidade))
+                $texto .= ': '.$grupo['qtdes'][$key];
+            }
+            $texto .= chr(10).chr(10).'Anotações:'.chr(10).$grupo['anotacoes'];
+            echo str_replace('"', '&quot;', $texto);
+          ?>"
+        >ⓘ</label>
       </li>
     @endforeach
   </ul>
