@@ -65,7 +65,7 @@ class MovimentacaoController extends Controller
       $movimentacoes = $movimentacoes->filter(function ($movimentacao) use ($filtro) {
         $tem_tudo = count(array_diff($filtro->itens, $movimentacao->itens))==0;
         foreach ($movimentacao->itens as $key => $id_do_item)
-          if (isset($movimentacao->qtdes[$key]))
+          if (isset($movimentacao->qtdes[$key]) && isset($filtro->qtdes[array_search($id_do_item, $filtro->itens)]))
             if ($movimentacao->qtdes[$key] < $filtro->qtdes[array_search($id_do_item, $filtro->itens)])
               $tem_tudo = false;
         return $tem_tudo;
@@ -93,16 +93,23 @@ class MovimentacaoController extends Controller
     return view('movimentacoes.movimentacao', ['movimentacao' => $movimentacao]);
   }
 
-  public function pagina_de_criacao($id = null) {
+  public function pagina_de_criacao(Request $req) {
     $movimentacao = [];
-    if ($id)
-      $movimentacao = Movimentacao::where('id', $id)->first();
+    if (!empty($req->id)) {
+      $movimentacao = Movimentacao::where('id', $req->id)->first();
+      if ($movimentacao->tipo == 'Empréstimo' || $movimentacao->tipo == 'Transferência') {
+          $movimentacao->quem_entregou = $movimentacao->quem_recebeu;
+          $movimentacao->quem_recebeu = '';
+      } else
+      if ($movimentacao->tipo == 'Devolução') {
+          $movimentacao->quem_recebeu = $movimentacao->quem_entregou;
+          $movimentacao->quem_entregou = '';
+      }
+      $movimentacao->tipo = $req->tipo;
+    }
     return view('movimentacoes.nova_movimentacao', [
-      //'itens' => Item::all(),
       'itens' => Item::all(),
-      //'grupos' => Grupo::aggregate()->project(_id: 1, nome: 1, itens: 1)->get(),
       'grupos' => Grupo::all(),
-      //'movimentacoes' => Movimentacao::all()
       'movimentacoes' => Movimentacao::aggregate()->project(_id: 1, data: 1, hora: 1, itens: 1)->get(),
       'movimentacao' => $movimentacao
     ]);

@@ -6,9 +6,9 @@
   @csrf
   <p>Data: <input type="date" name="data" value="<?php echo date('Y-m-d'); ?>"></p>
   <p>Hora: <input type="time" name="hora" value="<?php echo date('H:i'); ?>"></p>
-  <p>Responsável por entregar: <input name="quem_entregou" required></p>
-  <p>Responsável por receber: <input name="quem_recebeu" required></p>
-  <livewire:tipo-da-movimentacao />
+  <p>Responsável por entregar: <input name="quem_entregou" value="{{$movimentacao->quem_entregou ?? ''}}" required></p>
+  <p>Responsável por receber: <input name="quem_recebeu" value="{{$movimentacao->quem_recebeu ?? ''}}" required></p>
+  <livewire:tipo-da-movimentacao :tipo_da_movimentacao="$movimentacao->tipo ?? ''" />
   <div style="display: flex">
     <?php
       $itens_do_conjunto = [];
@@ -24,17 +24,20 @@
       :itens_do_conjunto="$itens_do_conjunto"
       :nome="'itens-da-movimentacao'"
       :name="'itens[]'"
+      :tipo_da_movimentacao="$movimentacao->tipo ?? ''"
     />
     <livewire:lista-de-itens
       :lista_de_itens="$itens"
       :destino="'itens-da-movimentacao'"
       :em_movimentacao="true"
+      :tipo_da_movimentacao="$movimentacao->tipo ?? ''"
     />
     <livewire:lista-de-grupos
       :lista_de_grupos="$grupos"
       :lista_de_itens="$itens"
       :destino="'itens-da-movimentacao'"
       :em_movimentacao="true"
+      :tipo_da_movimentacao="$movimentacao->tipo ?? ''"
     />
   </div>
   <p>

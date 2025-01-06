@@ -47,7 +47,8 @@ Route::put('/grupo/{id}/atualizar', [GrupoController::class, 'atualizar']);
 Route::delete('/grupo/{id}/excluir', [GrupoController::class, 'excluir']);
 
 Route::get('/movimentacoes', [MovimentacaoController::class, 'index']);
-Route::get('/movimentacoes/nova/{id?}', [MovimentacaoController::class, 'pagina_de_criacao']);
+Route::get('/movimentacoes/nova/', [MovimentacaoController::class, 'pagina_de_criacao']);
+Route::post('/movimentacoes/nova/', [MovimentacaoController::class, 'pagina_de_criacao']);
 Route::post('/movimentacoes/criar', [MovimentacaoController::class, 'criar']);
 Route::get('/movimentacao/{id}', [MovimentacaoController::class, 'ver']);
 Route::get('/movimentacao/{id}/editar', [MovimentacaoController::class, 'pagina_de_edicao']);
