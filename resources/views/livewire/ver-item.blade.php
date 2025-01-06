@@ -23,14 +23,6 @@
   </ul>
   @endif
   <p>Anotações: <br><pre>{{$item->anotacoes}}</pre></p>
-  <p>Histórico de movimentações:</p>
-  <ul>
-    @if (count($item->historico_de_movimentacoes))
-      @foreach ($item->historico_de_movimentacoes as $id_da_movimentacao)
-        <li><a href="/movimentacao/{{$id_da_movimentacao}}">{{$id_da_movimentacao}}</a></li>
-      @endforeach
-    @else
-      <li>Nenhuma</li>
-    @endif
-  </ul>
+  <p>Total de movimentações: {{count($item->historico_de_movimentacoes)}}<br>
+  <a href="/movimentacoes?itens[]={{$item->id}}">Ver tudo</a></p>
 </div>
