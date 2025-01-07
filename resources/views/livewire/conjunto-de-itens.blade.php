@@ -38,7 +38,7 @@
             title="<?php
               $texto = 'Onde está:';
               foreach ($item['onde_esta'] as $loc)
-                $texto .= chr(10).$loc['onde'].': '.$loc['qtde'];
+                $texto .= chr(10).'-'.$loc['onde'].': '.$loc['qtde'];
               $texto .= chr(10).chr(10).'Anotações:'.chr(10).$item['anotacoes'];
               echo str_replace('"', '&quot;', $texto);
             ?>"
@@ -46,7 +46,7 @@
         @else
           <label style="cursor: help;"
             title="<?php
-              $texto = 'Onde está:'.chr(10).$item['onde_esta'].chr(10).chr(10).'Anotações:'.chr(10).$item['anotacoes'];
+              $texto = 'Onde está:'.chr(10).'-'.$item['onde_esta'].chr(10).chr(10).'Anotações:'.chr(10).$item['anotacoes'];
               echo str_replace('"', '&quot;', $texto);
             ?>"
           >ⓘ</label>

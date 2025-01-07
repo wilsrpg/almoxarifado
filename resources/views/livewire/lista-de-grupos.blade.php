@@ -23,10 +23,10 @@
         >{{$grupo['nome']}}</a>
         <label style="cursor: help;"
           title="<?php
-            $texto = 'Itens:';
+            $texto = 'Itens ('.count($grupo['itens']).'):';
             foreach ($grupo['itens'] as $key => $id_do_item) {
               $item = $lista_de_itens->find($id_do_item);
-              $texto .= chr(10).$item->nome;
+              $texto .= chr(10).'-'.$item->nome;
               if (isset($item->quantidade))
                 $texto .= ': '.$grupo['qtdes'][$key];
             }
