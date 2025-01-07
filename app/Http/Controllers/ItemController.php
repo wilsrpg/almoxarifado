@@ -8,7 +8,7 @@ use App\Models\Categoria;
 
 class ItemController extends Controller
 {
-  public function index(Request $req) {
+  public function index() {
     //$itens = Item::all();
     //Item::all()->unset('0');
     //$categorias = Categoria::all();
@@ -51,6 +51,7 @@ class ItemController extends Controller
     $filtro->disponivel = $disp == 'sim' ? true : ($disp == 'nao' ? false : '');
     //$filtro->onde_esta = $req->onde_esta ?? '';
     $filtro->onde_esta = $_GET['onde_esta'] ?? '';
+    $filtro->emprestado = $_GET['emprestado'] ?? '';
     $filtro->emQuantidade = $_GET['emQuantidade'] ?? '';
     $filtro->quantidade = $_GET['quantidade'] ?? '';
     if ($filtro->quantidade != '')
@@ -81,6 +82,17 @@ class ItemController extends Controller
     }
     if ($filtro->disponivel !== '')
       $itens = $itens->where('disponivel', $filtro->disponivel);
+    if ($filtro->emprestado !== '') {
+      if ($filtro->emprestado == 'nao')
+        $itens = $itens->where('disponivel', true);
+      else if ($filtro->emprestado == 'sim')
+        $itens = $itens->filter(function($item) use($filtro){
+          if (gettype($item->onde_esta) == 'array')
+            return count($item->onde_esta) > 1;
+          else
+            return !$item->disponivel;
+        });
+    }
     if ($filtro->emQuantidade == 'nao')
       $itens = $itens->where('quantidade', null);
     else if ($filtro->emQuantidade == 'sim' || $filtro->quantidade > 0)

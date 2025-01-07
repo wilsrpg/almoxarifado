@@ -29,6 +29,14 @@
   </p>
   <p>Onde está: <input name="onde_esta" value="{{$filtro->onde_esta}}"></p>
   <p>
+    Emprestado:
+    <select name="emprestado">
+      <option value="">Qualquer</option>
+      <option value="sim" {{$filtro->emprestado == 'sim' ? 'selected' : ''}}>Sim</option>
+      <option value="nao" {{$filtro->emprestado == 'nao' ? 'selected' : ''}}>Não</option>
+    </select>
+  </p>
+  <p>
     Em quantidade:
     <select name="emQuantidade" onchange="alternarQuantidade(event)">
       <option value="">Qualquer</option>
