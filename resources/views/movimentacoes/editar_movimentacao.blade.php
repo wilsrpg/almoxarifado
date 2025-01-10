@@ -16,10 +16,9 @@
       $itens_do_conjunto = [];
       foreach ($movimentacao->itens as $key => $item) {
         $itens_do_conjunto[] = $itens->find($item);
-        if ($movimentacao->qtdes[$key])
+        if (isset($movimentacao->qtdes[$key]))
           end($itens_do_conjunto)->quantidade = $movimentacao->qtdes[$key];
       }
-      //echo '<pre>';print_r($movimentacao->itens);die();
     ?>
     <livewire:conjunto-de-itens
       :itens_do_conjunto="$itens_do_conjunto"
