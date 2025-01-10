@@ -70,20 +70,13 @@ class ListaDeGrupos extends Component
     $conteudo = [];
     $qtdes = [];
     foreach ($this->lista_de_grupos[$indice]->itens as $key => $it) {
-      //$conteudo[] = $this->lista_de_itens[$this->indice($it, $this->lista_de_itens->toArray())];
       $conteudo[] = $this->lista_de_itens->find($it);
       $qtdes[] = $this->lista_de_grupos[$indice]->qtdes[$key] ?? null;
     }
-    //$this->lista_de_grupos[$indice]->nome = implode(',', $qtdes);
-    //for ($i=0; $i < count($this->lista_de_grupos[$indice]->itens); $i++) { 
-    //  $conteudo[] = $this->lista_de_itens->find($this->lista_de_grupos[$indice]->itens[$i]);
-    //  $qtdes[] = $this->lista_de_grupos[$indice]->qtdes[$i] ?? null;
-    //}
     $this->dispatch('adicionar-itens', $conteudo, $this->destino, $qtdes);
   }
 
   public function remover($id_do_grupo) {
-    //$this->lista_de_grupos[0]->nome = implode(',', $this->lista_de_grupos->find($id_do_grupo)->qtdes ?? null);
     $this->dispatch('remover-itens', $this->lista_de_grupos->find($id_do_grupo)->itens, $this->destino, $this->lista_de_grupos->find($id_do_grupo)->qtdes ?? null);
   }
 
@@ -98,12 +91,6 @@ class ListaDeGrupos extends Component
       for ($j=0; $j < count($this->lista_de_grupos[$i]->itens) && !$tem_algum; $j++) {
         $tem_algum = array_search($this->lista_de_grupos[$i]->itens[$j], $ids_dos_itens_do_conjunto) !== false;
       }
-      //foreach ($this->lista_de_grupos[$i]->itens as $it) {
-      //  if (!$tem_algum)
-      //    $tem_algum = array_search($it, $ids_dos_itens_do_conjunto) !== false;
-      //  if (!$falta_algum)
-      //    $falta_algum = array_search($it, $ids_dos_itens_do_conjunto) === false;
-      //}
       $this->enviados[$i] = !$falta_algum;
       $this->enviados_parcialmente[$i] = $tem_algum;
     }

@@ -9,61 +9,20 @@ use App\Models\Categoria;
 class ItemController extends Controller
 {
   public function index() {
-    //$itens = Item::all();
-    //Item::all()->unset('0');
-    //$categorias = Categoria::all();
-    //echo '<pre>';
-    //$item = Item::where('nome', 'item6')->first();
-    //foreach ($itens as $item){
-      //$item->categoria = (object) ['id' => '', 'nome' => ''];
-      //Item::where('nome', 'item6')
-      //->update(['categoria', (object) ['id' => '', 'nome' => '']]);
-      //$item->save();
-    //echo '<pre>';
-    //  print_r($itens[0]->categoria);
-    //  die();
-    //  echo '<br><br>';
-    //  if ($item->categoria){
-    //    $cat = Categoria::where('nome', $item->categoria)->first();
-    ////    $cat->itens()->save($item);
-    //    $item->categoria = ['id' => $cat->id, 'nome' => $item->categoria];
-    //    $item->save();
-    //  } else {
-        
-    //    $item->categoria = ['id' => '', 'nome' => ''];
-    //    $item->save();
-      //}
-    //}
-    //die();
-    //$item->update(['categoria', array_search($item->categoria, $categorias)]);
-    //Item::whereNull('movimentacoes')->update(['movimentacoes' => []]);
-    //echo '<pre>';
-    //print_r($req->toArray());die();
-    //$a = ['$regex' => '/.*/ms'];
-    //var_dump($a);die();
     $filtro = (object)[];
-    //$filtro->nome = $req->nome ?? '';
     $filtro->nome = $_GET['nome'] ?? '';
-    //$filtro->categoria = $req->categoria ?? '';
     $filtro->categoria = $_GET['categoria'] ?? '';
-    //$filtro->disponivel = $req->disponivel == 'sim' ? true : ($req->disponivel == 'nao' ? false : '');
     $disp = $_GET['disponivel'] ?? '';
     $filtro->disponivel = $disp == 'sim' ? true : ($disp == 'nao' ? false : '');
-    //$filtro->onde_esta = $req->onde_esta ?? '';
     $filtro->onde_esta = $_GET['onde_esta'] ?? '';
     $filtro->emprestado = $_GET['emprestado'] ?? '';
     $filtro->emQuantidade = $_GET['emQuantidade'] ?? '';
     $filtro->quantidade = $_GET['quantidade'] ?? '';
     if ($filtro->quantidade != '')
       $filtro->quantidade = (int) $filtro->quantidade;
-    //$filtro->anotacoes = $req->anotacoes ?? '';
     $filtro->anotacoes = $_GET['anotacoes'] ?? '';
-    //$itens = Item::all();
     $itens = Item::where('nome', 'like', '%'.$filtro->nome.'%')
-      //->where('onde_esta', 'like', '%'.$filtro->onde_esta.'%')
-      //->where('anotacoes', 'REGEX', new Regex('.*'.$filtro->anotacoes.'.*', 'ms'))
       ->where('anotacoes', 'regexp', '/.*'.$filtro->anotacoes.'.*/ms')
-      //->where('anotacoes', ['$regex' => '/.*/ms'])
       ->get();
     if ($filtro->onde_esta != ''){
       $itens = $itens->filter(function($item) use($filtro){
@@ -115,17 +74,13 @@ class ItemController extends Controller
   }
 
   public function criar() {
-    //echo '<pre>';print_r($_POST);
-    //die();
     $item = new Item;
     $item->nome = $_POST['nome'];
-    //$item->anotacoes = str_replace(chr(13), '', $_POST['anotacoes']);
     $item->anotacoes = $_POST['anotacoes'] ?? '';
     $categoria = (object)['id' => '', 'nome' => ''];
     if ($_POST['categoria'])
       $categoria = Categoria::where('id', $_POST['categoria'])->first();
     $item->categoria = ['id' => $categoria->id, 'nome' => $categoria->nome];
-    //$item->disponivel = isset($_POST['disponivel']) && $_POST['disponivel'] == 'on';
     $item->disponivel = true;
     if (isset($_POST['emQuantidade'])) {
       $item->quantidade = (int) $_POST['quantidade'];
@@ -133,10 +88,7 @@ class ItemController extends Controller
     } else
       $item->onde_esta = 'Comunidade';
     $item->movimentacoes = [];
-    //echo '<pre>';print_r($item);
-    //die();
     $res = $item->save();
-    //echo '<pre>';print_r($res);die();
     return redirect('/')->with('mensagem', 'Item cadastrado com sucesso.');
   }
 
@@ -165,12 +117,6 @@ class ItemController extends Controller
       $item->onde_esta = $arr;
       $item->quantidade = (int) $_POST['quantidade'];
     }
-    //$item->anotacoes = $_POST['anotacoes'];
-    //echo ord(str_split($_POST['anotacoes'])[2]);
-    //echo chr(98);
-    //die();
-    //$item->anotacoes = str_replace(chr(13).chr(10), '', $_POST['anotacoes']); //chr(10) = caractere '\n', q eh adicionado com novas linhas na tag <textarea>
-    //$item->anotacoes = str_replace(chr(13), '', $item->anotacoes); //chr(13) = caractere '\r', q eh adicionado com novas linhas na tag <textarea>
     $item->anotacoes = $_POST['anotacoes'] ?? '';
     $categoria = (object)['id' => '', 'nome' => ''];
     if ($_POST['categoria'])
@@ -181,6 +127,7 @@ class ItemController extends Controller
   }
 
   public function excluir($id) {
+    //$res = Item::where('id', $id)->first()->delete();
     $res = Item::where('id', $id)->update(['deletado' => true]);
     return redirect('/')->with('mensagem', 'Item excluído com sucesso.');
   }

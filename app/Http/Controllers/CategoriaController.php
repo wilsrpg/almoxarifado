@@ -8,8 +8,6 @@ use App\Models\Categoria;
 class CategoriaController extends Controller
 {
   public function index() {
-    //echo '<pre>';
-    //print_r($req->toArray());die();
     $filtro = (object)[];
     $filtro->nome = $_GET['nome'] ?? '';
     $filtro->anotacoes = $_GET['anotacoes'] ?? '';
@@ -32,7 +30,6 @@ class CategoriaController extends Controller
     $categoria->nome = $_POST['nome'];
     $categoria->anotacoes = $_POST['anotacoes'];
     $res = $categoria->save();
-    //return redirect('/')->with('cadastrou_categoria', $res);
     return redirect('/')->with('mensagem', 'Categoria cadastrada com sucesso.');
   }
 
@@ -45,7 +42,6 @@ class CategoriaController extends Controller
     $categoria->nome = $_POST['nome'];
     $categoria->anotacoes = $_POST['anotacoes'] ?? '';
     $res = $categoria->save();
-    //return redirect('/')->with('atualizou_categoria', $res);
     return redirect('/')->with('mensagem', 'Categoria atualizada com sucesso.');
   }
 

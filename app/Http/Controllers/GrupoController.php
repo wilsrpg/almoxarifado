@@ -9,8 +9,6 @@ use App\Models\Item;
 class GrupoController extends Controller
 {
   public function index() {
-    //echo '<pre>';
-    //print_r($_GET);die();
     $filtro = (object)[];
     $filtro->nome = $_GET['nome'] ?? '';
     $filtro->itens = $_GET['itens'] ?? [];
@@ -19,7 +17,6 @@ class GrupoController extends Controller
     $grupos = Grupo::where('nome', 'like', '%'.$filtro->nome.'%')
       ->where('anotacoes', 'regexp', '/.*'.$filtro->anotacoes.'.*/ms')
       ->get();
-    //$grupos = Grupo::all();
     $grupos = $grupos->filter(function ($grupo) use ($filtro) {
       return count(array_diff($filtro->itens, $grupo->itens))==0;
     });
@@ -52,11 +49,9 @@ class GrupoController extends Controller
     $grupo->nome = $_POST['nome'];
     $grupo->anotacoes = $_POST['anotacoes'] ?? '';
     //$grupo->categoria = $_POST['categoria'];
-    //$grupo->itens = explode(',', $_POST['itens']);
     $grupo->itens = $_POST['itens'];
     $grupo->qtdes = $_POST['qtdes'];
     $res = $grupo->save();
-    //return redirect('/')->with('cadastrou_grupo', $res);
     return redirect('/')->with('mensagem', 'Grupo cadastrado com sucesso.');
   }
 
@@ -71,15 +66,14 @@ class GrupoController extends Controller
     $grupo = Grupo::where('id', $id)->first();
     $grupo->nome = $_POST['nome'];
     $grupo->anotacoes = $_POST['anotacoes'] ?? '';
-    //$grupo->itens = explode(',', $_POST['itens']);
     $grupo->itens = $_POST['itens'];
     $grupo->qtdes = $_POST['qtdes'];
     $res = $grupo->save();
-    //return redirect('/')->with('atualizou_grupo', $res);
     return redirect('/')->with('mensagem', 'Grupo atualizado com sucesso.');
   }
 
   public function excluir($id) {
+    //$res = Grupo::where('id', $id)->first()->delete();
     $res = Grupo::where('id', $id)->update(['deletado' => true]);
     return redirect('/')->with('mensagem', 'Grupo excluído com sucesso.');
   }

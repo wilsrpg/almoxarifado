@@ -17,7 +17,6 @@ class ConjuntoDeItens extends Component
     if (!$qtdes)
       foreach ($this->itens_do_conjunto as $it)
         array_push($this->qtdes, $it['quantidade'] ?? null);
-    //$this->name = count($this->qtdes);
   }
 
   #[On('adicionar-item')]
@@ -26,15 +25,11 @@ class ConjuntoDeItens extends Component
       $ids_dos_itens_do_conjunto = array_map(function($i){ return $i['id']; }, $this->itens_do_conjunto);
       $indice = array_search($item_enviado['id'], $ids_dos_itens_do_conjunto);
       if ($qtde && $indice !== false) {
-        //$item_enviado['quantidade'] += $this->itens_do_conjunto[$indice]['quantidade'];
-        //$this->itens_do_conjunto[$indice]['quantidade'] += $qtde;
         $this->qtdes[$indice] += $qtde;
         if ($this->qtdes[$indice] > $item_enviado['quantidade'])
           $this->qtdes[$indice] = $item_enviado['quantidade'];
       }
       if ($indice === false) {
-        //if (isset($item_enviado['quantidade']))
-          //$item_enviado['quantidade'] = $qtde;
         $this->itens_do_conjunto[] = $item_enviado;
         $this->qtdes[] = $qtde;
       }
@@ -62,7 +57,6 @@ class ConjuntoDeItens extends Component
           $this->qtdes[] = $qtdes[$i];
         }
       }
-      //$this->itens_do_conjunto = array_merge($this->itens_do_conjunto, $itens);
     $this->dispatch('atualizar-itens-enviados',
       array_map(function($i){ return $i['id']; }, $this->itens_do_conjunto),
       $this->qtdes
@@ -72,23 +66,12 @@ class ConjuntoDeItens extends Component
   #[On('remover-item')]
   public function remover($id_do_item, $destino, $qtde = null) {
     if ($this->nome == $destino) {
-      //$this->itens_do_conjunto = array_filter($this->itens_do_conjunto,
-      //  function($i, $key) use($id_do_item) { return $i['id'] != $id_do_item; }
-      //);
       $ids_dos_itens = array_map(function($i){ return $i['id']; }, $this->itens_do_conjunto);
       $indice = array_search($id_do_item, $ids_dos_itens);
       if($indice !== false) {
-        //if ($this->qtdes[$indice]) {
-        //  $this->qtdes[$indice] -= $qtde;
-        //  if ($this->qtdes[$indice] < 0)
-        //    $this->qtdes[$indice] = 0;
-        //}
-        //if (!$this->qtdes[$indice] || $this->qtdes[$indice] <= 0) {
-          array_splice($this->itens_do_conjunto, $indice, 1);
-          array_splice($this->qtdes, $indice, 1);
-        //}
+        array_splice($this->itens_do_conjunto, $indice, 1);
+        array_splice($this->qtdes, $indice, 1);
       }
-      //$this->dispatch('item-removido', $id_do_item);
       $this->dispatch('atualizar-itens-enviados',
         array_map(function($i){ return $i['id']; }, $this->itens_do_conjunto),
         $this->qtdes
@@ -114,16 +97,6 @@ class ConjuntoDeItens extends Component
           }
         }
       }
-      //$this->itens_do_conjunto[0]['nome'] = $qtdes;
-      //$this->itens_do_conjunto = array_diff($this->itens_do_conjunto,
-      //$this->itens_do_conjunto = array_filter($this->itens_do_conjunto,
-      //  function($i) use($ids_dos_itens) {
-      //    if (array_search($i['id'], $ids_dos_itens) !== false)
-      //      array_splice($this->qtdes, $key, 1);
-      //    return array_search($i['id'], $ids_dos_itens) === false;
-      //  }
-      //);
-      //$this->dispatch('item-removido', $ids_dos_itens);
       $this->dispatch('atualizar-itens-enviados',
         array_map(function($i){ return $i['id']; }, $this->itens_do_conjunto),
         $this->qtdes
@@ -136,12 +109,6 @@ class ConjuntoDeItens extends Component
     $this->qtdes = [];
     $this->dispatch('atualizar-itens-enviados', [], []);
   }
-
-  //public function hydrate() {
-  //  $this->dispatch('atualizar-itens-enviados',
-  //    array_map(function($i){ return $i['id']; }, $this->itens_do_conjunto)
-  //  );
-  //}
 
   #[On('obter-itens-enviados')]
   public function atualizar_lista() {

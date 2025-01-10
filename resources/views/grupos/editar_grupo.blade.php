@@ -9,11 +9,6 @@
   <div style="display: flex">
     <?php
       $itens_do_conjunto = [];
-      //for ($i=0; $i < count($grupo->itens); $i++) { 
-      //  $itens_do_conjunto[] = $itens->find($grupo->itens[$i]);
-      //  if ($grupo->qtdes[$i])
-      //    end($itens_do_conjunto)->quantidade = $grupo->qtdes[$i];
-      //}
       foreach ($grupo->itens as $key => $item) {
         $itens_do_conjunto[] = $itens->find($item);
         if ($grupo->qtdes[$key])

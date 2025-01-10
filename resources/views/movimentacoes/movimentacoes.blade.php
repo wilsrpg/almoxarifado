@@ -19,7 +19,6 @@
       $itens_do_conjunto = [];
       foreach ($filtro->itens as $it)
         $itens_do_conjunto[] = $itens->find($it);
-      //echo '<pre>';print_r($filtro->itens);die();
     ?>
     <livewire:conjunto-de-itens
       :itens_do_conjunto="$itens_do_conjunto"
@@ -108,7 +107,6 @@
   function enviar(e) {
     e.preventDefault();
     const form = new FormData(document.getElementsByTagName('form')[0]);
-    //console.log(Array.from(form.entries()).length);
     if (Array.from(form.entries()).length > 0)
       e.target.submit();
     else

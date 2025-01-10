@@ -36,14 +36,6 @@ class ListaDeItens extends Component
     $indice = $this->indice($id_do_item);
     if ($qtde !== 0)
     $this->dispatch('adicionar-item', $this->lista_de_itens[$indice], $this->destino, $qtde);
-    //if (isset($this->lista_de_itens[$indice]['quantidade'])) {
-    //  $this->qtdes = $this->lista_de_itens[$indice]['quantidade'] - $this->qtdes; //estranho, mas tá ok
-    //  if ($this->qtdes == 0)
-    //    $this->enviados[$indice] = true;
-    //  else
-    //    $this->enviados_parcialmente[$indice] = true;
-    //} else
-    //  $this->enviados[$indice] = true;
   }
 
   public function remover($id_do_item) {
@@ -62,36 +54,14 @@ class ListaDeItens extends Component
       } else {
         if (!isset($this->lista_de_itens[$i]['quantidade'])) {
           $this->enviados[$i] = true;
-          //$this->enviados_parcialmente[$i] = false;
         } else {
           $this->qtdes[$i] = $this->lista_de_itens[$i]['quantidade'] - $qtdes_do_conjunto[$indice];
           $this->qtde_input[$i] = $this->qtdes[$i];
-          if ($this->qtdes[$i] == 0) {
-            $this->enviados[$i] = true;
-            //$this->enviados_parcialmente[$i] = false;
-          } else {
-            //$this->enviados_parcialmente[$i] = true;
-            $this->enviados[$i] = false;
-          }
+          $this->enviados[$i] = $this->qtdes[$i] == 0;
         }
         $this->enviados_parcialmente[$i] = !$this->enviados[$i];
       }
-      //if (!$this->enviados[$i] && isset($this->lista_de_itens[$i]['quantidade']))
-      //  $this->qtdes = $this->lista_de_itens[$i]['quantidade'];
-      //if ($this->enviados[$i] && isset($this->lista_de_itens[$i]['quantidade'])) {
-      //  $this->qtdes = $this->lista_de_itens[$i]['quantidade'] - $qtdes_do_conjunto[$indice];
-      //}
     }
-    //$ids_dos_itens = array_map(function($i){ return $i['id']; }, $this->lista_de_itens->toArray());
-    //for ($i=0; $i < count($ids_dos_itens_do_conjunto); $i++) {
-    //  //$indice = array_search($ids_dos_itens_do_conjunto[$i], $ids_dos_itens);
-    //  $indice = $this->indice($ids_dos_itens_do_conjunto[$i]);
-    //  $this->enviados[$i] = false;
-    //  if ($qtdes_do_conjunto && $qtdes_do_conjunto[$i]) {
-    //    $this->qtdes += $qtdes_do_conjunto[$i];
-    //    $this->enviados_parcialmente[$i] = $this->qtdes != $this->lista_de_itens[$i]['quantidade'];
-    //  }
-    //}
   }
 
   #[On('mudou-tipo')]
