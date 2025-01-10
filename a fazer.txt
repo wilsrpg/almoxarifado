@@ -1,0 +1,3 @@
+tratar erros
+transformar grupos em itens compostos
+mesclar o array de quantidades ao de itens nas requisições
