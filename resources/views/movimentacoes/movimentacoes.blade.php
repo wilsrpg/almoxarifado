@@ -13,7 +13,7 @@
   </div>
   <p>Responsável por entregar: <input name="quem_entregou" value="{{$filtro->quem_entregou}}"></p>
   <p>Responsável por receber: <input name="quem_recebeu" value="{{$filtro->quem_recebeu}}"></p>
-  <livewire:tipo-da-movimentacao :tipo_da_movimentacao="$filtro->tipo" :opcional="true"/>
+  <livewire:tipo-da-movimentacao :tipo_da_movimentacao="$filtro->tipo" :opcional="true" :nome_em_branco="'Qualquer'"/>
   <div style="display: flex">
     <?php
       $itens_do_conjunto = [];
