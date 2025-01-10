@@ -55,12 +55,40 @@
 
 @if (count($itens) > 0)
   <p>{{count($itens) . ' ite' . (count($itens) > 1 ? 'ns' : 'm')}}</p>
-  <?php $link=true; ?>
-  @foreach ($itens as $item)
-    {{--<livewire:ver-item :item="$item" :link="true" />--}}
-    @include('itens.ver-item')
-    <br>
-  @endforeach
+  <table>
+    <tr>
+      <th>Nome</th>
+      <th>Categoria</th>
+      <th>Disponível</th>
+      <th>Quantidade</th>
+      <th>Onde está</th>
+      <th>Anotações</th>
+      <th>Movimentações</th>
+    </tr>
+    @foreach ($itens as $item)
+      <tr>
+        <td>
+          <a href="/item/{{$item->id}}" {{isset($item->deletado) ? 'class=vermelho' : ''}}>{{$item->nome}}</a>
+        </td>
+        <td><a href="/categoria/{{$item->categoria['id']}}">{{$item->categoria['nome']}}</a></td>
+        <td>{{$item->disponivel ? 'Sim' : 'Não'}}</td>
+        <td> {{$item->quantidade ?? ''}}</td>
+        <td>
+          @if (gettype($item->onde_esta) == 'string')
+            {{$item->onde_esta}}
+          @else
+            <ul>
+              @foreach ($item->onde_esta as $onde)
+                <li>{{$onde['onde']}}: {{$onde['qtde']}}</li>
+              @endforeach
+            </ul>
+          @endif
+        </td>
+        <td><pre>{{$item->anotacoes}}</pre></td>
+        <td>{{count($item->movimentacoes)}} <a href="/movimentacoes?itens[]={{$item->id}}">(Ver tudo)</a></td>
+      </tr>
+    @endforeach
+  </table>
 @else
   <p>Nenhum item.</p>
 @endif

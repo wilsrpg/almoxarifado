@@ -25,12 +25,32 @@
 
 @if (count($grupos) > 0)
   <p>{{count($grupos) . ' grupo' . (count($grupos) > 1 ? 's' : '')}}</p>
-  <?php $link=true; ?>
-  @foreach ($grupos as $grupo)
-    {{--<livewire:ver-grupo :grupo="$grupo" :link="true" />--}}
-    @include('grupos.ver-grupo')
-    <br>
-  @endforeach
+  <table>
+    <tr>
+      <th>Nome</th>
+      <th>Itens</th>
+      <th>Anotações</th>
+    </tr>
+    @foreach ($grupos as $grupo)
+      <tr>
+        <td>
+          <a href="/grupo/{{$grupo->id}}">{{$grupo->nome}}</a>
+          <?= isset($grupo->deletado) ? '<i class=vermelho>(deletado)</i>' : '' ?>
+        </td>
+        <td><ul>
+          @foreach ($grupo->itens as $key => $item)
+            <li>
+              <a href="/item/{{$item->id}}">{{$item->nome}}</a>
+              @if (isset($grupo->qtdes[$key]))
+                <i>({{$grupo->qtdes[$key]}})</i>
+              @endif
+            </li>
+          @endforeach
+        </ul></td>
+        <td><pre>{{$grupo->anotacoes}}</pre></td>
+      </tr>
+    @endforeach
+  </table>
 @else
   <p>Nenhum grupo.</p>
 @endif

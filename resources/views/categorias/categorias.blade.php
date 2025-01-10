@@ -16,12 +16,22 @@
 
 @if (count($categorias) > 0)
   <p>{{count($categorias) . ' categoria' . (count($categorias) > 1 ? 's' : '')}}</p>
-  <?php $link=true; ?>
+  <table>
+    <tr>
+      <th>Nome</th>
+      <th>Anotações</th>
+    </tr>
   @foreach ($categorias as $categoria)
-    {{--<livewire:ver-categoria :categoria="$categoria" :link="true" />--}}
-    @include('categorias.ver-categoria')
-    <br>
-  @endforeach
+    <tr>
+      <td>
+        <a href="/categoria/{{$categoria->id}}" {{isset($categoria->deletado) ? 'class=vermelho' : ''}}>
+          {{$categoria->nome}}
+        </a>
+      </td>
+      <td><pre>{{$categoria->anotacoes}}</pre></td>
+    </tr>
+    @endforeach
+  </table>
 @else
   <p>Nenhuma categoria.</p>
 @endif

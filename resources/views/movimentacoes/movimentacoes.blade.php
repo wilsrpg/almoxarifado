@@ -46,16 +46,47 @@
   </p>
   <input type="submit" value="Filtrar">
   <input type="button" value="Limpar" onclick="limpar_campos()">
-  </form>
+</form>
 
 @if (count($movimentacoes) > 0)
   <p>{{count($movimentacoes) . ' movimentaç' . (count($movimentacoes) > 1 ? 'ões' : 'ão')}}</p>
-  <?php $link=true; ?>
-  @foreach ($movimentacoes as $movimentacao)
-    {{--<livewire:ver-movimentacao :movimentacao="$movimentacao" :link="true" />--}}
-    @include('movimentacoes.ver-movimentacao')
-    <br>
-  @endforeach
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Data</th>
+      <th>Hora</th>
+      <th>Tipo</th>
+      <th>Responsável por entregar</th>
+      <th>Responsável por receber</th>
+      <th>Itens</th>
+      <th>Anotações</th>
+    </tr>
+    @foreach ($movimentacoes as $movimentacao)
+    <tr>
+      <td>
+        <a href="/movimentacao/{{$movimentacao->id}}" {{isset($movimentacao->deletado) ? 'class=vermelho' : ''}}>
+          {{$movimentacao->id}}
+        </a>
+      </td>
+      <td>{{$movimentacao->data ? date_format(date_create($movimentacao->data), 'd/m/Y') : ''}}</td>
+      <td>{{$movimentacao->hora}}</td>
+      <td>{{$movimentacao->tipo}}</td>
+      <td>{{$movimentacao->quem_entregou}}</td>
+      <td>{{$movimentacao->quem_recebeu}}</td>
+      <td><ul>
+        @foreach ($movimentacao->itens as $key => $item)
+          <li>
+            <a href="/item/{{$item->id}}">{{$item->nome}}</a>
+            @if (isset($movimentacao->qtdes[$key]))
+              <i>({{$movimentacao->qtdes[$key]}})</i>
+            @endif
+          </li>
+        @endforeach
+      </ul></td>
+      <td><pre>{{$movimentacao->anotacoes}}</pre></td>
+    </tr>
+    @endforeach
+  </table>
 @else
   <p>Nenhuma movimentação.</p>
 @endif

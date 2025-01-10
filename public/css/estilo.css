@@ -23,9 +23,9 @@ footer {
 .lista-de-itens {
   padding: 0;
   overflow: auto;
-  height: 50vh;
+  height: 10em;
 }
-.lista-de-itens li {
+.lista-de-itens, table li {
   list-style-type: none;
 }
 
@@ -34,4 +34,22 @@ footer {
 }
 .vermelho {
   color: red;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th {
+  position: sticky;
+  top: 3.1em;
+  /*border: 1px solid black;
+  border-collapse: separate;
+  border-spacing: 3px;*/
+  background-clip: padding-box;
+  background-color: white;
+}
+table ul, table pre {
+  margin: 0;
+  padding: 0;
 }
