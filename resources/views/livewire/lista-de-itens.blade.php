@@ -34,7 +34,7 @@
           }}
         >{{$item['nome']}}</a>
         @if (isset($qtdes[$key]))
-          ({{$qtde_input[$key]}}/{{$item['quantidade']}}){{$qtdes[$key]}}
+          ({{$qtde_input[$key]}}/{{$item['quantidade']}})
           <input type="number" min="1" max="{{$qtdes[$key]}}" size="5" wire:model.live="qtde_input.{{$key}}"
             {{$enviados[$key] ? 'disabled' : ''}}
           >
